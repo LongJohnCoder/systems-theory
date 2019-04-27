@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>blk_init_queue</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Block Devices"
+HREF="c11635.html"><LINK
+REL="PREVIOUS"
+TITLE="blk_cleanup_queue"
+HREF="r12349.html"><LINK
+REL="NEXT"
+TITLE="blk_requeue_request"
+HREF="r12426.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r12349.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r12426.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN12381"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_init_queue</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN12385"
+></A
+><H2
+>Name</H2
+>blk_init_queue&nbsp;--&nbsp;      prepare a request queue for use with a block device
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN12388"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN12390"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>request_queue_t * blk_init_queue </CODE
+>(request_fn_proc * rfn, spinlock_t * lock);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN12398"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>rfn</VAR
+></DT
+><DD
+><P
+>       The function to be called to process requests that have been
+     placed on the queue.
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>lock</VAR
+></DT
+><DD
+><P
+>      Request queue spin lock
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN12411"
+></A
+><H2
+>Description</H2
+><P
+>   If a block device wishes to use the standard request handling procedures,
+   which sorts requests and coalesces adjacent requests, then it must
+   call <CODE
+CLASS="FUNCTION"
+>blk_init_queue</CODE
+>.  The function <VAR
+CLASS="PARAMETER"
+>rfn</VAR
+> will be called when there
+   are requests on the queue that need to be processed.  If the device
+   supports plugging, then <VAR
+CLASS="PARAMETER"
+>rfn</VAR
+> may not be called immediately when requests
+   are available on the queue, but may be called at some time later instead.
+   Plugged queues are generally unplugged when a buffer belonging to one
+   of the requests on the queue is needed, or due to memory pressure.
+   </P
+><P
+>&#13;   <VAR
+CLASS="PARAMETER"
+>rfn</VAR
+> is not required, or even expected, to remove all requests off the
+   queue, but only as many as it can handle at a time.  If it does leave
+   requests on the queue, it is responsible for arranging that the requests
+   get dealt with eventually.
+   </P
+><P
+>&#13;   The queue spin lock must be held while manipulating the requests on the
+   request queue.
+   </P
+><P
+>&#13;   Function returns a pointer to the initialized request queue, or NULL if
+   it didn't succeed.
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN12421"
+></A
+><H2
+>Note</H2
+><P
+>   <CODE
+CLASS="FUNCTION"
+>blk_init_queue</CODE
+> must be paired with a <CODE
+CLASS="FUNCTION"
+>blk_cleanup_queue</CODE
+> call
+   when the block device is deactivated (such as at module unload).
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r12349.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r12426.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_cleanup_queue</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c11635.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_requeue_request</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

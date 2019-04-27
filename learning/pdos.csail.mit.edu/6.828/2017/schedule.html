@@ -1,0 +1,401 @@
+<HTML>
+<HEAD>
+<TITLE>
+6.828 / Fall 2017
+</TITLE>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/labs.css" type="text/css" />
+
+</HEAD>
+
+<BODY BGCOLOR=#ffffff TEXT=#000000>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">6.828: Operating System Engineering</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+	    <li><a href="schedule.html">Schedule</a></li>
+	    <li class="dropdown">
+              <a href="schedule.html#" class="dropdown-toggle" data-toggle="dropdown">Class<span class="caret"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+                <li><a href="overview.html">Overview</a></li>
+                <li><a href="general.html">Administrivia</a></li>
+		<li><a href="classes.html">Related classes</a></li>
+		<li><a href="http://pdos.csail.mit.edu/6.828/2016">6.828 2016</a></li>
+	      </ul>
+	    </li>
+            <li class="dropdown">
+              <a href="schedule.html#" class="dropdown-toggle" data-toggle="dropdown">Labs<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+		<li><a href="tools.html">Tools</a></li>
+		<li><a href="labguide.html">Lab guide</a></li>
+                <li><a href="labs/lab1">Lab 1</a></li>
+                <li><a href="labs/lab2">Lab 2</a></li>
+                <li><a href="labs/lab3">Lab 3</a></li>
+		<li><a href="labs/lab4">Lab 4</a></li>
+		<li><a href="labs/lab5">Lab 5</a></li>
+		<li><a href="labs/lab6">Lab 6</a></li>
+		<li><a href="labs/lab7">Lab 7</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="schedule.html#" class="dropdown-toggle" data-toggle="dropdown">xv6<span class="caret"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+		<li><a href="xv6.html">xv6</a></li>
+		<li><a href="xv6/xv6-rev10.pdf">xv6 printout</a></li>
+		<li><a href="xv6/book-rev10.pdf">xv6 book</a></li>
+	      </ul>
+	    </li>
+	    <li><a href="reference.html">References</a></li>
+	    <li><a href="https://piazza.com/mit/fall2017/6828">Piazza</a></li>
+          </ul>
+	  <ul class="nav navbar-nav navbar-right">
+	    <p class="navbar-text">2017</p>
+	  </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="container">
+
+
+
+
+
+<style>
+table.calendar {
+    font-family: arial, helvetica;
+    font-size: 10pt;
+    empty-cells: show;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+}
+table.calendar tr td {
+    border: 1px solid #aaaaaa;
+}
+table.calendar tr {
+    vertical-align: top;
+    height: 6em;
+    background: #eeeeee;
+}
+table.calendar thead tr {
+    text-align: center;
+    background: #444444;
+    color: #ffffff;
+    height: auto;
+    font-weight: bold;
+}
+.lecture {
+    background: #ffffaa;
+}
+.holiday {
+    background: #ccffcc;
+}
+.special {
+    background: #aaaaff;
+}
+.important {
+    background: #ffaaaa;
+}
+.reading {
+    color: #3333ff;
+}
+.deadline {
+    color: #ff0000;
+}
+.hwdue {
+    color: #ff0000;
+}
+.assignment {
+    color: #0aa00a;
+}
+.date {
+    color: #444444;
+}
+</style>
+Links to notes etc. on future days are copies of materials from
+2016 to give you an idea of what the future will bring. We will update
+the notes as the course progresses.
+The lecture notes may help you remember the lecture content,
+but they are not a replacement for attending lectures.
+<p>
+<table class="calendar" cellspacing="0" cellpadding="6" width="100%">
+ <thead>
+  <tr>
+   <td width="35%">Monday</td><td width="10%">Tuesday</td>
+   <td width="35%">Wednesday</td><td width="10%">Thursday</td>
+   <td width="10%">Friday</td>
+  </tr>
+ </thead>
+
+<tr> <!-- week of sep 4 -->
+  <td id="2017-9-4" class="holiday"><span class="date">sep 4</span></td>
+  <td id="2017-9-5" class="special"><span class="date">sep 5</span><br />
+    Reg Day</td>
+  <td id="2017-9-6" class="lecture"><span class="date">sep 6</span><br />
+    <b>LEC 1:</b> <a href="lec/l-overview.txt">Operating systems</a> (handouts: <a href="xv6/xv6-rev10.pdf">xv6 source</a>, <a href="xv6/book-rev10.pdf">xv6 book</a>)<br />
+    <span class="reading"><b>Preparation</b>: <a href="https://www.youtube.com/watch?v=tc4ROCJYbm0">Unix intro</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab1">Lab 1: C, Assembly, Tools, and Bootstrapping</a></span></td>
+  <td id="2017-9-7"><span class="date">sep 7</span></td>
+  <td id="2017-9-8"><span class="date">sep 8</span></td>
+</tr>
+<tr> <!-- week of sep 11 -->
+  <td id="2017-9-11" class="lecture"><span class="date">sep 11</span><br />
+    <b>LEC 2:</b> <a href="lec/l-x86.pdf">PC hardware and x86 programming slides</a>, <a href="lec/l-x86.html">notes</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="xv6/book-rev10.pdf">Bootstrap/PC hardware appendices and the related xv6 source files</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-boot.html">HW: Boot xv6</a></span></td>
+  <td id="2017-9-12"><span class="date">sep 12</span></td>
+  <td id="2017-9-13" class="lecture"><span class="date">sep 13</span><br />
+    <b>LEC 3:</b> C and <a href="lec/gdb_slides.pdf">gdb</a> (<a href="lec/pointers.c">pointers example</a>)<br />
+    <span class="hwdue"><b>Homework 1 due:</b> <a href="homework/xv6-boot.html">Boot xv6</a></span><br />
+    <span class="reading"><b>Preparation</b>: Read 2.9 (Bitwise operators), 5.1 (Pointers and Addresses) through 5.5(Character Pointers and Functions) and 6.4 (pointers to structures) in K&amp;R</span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-shell.html">HW: shell</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab2">Lab 2: Memory management</a></span></td>
+  <td id="2017-9-14" class="important"><span class="date">sep 14</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 1</span></td>
+  <td id="2017-9-15"><span class="date">sep 15</span></td>
+</tr>
+<tr> <!-- week of sep 18 -->
+  <td id="2017-9-18" class="lecture"><span class="date">sep 18</span><br />
+    <b>LEC 4:</b> <a href="lec/l-shell.txt">Shell & OS organization</a><br />
+    <span class="reading"><b>Preparation</b>: <a href="xv6/book-rev10.pdf">Read chapter 0 of the xv6 book</a>.</span><br />
+    <span class="hwdue"><b>Homework 2 due:</b> <a href="homework/xv6-shell.html">shell</a></span></td>
+  <td id="2017-9-19"><span class="date">sep 19</span></td>
+  <td id="2017-9-20" class="lecture"><span class="date">sep 20</span><br />
+    <b>LEC 5:</b> <a href="lec/l-internal.txt">Isolation mechanisms</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="xv6/book-rev10.pdf">"Chapter 1: Operating system organization" and the related xv6 source files</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-syscall.html">HW: system calls</a></span></td>
+  <td id="2017-9-21"><span class="date">sep 21</span></td>
+  <td id="2017-9-22"><span class="date">sep 22</span></td>
+</tr>
+<tr> <!-- week of sep 25 -->
+  <td id="2017-9-25" class="lecture"><span class="date">sep 25</span><br />
+    <b>LEC 6:</b> <a href="lec/l-vm.md">Virtual memory</a> (handouts:  <a href="lec/x86_translation_and_registers.pdf">page table translation and registers</a>) (<a href="lec/l-vm.pdf">slides</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="xv6/book-rev10.pdf">"Chapter 2: Page Tables"</a></span><br />
+    <span class="hwdue"><b>Homework 3 due:</b> <a href="homework/xv6-syscall.html">system calls</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-zero-fill.html">HW lazy page allocation</a></span></td>
+  <td id="2017-9-26"><span class="date">sep 26</span></td>
+  <td id="2017-9-27" class="lecture"><span class="date">sep 27</span><br />
+    <b>LEC 7:</b> <a href="lec/l-usevm.md">Using virtual memory</a> (handout: <a href="lec/l-josmem.html">JOS virtual memory layout</a>) (<a href="lec/l-usingvm.pdf">slides</a>)<br />
+    <span class="hwdue"><b>Homework 4 due:</b> <a href="homework/xv6-zero-fill.html">HW lazy page allocation</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-alarm.html">HW xv6 CPU alarm</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab3">Lab 3: User-Level Environments</a></span></td>
+  <td id="2017-9-28" class="important"><span class="date">sep 28</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 2</span></td>
+  <td id="2017-9-29" class="holiday"><span class="date">sep 29</span><br />
+    Student holiday</td>
+</tr>
+<tr> <!-- week of oct 2 -->
+  <td id="2017-10-2" class="lecture"><span class="date">oct 2</span><br />
+    <b>LEC 8:</b> <a href="lec/l-interrupt.txt">System calls, interrupts, exceptions</a>  (handouts: <a href="lec/x86_idt.pdf">IDT</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="xv6/book-rev10.pdf">"Traps, interrupts, and drivers" and the related xv6 source files</a></span><br />
+    <span class="hwdue"><b>Homework 5 due:</b> <a href="homework/xv6-alarm.html">HW xv6 CPU alarm</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/lock.html">HW multithreaded programming</a></span></td>
+  <td id="2017-10-3"><span class="date">oct 3</span></td>
+  <td id="2017-10-4" class="lecture"><span class="date">oct 4</span><br />
+    <b>LEC 9:</b> <a href="lec/l-lockv2.txt">Multiprocessors and locking</a> (<a href="lec/l-locks.pdf">slides</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="xv6/book-rev10.pdf">"Locking"</a> with spinlock.c and skim mp.c</span><br />
+    <span class="hwdue"><b>Homework 6 due:</b> <a href="homework/lock.html">HW multithreaded programming</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-lock.html">HW xv6 locks</a></span></td>
+  <td id="2017-10-5" class="important"><span class="date">oct 5</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 3 (Part A)</span></td>
+  <td id="2017-10-6" class="special"><span class="date">oct 6</span><br />
+    ADD DATE</td>
+</tr>
+<tr> <!-- week of oct 9 - oct 10 -->
+  <td id="2017-10-9" class="holiday" colspan="2"><span class="date">oct 9 - oct 10</span><br />
+    Columbus Day</td>
+  <td id="2017-10-11" class="lecture"><span class="date">oct 11</span><br />
+    <b>LEC 10:</b> <a href="lec/l-threads.txt">Processes and switching</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="xv6/book-rev10.pdf">"Scheduling"</a> up to "Sleep and wakeup" and proc.c, swtch.S</span><br />
+    <span class="hwdue"><b>Homework 7 due:</b> <a href="homework/xv6-lock.html">HW xv6 locks</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-uthread.html">HW uthreads</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab4">Lab 4: Preemptive Multitasking</a></span></td>
+  <td id="2017-10-12" class="important"><span class="date">oct 12</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 3 (Part B)</span></td>
+  <td id="2017-10-13"><span class="date">oct 13</span></td>
+</tr>
+<tr> <!-- week of oct 16 -->
+  <td id="2017-10-16" class="lecture"><span class="date">oct 16</span><br />
+    <b>LEC 11:</b> <a href="lec/l-coordination.txt">sleep&wakeup</a><br />
+    <span class="reading"><b>Preparation</b>: Read remainder of <a href="xv6/book-rev10.pdf">"Scheduling"</a>, and corresponding parts of proc.c</span><br />
+    <span class="hwdue"><b>Homework 8 due:</b> <a href="homework/xv6-uthread.html">HW uthreads</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/barrier.html">HW barrier</a></span></td>
+  <td id="2017-10-17"><span class="date">oct 17</span></td>
+  <td id="2017-10-18" class="lecture"><span class="date">oct 18</span><br />
+    <b>LEC 12:</b> <a href="lec/l-fs.txt">File systems</a><br />
+    <span class="reading"><b>Preparation</b>: Read bio.c, fs.c, sysfile.c, file.c and "File system" except for the logging sections</span><br />
+    <span class="hwdue"><b>Homework 9 due:</b> <a href="homework/barrier.html">HW barrier</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-big-files.html">HW big files</a></span></td>
+  <td id="2017-10-19" class="important"><span class="date">oct 19</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 4 (Part A)</span></td>
+  <td id="2017-10-20"><span class="date">oct 20</span></td>
+</tr>
+<tr> <!-- week of oct 23 -->
+  <td id="2017-10-23" class="important"><span class="date">oct 23</span><br />
+    <b class="deadline">Exam #1</b> <b>open book and notes</b><br /> <b>scope</b>: Lectures 1 through 11, HW 1 through 8, labs 1 through 3<br /> <b>practice:</b> <a href="quiz.html">previous years' quizzes</a>.</td>
+  <td id="2017-10-24"><span class="date">oct 24</span></td>
+  <td id="2017-10-25" class="lecture"><span class="date">oct 25</span><br />
+    <b>LEC 13:</b> <a href="lec/l-crash.txt">Crash recovery</a><br />
+    <span class="reading"><b>Preparation</b>: Read log.c and the logging sections of "File system"</span><br />
+    <span class="hwdue"><b>Homework 10 due:</b> <a href="homework/xv6-big-files.html">HW big files</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/xv6-new-log.html">HW crash</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab6">Lab 6: Networking</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab7">Lab 7: Final project</a></span></td>
+  <td id="2017-10-26" class="important"><span class="date">oct 26</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 4 (Part B)</span></td>
+  <td id="2017-10-27"><span class="date">oct 27</span></td>
+</tr>
+<tr> <!-- week of oct 30 -->
+  <td id="2017-10-30" class="holiday"><span class="date">oct 30</span><br />
+    Hacking day</td>
+  <td id="2017-10-31"><span class="date">oct 31</span></td>
+  <td id="2017-11-1" class="holiday"><span class="date">nov 1</span><br />
+    Hacking day<br />
+    <span class="assignment"><b>Assignment</b>: <a href="labs/lab5">Lab 5: File system, spawn, and sh</a></span></td>
+  <td id="2017-11-2" class="important"><span class="date">nov 2</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 4 (Part C)</span></td>
+  <td id="2017-11-3" class="important"><span class="date">nov 3</span><br />
+    <span class="deadline"><b>DUE</b>: Piazza discussion final project</span></td>
+</tr>
+<tr> <!-- week of nov 6 -->
+  <td id="2017-11-6" class="lecture"><span class="date">nov 6</span><br />
+    <b>LEC 14:</b> <a href="lec/l-journal.txt">File system performance and fast crash recovery</a><br />
+    <span class="hwdue"><b>Homework 11 due:</b> <a href="homework/xv6-new-log.html">HW crash</a></span><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="homework/journal-ext2fs.html">Journaling the Linux ext2fs Filesystem (1998)</a></span><br />
+    <span class="assignment"><b>Assignment</b>: <a href="homework/mmap.html">mmap()</a></span></td>
+  <td id="2017-11-7"><span class="date">nov 7</span></td>
+  <td id="2017-11-8" class="lecture"><span class="date">nov 8</span><br />
+    <b>LEC 15:</b> <a href="lec/l-vm-again.txt">Virtual Memory (2)</a> (<a href="lec/l-vm-again.pdf">slides</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/appel-li.pdf">Virtual Memory Primitives for User Programs (1991)</a></span><br />
+    <span class="hwdue"><b>Homework 12 due:</b> <a href="homework/mmap.html">mmap</a></span></td>
+  <td id="2017-11-9" class="important"><span class="date">nov 9</span><br />
+    <span class="deadline"><b>DUE</b>: Final project proposal (if doing project)</span></td>
+  <td id="2017-11-10" class="holiday"><span class="date">nov 10</span><br />
+    Veteran's Day</td>
+</tr>
+<tr> <!-- week of nov 13 -->
+  <td id="2017-11-13" class="lecture"><span class="date">nov 13</span><br />
+    <b>LEC 16:</b> <a href="lec/l-organization.txt">OS Organization</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/engler95exokernel.pdf">Exokernel (1995)</a></span><br />
+    <span class="hwdue"><b>Homework 13 due:</b> <a href="homework/exok.html">HW exokernel question</a></span></td>
+  <td id="2017-11-14"><span class="date">nov 14</span></td>
+  <td id="2017-11-15" class="lecture"><span class="date">nov 15</span><br />
+    <b>LEC 17:</b> <a href="lec/l-singularity.md">Language/OS co-design</a> (<a href="lec/l-singularity.pdf">slides</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/hunt07singularity.pdf">Singularity (2007)</a></span><br />
+    <span class="hwdue"><b>Homework 14 due:</b> <a href="homework/singularity.html">Singularity question</a></span></td>
+  <td id="2017-11-16" class="important"><span class="date">nov 16</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 5</span></td>
+  <td id="2017-11-17"><span class="date">nov 17</span></td>
+</tr>
+<tr> <!-- week of nov 20 -->
+  <td id="2017-11-20" class="lecture"><span class="date">nov 20</span><br />
+    <b>LEC 18:</b> <a href="lec/l-scalable-lock.md">Scalable locks</a> (<a href="lec/l-mcs.pdf">slides</a>) (<a href="lec/scalable-lock-code.c">code</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/linux-lock.pdf">Non-scalable locks paper (2012)</a></span><br />
+    <span class="hwdue"><b>Homework 15 due:</b> <a href="homework/ticketlock.html">ticket lock question</a></span></td>
+  <td id="2017-11-21"><span class="date">nov 21</span></td>
+  <td id="2017-11-22" class="holiday"><span class="date">nov 22</span><br />
+    <b class="deadline">DROP DATE</b><br />
+    Hacking day</td>
+  <td id="2017-11-23" class="holiday" colspan="2"><span class="date">nov 23 - nov 24</span><br />
+    Thanksgiving</td>
+</tr>
+<tr> <!-- week of nov 27 -->
+  <td id="2017-11-27" class="important"><span class="date">nov 27</span><br />
+    <b>LEC 19:</b> <a href="lec/l-rcu.pdf">Scaling OSes slides</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/rcu-decade-later.pdf">RCU (2013)</a></span><br />
+    <span class="hwdue"><b>Homework 16 due:</b> <a href="homework/rcu.html">RCU question</a></span><br />
+    <span class="deadline"><b>DUE</b>: Email us a status update on your final project (a paragraph)</span></td>
+  <td id="2017-11-28"><span class="date">nov 28</span></td>
+  <td id="2017-11-29" class="lecture"><span class="date">nov 29</span><br />
+    <b>LEC 20:</b> <a href="lec/l-vmware.txt">Virtual Machines (1)</a> (<a href="lec/l-vmware.pdf">slides</a>)<br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/adams06vmware.pdf">Software vs Hardware Virtualization (2006)</a></span><br />
+    <span class="hwdue"><b>Homework 17 due:</b> <a href="homework/vmware.html">VM question</a></span></td>
+  <td id="2017-11-30"><span class="date">nov 30</span></td>
+  <td id="2017-12-1"><span class="date">dec 1</span></td>
+</tr>
+<tr> <!-- week of dec 4 -->
+  <td id="2017-12-4" class="lecture"><span class="date">dec 4</span><br />
+    <b>LEC 21:</b> <a href="lec/l-vmm.md">Virtual Machines (2)</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/belay-dune.pdf">Dune: Safe User-level Access to Privileged CPU Features (2012)</a></span><br />
+    <span class="hwdue"><b>Homework 18 due:</b> <a href="homework/dune.html">Dune question</a></span></td>
+  <td id="2017-12-5"><span class="date">dec 5</span></td>
+  <td id="2017-12-6" class="holiday"><span class="date">dec 6</span><br />
+    Hacking day</td>
+  <td id="2017-12-7" class="important"><span class="date">dec 7</span><br />
+    <span class="deadline"><b>DUE</b>: Lab 6 (networking) or lab 7 (Final project)</span></td>
+  <td id="2017-12-8"><span class="date">dec 8</span></td>
+</tr>
+<tr> <!-- week of dec 11 -->
+  <td id="2017-12-11" class="lecture"><span class="date">dec 11</span><br />
+    <b>LEC 22:</b> <a href="lec/l-net.txt">High-performance networking</a><br />
+    <span class="reading"><b>Preparation</b>: Read <a href="readings/osdi14-paper-belay.pdf">IX: A Protected Dataplane Operating System for High Throughput and Low Latency (2014)</a></span><br />
+    <span class="hwdue"><b>Homework 19 due:</b> <a href="homework/ix.html">IX question</a></span></td>
+  <td id="2017-12-12"><span class="date">dec 12</span></td>
+  <td id="2017-12-13" class="lecture"><span class="date">dec 13</span><br />
+    LAST DAY OF CLASSES<br />
+    <b>LEC 23:</b> demos in class; guest lecture by Dan Cross of Google: Akaros: Operating Systems, Research, and Industrial Applications<br />
+    <b>Project sign-offs</b></td>
+  <td id="2017-12-14"><span class="date">dec 14</span></td>
+  <td id="2017-12-15"><span class="date">dec 15</span></td>
+</tr>
+<tr> <!-- week of dec 18 -->
+  <td id="2017-12-18"><span class="date">dec 18</span></td>
+  <td id="2017-12-19" class="important"><span class="date">dec 19</span><br />
+    <b class="deadline">Exam #2</b><br /> <b>1:30-3:30p, Walker Gym. <br /> <b>open book, notes, and papers.</b><br /> <b>scope</b>: Lectures 12 through last lecture, labs 4 and 5.<br /> <b>practice:</b> <a href="quiz.html">previous years' quizzes</a>.</td>
+  <td id="2017-12-20"><span class="date">dec 20</span></td>
+  <td id="2017-12-21"><span class="date">dec 21</span></td>
+  <td id="2017-12-22"><span class="date">dec 22</span></td>
+</tr>
+
+</table>
+<script type="text/javascript">
+var d = new Date();
+for (var fwd = 0; fwd < 3; fwd++) {
+  var i = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+  var e = document.getElementById(i);
+  if (e) { e.style.border = '2px solid blue'; break; }
+  d.setTime(d.getTime() + 24*60*60*1000);
+}
+</script>
+
+<!-- End Page Content -->
+
+<hr>
+
+<font style="font-size: 12px;">
+<p>Questions or comments regarding 6.828?  Send e-mail to the TAs at
+<A
+HREF="mailto:6828-staff@lists.csail.mit.edu"><I>6828-staff@lists.csail.mit.edu</I></A>.
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/"><img
+alt="Creative Commons License" style="border-width:0"
+src="http://i.creativecommons.org/l/by/3.0/us/88x31.png" ></a> <B><A HREF="schedule.html#top">Top</A></B> //
+<B><A HREF="index.html">6.828 home</A></B> // 
+<i>Last updated Thursday, 08-Mar-2018 13:18:09 EST</i>
+</font>
+
+</div>
+
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</BODY>
+</HTML>
+

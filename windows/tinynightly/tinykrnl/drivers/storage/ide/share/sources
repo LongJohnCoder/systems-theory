@@ -1,0 +1,26 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=ideshare
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib
+
+INCLUDES=\
+         ..\..\..\..\public\sdk\inc; \
+         ..\..\..\..\public\internal\base\inc; \
+         ..\inc\; \
+         $(PROJECT_ROOT)\storage\inc; \
+         $(DDK_INC_PATH);
+
+SOURCES=\
+        util.c
+

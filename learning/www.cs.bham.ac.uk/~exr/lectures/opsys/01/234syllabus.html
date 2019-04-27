@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<!-- The parts you need to change are 
+  indicated by an empty comment on the right
+  (as at the end of this line) -->				<!-- -->
+
+<HEAD>
+	<TITLE>Syllabus 06 02500: Operating Systems</TITLE>			<!-- -->
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" LINK="#000000" VLINK="#777777">
+
+<CENTER>
+<P><FONT SIZE="+2" COLOR="#0000AA">
+06 02500: Operating Systems</FONT></P>				<!-- -->
+
+<P><IMG SRC="/modules/images/HorizontalDivider.gif" 
+WIDTH="413" HEIGHT="1" ALIGN="BOTTOM" BORDER="0"></P>
+
+<P><TABLE BORDER="0" WIDTH="420" BGCOLOR="#FFFFFF"><TR>
+	<TD WIDTH="67%"  NOWRAP><I>
+	<A HREF="http://www.cs.bham.ac.uk/~exr/">		<!-- -->
+	Eike Ritter</A>				<!-- -->
+	</I></TD>
+	<TD WIDTH="19%"  NOWRAP><P ALIGN="RIGHT"><I>
+	10 credits in Semester 2, year 2				<!-- -->
+	</I></TD>
+</TR></TABLE></P>
+
+<P Align="CENTER">
+<IMG SRC="/modules/images/buttonbar.gif" WIDTH="542" HEIGHT="59"
+ALIGN="BOTTOM" ALT="button bar" BORDER="0" USEMAP="#buttonbar"></p>
+<P>
+</CENTER>
+
+<P><A NAME="Aims"></A><FONT SIZE="+2" COLOR="#0000AA">Aims</FONT></P>
+
+<UL>
+	<LI> Explain the role and function of an operating system
+	<LI> Show how resource management is done in an OS
+	<LI> Examine the additional complexities of distributed OS
+	<LI> Evaluate security mechanisms in OS
+</UL>
+
+<P><A NAME="Outcomes"></A><FONT SIZE="+2" COLOR="#0000AA">Objectives
+</FONT></P>
+On completion of this course, the student should be able to:
+<UL>
+	<LI> Understand the role of an operating system
+	<LI> Understand how the decomposition of a program into
+	processes affects its behaviour.
+	<LI> Analyse known scheduling algorithms and adapt them for
+	new situations.
+        <LI> Suggest appropriate memory management algorithms for a
+        variety of situations.
+        <LI> Find the additional problems when transferring a concrete
+	situation from a monoprocessor system to a distributed
+	environment and solve the arising co-ordination problems.
+        <LI> Devise appropriate security mechanisms in a given
+	situation and understand the role operating system can and
+	should play in establishing security.
+</UL>
+
+<P><A NAME="Prerequisites"></A><FONT SIZE="+2" COLOR="#0000AA">
+Prerequisites</FONT></P>
+
+<P>Basic knowledge of Computer Architecture and algorithms as taught
+in Introduction to Computer Science (for the undergraduates) and
+Fundamentals of Computer Science (for MSc students).
+
+
+<P><A NAME="Teaching Methods"></A><FONT SIZE="+2" COLOR="#0000AA">
+Teaching Methods</FONT></P>
+
+<P> 20 hours of lecture together with exercises classes. I will give
+out an exercise sheet every two weeks which I will mark on a voluntary
+basis and provide a class test during reading week, which the students
+will mark themselves. In addition there will be practical
+exercises, which will consist in implementing some of the algorithms
+described in the course. Neither the exercise sheets nor the class
+test nor the practical exercises count towards the module mark. 
+</P>						<!-- -->
+
+
+<P><A NAME="Assessment"></A><FONT SIZE="+2" COLOR="#0000AA">
+Assessment</FONT></P>
+
+<P>Two hour unseen exam in May.</P>				<!-- -->
+
+
+<P><A NAME="Recommended Books"></A><FONT SIZE="+2" COLOR="#0000AA">
+Recommended Books</FONT></P>
+<P><TABLE BORDER="1" WIDTH="99%" BGCOLOR="#FFFFCC"><TR>
+	<TD WIDTH="40%" VALIGN="TOP" BGCOLOR="#99CCFF">Title</TD>
+	<TD WIDTH="15%" VALIGN="TOP" BGCOLOR="#99CCFF">Author(s)</TD>
+	<TD WIDTH="12%" VALIGN="TOP" BGCOLOR="#99CCFF">Publisher</TD>
+	<TD WIDTH="33%" VALIGN="TOP" BGCOLOR="#99CCFF">Comments</TD>
+</TR>
+<TR>
+	<TD WIDTH="40%" VALIGN="TOP">
+	Applied Operating Systems Concepts. </TD>		
+	<TD WIDTH="15%" VALIGN="TOP">
+	A. Silberschatz, P. Galvin and G. Gagne</TD>						<!-- -->
+	<TD WIDTH="12%" VALIGN="TOP">
+	Wiley, 2000.</TD>						<!-- -->
+	<TD WIDTH="33%" VALIGN="TOP">
+	Main Course Text.</TD>						<!-- -->
+</TR>
+<TR>
+	<TD WIDTH="40%" VALIGN="TOP">
+	Distributed Systems.</TD>		<!-- -->
+	<TD WIDTH="15%" VALIGN="TOP">
+	A. S. Tanenbaum.</TD>			<!-- -->
+	<TD WIDTH="12%" VALIGN="TOP">
+	Prentice Hall, 1995.</TD>					<!-- -->
+	<TD WIDTH="33%" VALIGN="TOP">
+	Covers part on distributed operating systems.</TD>				<!-- -->
+</TR></TABLE></P>
+
+
+<P><HR ALIGN="CENTER"><A NAME="Detailed Syllabus"></A>
+<FONT SIZE="+2" COLOR="#0000AA">Detailed Syllabus</FONT></P>
+
+<OL>
+	<LI> <strong> Function of Operating Systems  </strong> <BR>
+	     I start the course by explaining the function of an
+	     operating system in general terms and list necessary
+	     prerequisites of the hardware. (2 lectures)
+	<LI> <strong> Processes </strong> <BR>
+	     The concept of a process is fundamental for an operating
+	     system. I will discuss the states of a process and
+	     discuss process scheduling in some detail because it is
+	     paradigmatic for many other resource allocation problems
+	     in operating systems. Afterwards I will discuss threads
+	     (lightweight processes). They are introduced to reduce the
+	     time necessary for context switches. (4 lectures)
+	<LI> <strong> Memory Management </strong> <BR>
+	     An absolutely crucial aspect of every operating system is memory
+management. It arises because main memory is a limited resource, which
+has to be used as efficiently as possible. This part discusses memory
+management strategies and their dependence on the behaviour of programs
+on one side and on properties of the hardware on the other side. I
+will discuss virtual memory in detail. (4 lectures)
+        <LI> <strong> File Systems </strong> <BR>
+Again, the physical constraints of a disk have a great impact on the
+design of a file system. This part of the course shows how the
+principles discussed for process scheduling and memory management
+apply to file systems. (3 lectures)
+	<LI> <strong> Distributed Systems </strong> <BR>
+	A whole series of new problems arise when one considers distributed
+operating systems. I will present the various models that have been
+proposed (shared memory, loosely coupled etc.) and discuss their
+relative merits.
+I will stress co-ordination problems which are at the heart of
+distributed systems. (4 lectures)
+<LI> <strong> Security </strong> <BR>
+     I will discuss various meanings of the term ``security'': data
+integrity, protection against user errors and protection against
+malicious users.
+I will use access control as an example to illustrate common problems
+in this area. (3 lectures)
+</OL>
+
+Synchronisation is an important part of any operating system. This is
+not part of this course because it is covered in detail in Dr Axford's
+course on Real-time systems programming. Also I will omit material
+about networks which is a separate course in the third year.
+
+<HR ALIGN="CENTER">
+<A NAME="Relevant Links"></A><FONT SIZE="+2" COLOR="#0000AA">
+Relevant Links</FONT></P>
+<P><TABLE BORDER="0" WIDTH="100%" BGCOLOR="#FFFFCC">
+<TR>
+  
+  <UL>
+  <LI>
+      Slides for the course:
+      <UL>
+	<LI>
+	    <a href="overview.ps">Overview</a>
+	<LI>
+	    <a href="processes.ps">Processes</a>
+	<LI>
+	    <a href="scheduler.ps">Scheduling</a>
+	<LI>
+	    <a href="memory.ps">Memory Management</a>
+	<LI>
+	    <a href="filesys.ps">File Systems</a>
+	<LI>
+	    <a href="io.ps">Input/Output</a>
+	<LI>
+	    <a href="distributed.ps">Distributed Systems</a>
+	<LI>
+	    <a href="security.ps">Security</a>
+	</LI>
+</UL>
+<LI> Exercise Sheets: 		    
+<UL><LI>
+	<a
+    href="http://www.cs.bham.ac.uk/~exr/lectures/opsys/01/1ex.ps">Exercise Sheet 1</a>.
+    <LI>
+    <a
+	href="http://www.cs.bham.ac.uk/~exr/lectures/opsys/01/2ex.ps">Exercise Sheet 2</a>.
+	<LI>
+    <a href="http://www.cs.bham.ac.uk/~exr/lectures/opsys/01/3ex.ps">Exercise Sheet 3</a>.
+    </UL>
+
+<LI>	    Past exam papers:
+	    <UL>
+	      <LI>
+		  <a href="exam00.ps"> May 2000 </a>
+	    <LI>
+		<a href="exam99.ps"> May 1999 </a>
+	    </LI>
+	    <LI>
+		<a href="exam98.ps"> January 1998 </a>
+	    </LI>
+	  </UL>
+    
+
+<HR ALIGN="CENTER">
+<P Align="CENTER">
+<IMG SRC="/modules/images/buttonbar.gif" WIDTH="542" HEIGHT="59"
+ALIGN="BOTTOM" ALT="button bar" BORDER="0" USEMAP="#buttonbar"></p>
+<P>
+
+<MAP Name="buttonbar">
+<AREA Shape="Rect" coords = "428,32,550,60"  HREF="#Relevant Links">
+<AREA Shape="Rect" coords = "292,30,429,58"  HREF="#Detailed Syllabus">
+<AREA Shape="Rect" coords = "132,30,293,58"  HREF="#Recommended Books">
+<AREA Shape="Rect" coords = "1,30,134,58"  HREF="#Assessment">
+<AREA Shape="Rect" coords = "407,0,539,32"  HREF="#Teaching Methods">
+<AREA Shape="Rect" coords = "305,0,408,31"  HREF="#Prerequisites">
+<AREA Shape="Rect" coords = "217,2,306,31"  HREF="#Objectives">
+<AREA Shape="Rect" coords = "165,1,219,31"  HREF="#Aims">
+<AREA Shape="Rect" coords = "1,0,166,30"
+HREF="http://www.cs.bham.ac.uk/degreeregs/">
+</MAP>
+
+
+
+<HR>
+<center><em>
+<p>Maintained by Eike Ritter
+<br>School of Computer Science<br>
+The University of Birmingham</p>
+<!-- hhmts start -->
+Last modified: Tue Mar 27 15:52:21 BST 2001
+<!-- hhmts end -->
+</em></center>
+
+</BODY>
+</HTML>

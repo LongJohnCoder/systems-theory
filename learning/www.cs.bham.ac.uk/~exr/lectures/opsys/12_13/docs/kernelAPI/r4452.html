@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>proc_dostring</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="sysctl interface"
+HREF="c4357.html#AEN4359"><LINK
+REL="PREVIOUS"
+TITLE="unregister_sysctl_table"
+HREF="r4426.html"><LINK
+REL="NEXT"
+TITLE="proc_dointvec"
+HREF="r4509.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r4426.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r4509.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN4452"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dostring</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN4456"
+></A
+><H2
+>Name</H2
+>proc_dostring&nbsp;--&nbsp;      read a string sysctl
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN4459"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN4461"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int proc_dostring </CODE
+>(ctl_table * table, int write, struct file * filp, void __user * buffer, size_t * lenp);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN4475"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>table</VAR
+></DT
+><DD
+><P
+>      the sysctl table
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>write</VAR
+></DT
+><DD
+><P
+>      <CODE
+CLASS="CONSTANT"
+>TRUE</CODE
+> if this is a write to the sysctl file
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>filp</VAR
+></DT
+><DD
+><P
+>      the file structure
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>buffer</VAR
+></DT
+><DD
+><P
+>      the user buffer
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>lenp</VAR
+></DT
+><DD
+><P
+>      the size of the user buffer
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN4504"
+></A
+><H2
+>Description</H2
+><P
+>   Reads/writes a string from/to the user buffer. If the kernel
+   buffer provided is not large enough to hold the string, the
+   string is truncated. The copied string is <CODE
+CLASS="CONSTANT"
+>NULL-terminated</CODE
+>.
+   If the string is being read by the user process, it is copied
+   and a newline '\n' is added. It is truncated if the buffer is
+   not large enough.
+   </P
+><P
+>&#13;   Returns 0 on success.
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r4426.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r4509.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sysctl_table</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c4357.html#AEN4359"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dointvec</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

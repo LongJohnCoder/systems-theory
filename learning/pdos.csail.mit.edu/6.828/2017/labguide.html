@@ -1,0 +1,468 @@
+
+<HTML>
+<HEAD>
+<TITLE>
+6.828 / Fall 2017
+</TITLE>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/labs.css" type="text/css" />
+
+</HEAD>
+
+<BODY BGCOLOR=#ffffff TEXT=#000000>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">6.828: Operating System Engineering</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+	    <li><a href="schedule.html">Schedule</a></li>
+	    <li class="dropdown">
+              <a href="labguide.html#" class="dropdown-toggle" data-toggle="dropdown">Class<span class="caret"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+                <li><a href="overview.html">Overview</a></li>
+                <li><a href="general.html">Administrivia</a></li>
+		<li><a href="classes.html">Related classes</a></li>
+		<li><a href="http://pdos.csail.mit.edu/6.828/2016">6.828 2016</a></li>
+	      </ul>
+	    </li>
+            <li class="dropdown">
+              <a href="labguide.html#" class="dropdown-toggle" data-toggle="dropdown">Labs<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+		<li><a href="tools.html">Tools</a></li>
+		<li><a href="labguide.html">Lab guide</a></li>
+                <li><a href="labs/lab1">Lab 1</a></li>
+                <li><a href="labs/lab2">Lab 2</a></li>
+                <li><a href="labs/lab3">Lab 3</a></li>
+		<li><a href="labs/lab4">Lab 4</a></li>
+		<li><a href="labs/lab5">Lab 5</a></li>
+		<li><a href="labs/lab6">Lab 6</a></li>
+		<li><a href="labs/lab7">Lab 7</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="labguide.html#" class="dropdown-toggle" data-toggle="dropdown">xv6<span class="caret"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+		<li><a href="xv6.html">xv6</a></li>
+		<li><a href="xv6/xv6-rev10.pdf">xv6 printout</a></li>
+		<li><a href="xv6/book-rev10.pdf">xv6 book</a></li>
+	      </ul>
+	    </li>
+	    <li><a href="reference.html">References</a></li>
+	    <li><a href="https://piazza.com/mit/fall2017/6828">Piazza</a></li>
+          </ul>
+	  <ul class="nav navbar-nav navbar-right">
+	    <p class="navbar-text">2017</p>
+	  </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="container">
+
+
+
+ 
+
+<h1>6.828 lab tools guide</h1>
+
+Familiarity with your environment is crucial for productive
+development and debugging.  This page gives a brief overview of the
+JOS environment and useful GDB and QEMU commands.  Don't take our word
+for it, though.  Read the GDB and QEMU manuals.  These are powerful
+tools that are worth knowing how to use.
+
+<div class="toc">
+  <table>
+    <tr>
+      <th>Debugging tips:</th>
+      <td>
+        <a href="labguide.html#debug-kernel">Kernel</a>
+        <a href="labguide.html#debug-user">User environments</a>
+      </td>
+    </tr>
+    <tr>
+      <th>Reference:</th>
+      <td>
+        <a href="labguide.html#make">JOS makefile</a>
+        <a href="labguide.html#obj">JOS obj/</a>
+        <a href="labguide.html#gdb">GDB</a>
+        <a href="labguide.html#qemu">QEMU</a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<h2>Debugging tips</h2>
+
+<h3 id="debug-kernel">Kernel</h3>
+
+<p>GDB is your friend.  Use the <a
+href="labguide.html#make-qemu-gdb"><kbd>qemu-gdb</kbd></a> target (or its <a
+href="labguide.html#make-qemu-gdb-nox"><tt>qemu-gdb-nox</tt></a> variant) to make
+QEMU wait for GDB to attach.  See the <a href="labguide.html#gdb">GDB</a> reference
+below for some commands that are useful when debugging kernels.</p>
+
+<p>If you're getting unexpected interrupts, exceptions, or triple
+faults, you can ask QEMU to generate a detailed log of interrupts
+using the <a href="labguide.html#qemu--d">-d</a> argument.</p>
+
+<p>To debug virtual memory issues, try the QEMU monitor commands <a
+href="labguide.html#qemu-info-mem"><kbd>info mem</kbd></a> (for a high-level
+overview) or <a href="labguide.html#qemu-info-pg"><kbd>info pg</kbd></a> (for lots
+of detail).  Note that these commands only display the <i>current</i>
+page table.</p>
+
+<p>(Lab 4+) To debug multiple CPUs, use GDB's thread-related commands
+like <a href="labguide.html#gdb-thread"><kbd>thread</kbd></a> and <a
+href="labguide.html#gdb-info-threads"><kbd>info threads</kbd></a>.</p>
+
+<h3 id="debug-user">User environments (lab 3+)</h3>
+
+<p>GDB also lets you debug user environments, but there are a few
+things you need to watch out for, since GDB doesn't know that there's
+a distinction between multiple user environments, or between user and
+kernel.</p>
+
+<p>You can start JOS with a specific user environment using <a
+href="labguide.html#make-run"><kbd>make run-<i>name</i></kbd></a> (or you can edit
+<tt>kern/init.c</tt> directly).  To make QEMU wait for GDB to attach,
+use the <a href="labguide.html#make-run-x"><kbd>run-<i>name</i>-gdb</kbd></a>
+variant.</p>
+
+<p>You can symbolically debug user code, just like you can kernel
+code, but you have to tell GDB which <a href="labguide.html#obj-elf">symbol
+table</a> to use with the <a
+href="labguide.html#gdb-symbol-file"><kbd>symbol-file</kbd></a> command, since it
+can only use one symbol table at a time.  The provided
+<tt>.gdbinit</tt> loads the kernel symbol table,
+<tt>obj/kern/kernel</tt>.  The symbol table for a user environment is
+in its ELF binary, so you can load it using <kbd>symbol-file
+obj/user/<i>name</i></kbd>.  <i>Don't</i> load symbols from any
+<tt>.o</tt> files, as those haven't been relocated by the linker
+(libraries are statically linked into JOS user binaries, so those
+symbols are already included in each user binary).  Make sure you get
+the <i>right</i> user binary; library functions will be linked at
+different EIPs in different binaries and GDB won't know any
+better!</p>
+
+<p>(Lab 4+) Since GDB is attached to the virtual machine as a whole,
+it sees clock interrupts as just another control transfer.  This makes
+it basically impossible to step through user code because a clock
+interrupt is virtually guaranteed the moment you let the VM run again.
+The <a href="labguide.html#gdb-si"><kbd>stepi</kbd></a> command works because it
+suppresses interrupts, but it only steps one assembly instruction.  <a
+href="labguide.html#gdb-b">Breakpoints</a> generally work, but watch out because
+you can hit the same EIP in a different environment (indeed, a
+different binary altogether!).</p>
+
+<h2>Reference</h2>
+
+<h3 id="make">JOS makefile</h3>
+
+The JOS GNUmakefile includes a number of phony targets for running JOS
+in various ways.  All of these targets configure QEMU to listen for
+GDB connections (the <tt>*-gdb</tt> targets also wait for this
+connection).  To start once QEMU is running, simply run <kbd>gdb</kbd>
+from your lab directory.  We provide a <tt>.gdbinit</tt> file that
+automatically points GDB at QEMU, loads the kernel symbol file, and
+switches between 16-bit and 32-bit mode.  Exiting GDB will shut down
+QEMU.
+
+<dl>
+  <dt id="make-qemu"><kbd>make qemu</kbd></dt>
+  <dd>Build everything and start QEMU with the VGA console in a new
+  window and the serial console in your terminal.  To exit, either
+  close the VGA window or press <tt>Ctrl-c</tt> or <tt>Ctrl-a x</tt>
+  in your terminal.</dd>
+
+  <dt id="make-qemu-nox"><kbd>make qemu-nox</kbd></dt>
+  <dd>Like <tt>make qemu</tt>, but run with only the serial console.
+  To exit, press <tt>Ctrl-a x</tt>.  This is particularly useful over
+  SSH connections to Athena dialups because the VGA window consumes a
+  lot of bandwidth.</dd>
+
+  <dt id="make-qemu-gdb"><kbd>make qemu-gdb</kbd></dt>
+  <dd>Like <tt>make qemu</tt>, but rather than passively accepting GDB
+  connections at any time, this pauses at the first machine
+  instruction and waits for a GDB connection.</dd>
+
+  <dt id="make-qemu-gdb-nox"><kbd>make qemu-nox-gdb</kbd></dt>
+  <dd>A combination of the <tt>qemu-nox</tt> and <tt>qemu-gdb</tt>
+  targets.</dd>
+
+  <dt id="make-run"><kbd>make run-<i>name</i></kbd></dt>
+  <dd>(Lab 3+) Run user program <i>name</i>.  For example, <tt>make
+  run-hello</tt> runs <tt>user/hello.c</tt>.</dd>
+
+  <dt id="make-run-x"><kbd>make run-<i>name</i>-nox</kbd>,
+      <kbd>run-<i>name</i>-gdb</kbd>,
+      <kbd>run-<i>name</i>-gdb-nox</kbd>, </dt>
+  <dd>(Lab 3+) Variants of <tt>run-<i>name</i></tt> that correspond to
+  the variants of the <tt>qemu</tt> target.</dd>
+</dl>
+
+The makefile also accepts a few useful variables:
+
+<dl>
+  <dt id="make-v"><kbd>make V=1 ...</kbd></dt>
+  <dd>Verbose mode.  Print out every command being executed, including
+  arguments.</dd>
+
+  <dt id="make-v-grade"><kbd>make V=1 grade</kbd></dt>
+  <dd>Stop after any failed grade test and leave the QEMU output in
+  <tt>jos.out</tt> for inspection.</dd>
+
+  <dt id="make-qemuextra"><kbd>make QEMUEXTRA='<i>args</i>' ...</kbd></dt>
+  <dd>Specify additional arguments to pass to QEMU.</dd>
+</dl>
+
+<h3 id="obj">JOS obj/</h3>
+
+<p>When building JOS, the makefile also produces some additional
+output files that may prove useful while debugging:</p>
+
+<dl>
+  <dt id="obj-asm"><tt>obj/boot/boot.asm</tt>,
+  <tt>obj/kern/kernel.asm</tt>, <tt>obj/user/hello.asm</tt>, etc.</dt>
+  <dd>Assembly code listings for the bootloader, kernel, and user
+  programs.</dd>
+
+  <dt id="obj-sym"><tt>obj/kern/kernel.sym</tt>,
+  <tt>obj/user/hello.sym</tt>, etc.</dt>
+  <dd>Symbol tables for the kernel and user programs.</dd>
+
+  <dt id="obj-elf"><tt>obj/boot/boot.out</tt>, <tt>obj/kern/kernel</tt>,
+  <tt>obj/user/hello</tt>, etc</dt>
+  <dd>Linked ELF images of the kernel and user programs.  These
+  contain symbol information that can be used by GDB.</dd>
+</dl>
+
+<h3 id="gdb">GDB</h3>
+
+<p>See the <a
+href="http://sourceware.org/gdb/current/onlinedocs/gdb/">GDB
+manual</a> for a full guide to GDB commands.  Here are some
+particularly useful commands for 6.828, some of which don't typically
+come up outside of OS development.</p>
+
+<dl>
+  <dt id="gdb-ctrl-c"><kbd>Ctrl-c</kbd></dt>
+  <dd>Halt the machine and break in to GDB at the current
+  instruction.  If QEMU has multiple virtual CPUs, this halts all of
+  them.</dd>
+
+  <dt id="gdb-c"><kbd>c</kbd> (or <kbd>continue</kbd>)</dt>
+  <dd>Continue execution until the next breakpoint or <tt>Ctrl-c</tt>.</dd>
+
+  <dt id="gdb-si"><kbd>si</kbd> (or <kbd>stepi</kbd>)</dt>
+  <dd>Execute one machine instruction.</dd>
+
+  <dt id="gdb-b"><kbd>b function</kbd> or <kbd>b file:line</kbd> (or
+  <kbd>breakpoint</kbd>)</dt>
+  <dd>Set a breakpoint at the given function or line.</dd>
+
+  <dt id="gdb-bstar"><kbd>b *<i>addr</i></kbd> (or <kbd>breakpoint</kbd>)</dt>
+  <dd>Set a breakpoint at the EIP <i>addr</i>.</dd>
+
+  <dt id="gdb-pretty"><kbd>set print pretty</kbd></dt>
+  <dd>Enable pretty-printing of arrays and structs.</dd>
+
+  <dt id="gdb-info-registers"><kbd>info registers</kbd></dt>
+  <dd>Print the general purpose registers, <tt>eip</tt>,
+  <tt>eflags</tt>, and the segment selectors.  For a much more
+  thorough dump of the machine register state, see QEMU's own <tt>info
+  registers</tt> command.</dd>
+
+  <dt id="gdb-x-x"><kbd>x/<i>N</i>x <i>addr</i></kbd></dt>
+  <dd>Display a hex dump of <i>N</i> words starting at virtual address
+  <i>addr</i>.  If <i>N</i> is omitted, it defaults to 1.  <i>addr</i>
+  can be any expression.</dd>
+
+  <dt id="gdb-x-i"><kbd>x/<i>N</i>i <i>addr</i></kbd></dt>
+  <dd>Display the <i>N</i> assembly instructions starting at
+  <i>addr</i>.  Using <tt>$eip</tt> as <i>addr</i> will display the
+  instructions at the current instruction pointer.</dd>
+
+  <dt id="gdb-symbol-file"><kbd>symbol-file <i>file</i></kbd></dt>
+  <dd>(Lab 3+) Switch to symbol file <i>file</i>.  When GDB attaches
+  to QEMU, it has no notion of the process boundaries within the
+  virtual machine, so we have to tell it which symbols to use.  By
+  default, we configure GDB to use the kernel symbol file,
+  <tt>obj/kern/kernel</tt>.  If the machine is running user code, say
+  <tt>hello.c</tt>, you can switch to the hello symbol file using
+  <tt>symbol-file obj/user/hello</tt>.</dd>
+</dl>
+
+<p>QEMU represents each virtual CPU as a thread in GDB, so you can use
+all of GDB's thread-related commands to view or manipulate QEMU's
+virtual CPUs.</p>
+
+<dl>
+  <dt id="gdb-thread"><kbd>thread <i>n</i></kbd></dt>
+  <dd>GDB focuses on one thread (i.e., CPU) at a time.  This command
+  switches that focus to thread <i>n</i>, numbered from zero.</dd>
+
+  <dt id="gdb-info-threads"><kbd>info threads</kbd></dt>
+  <dd>List all threads (i.e., CPUs), including their state (active or
+  halted) and what function they're in.</dd>
+</dl>
+
+<h3 id="qemu">QEMU</h3>
+
+<p>QEMU includes a built-in monitor that can inspect and modify the
+machine state in useful ways.  To enter the monitor, press <kbd>Ctrl-a
+c</kbd> in the terminal running QEMU.  Press <kbd>Ctrl-a c</kbd> again
+to switch back to the serial console.</p>
+
+<p>For a complete reference to the monitor commands, see the <a
+href="http://wiki.qemu.org/download/qemu-doc.html#pcsys_005fmonitor">QEMU
+manual</a>.  Here are some particularly useful commands:</p>
+
+<dl>
+  <dt id="qemu-xp"><kbd>xp/<i>N</i>x <i>paddr</i></kbd></dt>
+  <dd>Display a hex dump of <i>N</i> words starting at <i>physical</i>
+  address <i>paddr</i>.  If <i>N</i> is omitted, it defaults to 1.
+  This is the physical memory analogue of GDB's <tt>x</tt>
+  command.</dd>
+
+  <dt id="qemu-info-registers"><kbd>info registers</kbd></dt>
+  <dd>Display a full dump of the machine's internal register state.
+  In particular, this includes the machine's <i>hidden</i> segment
+  state for the segment selectors and the local, global, and interrupt
+  descriptor tables, plus the task register.  This hidden state is the
+  information the virtual CPU read from the GDT/LDT when the segment
+  selector was loaded.  Here's the CS when running in the JOS kernel
+  in lab 1 and the meaning of each field:
+
+  <pre>CS =0008 10000000 ffffffff 10cf9a00 DPL=0 CS32 [-R-]</pre>
+  <dl>
+    <dt><tt>CS =0008</tt></dt>
+    <dd>The visible part of the code selector.  We're using segment
+    0x8.  This also tells us we're referring to the global descriptor
+    table (0x8&amp;4=0), and our CPL (current privilege level) is
+    0x8&amp;3=0.</dd>
+    <dt><tt>10000000</tt></dt>
+    <dd>The base of this segment.  Linear address = logical address +
+    0x10000000.</dd>
+    <dt><tt>ffffffff</tt></dt>
+    <dd>The limit of this segment.  Linear addresses above 0xffffffff
+    will result in segment violation exceptions.</dd>
+    <dt><tt>10cf9a00</tt></dt>
+    <dd>The raw flags of this segment, which QEMU helpfully decodes
+    for us in the next few fields.</dd>
+    <dt><tt>DPL=0</tt></dt>
+    <dd>The privilege level of this segment.  Only code running with
+    privilege level 0 can load this segment.</dd>
+    <dt><tt>CS32</tt></dt>
+    <dd>This is a 32-bit code segment.  Other values include
+    <tt>DS</tt> for data segments (not to be confused with the DS
+    register), and <tt>LDT</tt> for local descriptor tables.</dd>
+    <dt><tt>[-R-]</tt></dt>
+    <dd>This segment is read-only.</dd>
+  </dl>
+  </dd>
+
+  <dt id="qemu-info-mem"><kbd>info mem</kbd></dt>
+  <dd>(Lab 2+) Display mapped virtual memory and permissions.  For
+  example,
+
+  <pre>ef7c0000-ef800000 00040000 urw
+efbf8000-efc00000 00008000 -rw</pre>
+
+  tells us that the 0x00040000 bytes of memory from 0xef7c0000 to
+  0xef800000 are mapped read/write and user-accessible, while the
+  memory from 0xefbf8000 to 0xefc00000 is mapped read/write, but only
+  kernel-accessible.
+  </dd>
+
+  <dt id="qemu-info-pg"><kbd>info pg</kbd></dt>
+  <dd>(Lab 2+) Display the current page table structure.  The output
+  is similar to <tt>info mem</tt>, but distinguishes page directory
+  entries and page table entries and gives the permissions for each
+  separately.  Repeated PTE's and entire page tables are folded up
+  into a single line.  For example,
+
+  <pre>VPN range     Entry         Flags        Physical page
+[00000-003ff]  PDE[000]     -------UWP
+  [00200-00233]  PTE[200-233] -------U-P 00380 0037e 0037d 0037c 0037b 0037a ..
+[00800-00bff]  PDE[002]     ----A--UWP
+  [00800-00801]  PTE[000-001] ----A--U-P 0034b 00349
+  [00802-00802]  PTE[002]     -------U-P 00348
+</pre>
+
+  This shows two page directory entries, spanning virtual addresses
+  0x00000000 to 0x003fffff and 0x00800000 to 0x00bfffff, respectively.
+  Both PDE's are present, writable, and user and the second PDE is also
+  accessed.  The second of these page tables maps three pages, spanning
+  virtual addresses 0x00800000 through 0x00802fff, of which the first
+  two are present, user, and accessed and the third is only present and
+  user.  The first of these PTE's maps physical page 0x34b.
+  </dd>
+</dl>
+
+QEMU also takes some useful command line arguments, which can be
+passed into the JOS makefile using the <a href="labguide.html#make-qemuextra"
+>QEMUEXTRA</a> variable.
+
+<dl>
+  <dt id="qemu--d"><kbd>make QEMUEXTRA='-d int' ...</kbd></dt>
+  <dd>Log all interrupts, along with a full register dump, to
+  <tt>qemu.log</tt>.  You can ignore the first two log entries, "SMM:
+  enter" and "SMM: after RMS", as these are generated before entering
+  the boot loader.  After this, log entries look like
+  <pre>     4: v=30 e=0000 i=1 cpl=3 IP=001b:00800e2e pc=00800e2e SP=0023:eebfdf28 EAX=00000005
+EAX=00000005 EBX=00001002 ECX=00200000 EDX=00000000
+ESI=00000805 EDI=00200000 EBP=eebfdf60 ESP=eebfdf28
+...</pre>
+  The first line describes the interrupt.  The <tt>4:</tt> is just a
+  log record counter.  <tt>v</tt> gives the vector number in hex.
+  <tt>e</tt> gives the error code.  <tt>i=1</tt> indicates that this
+  was produced by an <code>int</code> instruction (versus a hardware
+  interrupt).  The rest of the line should be self-explanatory.  See
+  <a href="labguide.html#qemu-info-registers">info registers</a> for a description
+  of the register dump that follows.
+  </dd>
+  <dd>Note: If you're running a pre-0.15 version of QEMU, the log will
+  be written to <tt>/tmp</tt> instead of the current directory.</dd>
+</dl>
+
+<!-- End Page Content -->
+
+<hr>
+
+<font style="font-size: 12px;">
+<p>Questions or comments regarding 6.828?  Send e-mail to the TAs at
+<A
+HREF="mailto:6828-staff@lists.csail.mit.edu"><I>6828-staff@lists.csail.mit.edu</I></A>.
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/"><img
+alt="Creative Commons License" style="border-width:0"
+src="http://i.creativecommons.org/l/by/3.0/us/88x31.png" ></a> <B><A HREF="labguide.html#top">Top</A></B> //
+<B><A HREF="index.html">6.828 home</A></B> // 
+<i>Last updated Thursday, 08-Mar-2018 13:18:08 EST</i>
+</font>
+
+</div>
+
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</BODY>
+</HTML>
+ 

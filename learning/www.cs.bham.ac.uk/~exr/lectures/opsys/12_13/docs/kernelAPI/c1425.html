@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Basic C Library Functions</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="hlist_for_each_entry_safe"
+HREF="r1374.html"><LINK
+REL="NEXT"
+TITLE="simple_strtoll"
+HREF="r1430.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r1374.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r1430.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="LIBC"
+></A
+>Chapter 3. Basic C Library Functions</H1
+><P
+>       When writing drivers, you cannot in general use routines which are
+       from the C Library.  Some of the functions have been found generally
+       useful and they are listed below.  The behaviour of these functions
+       may vary slightly from those defined by ANSI, and these deviations
+       are noted in the text.
+     </P
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN1428"
+>3.1. String Conversions</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r1430.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoll</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   convert a string to a signed long long
+ </DT
+><DT
+><A
+HREF="r1467.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoul</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   convert a string to an unsigned long
+ </DT
+><DT
+><A
+HREF="r1504.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtol</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      convert a string to a signed long
+ </DT
+><DT
+><A
+HREF="r1541.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoull</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      convert a string to an unsigned long long
+ </DT
+><DT
+><A
+HREF="r1578.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>vsnprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1625.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>snprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1669.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>vsprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1709.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1746.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>vsscanf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Unformat a buffer into a list of arguments
+ </DT
+><DT
+><A
+HREF="r1783.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sscanf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Unformat a buffer into a list of arguments
+ </DT
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r1374.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r1430.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_safe</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoll</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

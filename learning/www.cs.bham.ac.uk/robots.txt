@@ -1,0 +1,54 @@
+#
+# robots.txt for http://www.cs.bham.ac.uk/
+#
+User-agent: UoB-SpiderPig
+Disallow: /research/projects/poplog/
+Disallow: /~wbl/biblio/
+Disallow: /~hxt/research/rxxr2/
+Disallow: /sys/
+Disallow: /Templates
+Disallow: /search/
+Disallow: /internal/module-catalogue/
+Allow: /
+
+User-agent: *
+Disallow: /sys/
+Disallow: /Templates
+Disallow: /search/
+# duplicated in /internal/modules/
+Disallow: /internal/module-catalogue/
+# stuff which is from bham
+Disallow: /webteam/
+Disallow: /WebResource.axd
+Disallow: /ScriptResource.axd
+Disallow: /yt/
+Disallow: /schools/
+Disallow: /community/
+Disallow: /staff/
+Disallow: /community/
+Disallow: /alumni/
+Disallow: /university/
+Disallow: /international/
+Disallow: /partners/
+Disallow: /students/
+Disallow: /currentstudents/
+Disallow: /libraries/
+Disallow: /supplier-zone/
+Disallow: /facilites/
+Disallow: /collections/
+Disallow: /Images/
+Disallow: /SiteElements/
+Disallow: /news/
+Disallow: /privacy/
+Disallow: /legal/
+Disallow: /accessibility/
+Disallow: /sitemap/
+Disallow: /oncampus/
+Disallow: /contact/
+Disallow: /research/our/
+Disallow: /research/impact/
+Disallow: /research/heroes/
+Disallow: /research/funding/
+Disallow: /research/support/
+Disallow: /research/collaborators/
+Allow: /

@@ -1,0 +1,11 @@
+.plugin #providers .provider {
+ width:35px;
+}
+
+.plugin #providers .provider .name {
+ display:none;
+}
+
+.plugin .footer {
+ left:2px;
+}

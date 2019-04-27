@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>pskb_expand_head</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Socket Buffer Functions"
+HREF="c6671.html#AEN6673"><LINK
+REL="PREVIOUS"
+TITLE="pskb_copy"
+HREF="r7990.html"><LINK
+REL="NEXT"
+TITLE="skb_copy_expand"
+HREF="r8073.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r7990.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r8073.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN8024"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_expand_head</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN8028"
+></A
+><H2
+>Name</H2
+>pskb_expand_head&nbsp;--&nbsp;      reallocate header of <CODE
+CLASS="STRUCTNAME"
+>sk_buff</CODE
+>
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN8032"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN8034"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int pskb_expand_head </CODE
+>(struct sk_buff * skb, int nhead, int ntail, int gfp_mask);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN8046"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>skb</VAR
+></DT
+><DD
+><P
+>      buffer to reallocate
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>nhead</VAR
+></DT
+><DD
+><P
+>      room to add at head
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>ntail</VAR
+></DT
+><DD
+><P
+>      room to add at tail
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>gfp_mask</VAR
+></DT
+><DD
+><P
+>      allocation priority
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN8069"
+></A
+><H2
+>Description</H2
+><P
+>   Expands (or creates identical copy, if &amp;nhead and &amp;ntail are zero)
+   header of skb. &amp;sk_buff itself is not changed. &amp;sk_buff MUST have
+   reference count of 1. Returns zero in the case of success or error,
+   if expansion failed. In the last case, &amp;sk_buff is not changed.
+   </P
+><P
+>&#13;   All the pointers pointing into skb header may change and must be
+   reloaded after call to this function.
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r7990.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r8073.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_copy</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c6671.html#AEN6673"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_copy_expand</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

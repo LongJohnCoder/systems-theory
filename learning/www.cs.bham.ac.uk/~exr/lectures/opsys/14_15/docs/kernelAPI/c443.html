@@ -1,0 +1,514 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Data Types</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="put_unaligned"
+HREF="r409.html"><LINK
+REL="NEXT"
+TITLE="list_add"
+HREF="r447.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r409.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r447.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="ADT"
+></A
+>Chapter 2. Data Types</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN445"
+>2.1. Doubly Linked Lists</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r447.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   add a new entry
+ </DT
+><DT
+><A
+HREF="r480.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add a new entry
+ </DT
+><DT
+><A
+HREF="r513.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add a new entry to rcu-protected list
+ </DT
+><DT
+><A
+HREF="r546.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add_tail_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add a new entry to rcu-protected list
+ </DT
+><DT
+><A
+HREF="r579.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_del</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from list.
+ </DT
+><DT
+><A
+HREF="r605.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_del_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from list without re-initialization
+ </DT
+><DT
+><A
+HREF="r632.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_del_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from list and reinitialize it.
+ </DT
+><DT
+><A
+HREF="r655.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_move</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete from one list and add as another's head
+ </DT
+><DT
+><A
+HREF="r685.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_move_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete from one list and add as another's tail
+ </DT
+><DT
+><A
+HREF="r715.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_empty</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      tests whether a list is empty
+ </DT
+><DT
+><A
+HREF="r738.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_splice</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      join two lists
+ </DT
+><DT
+><A
+HREF="r768.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_splice_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      join two lists and reinitialise the emptied list.
+ </DT
+><DT
+><A
+HREF="r802.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_entry</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get the struct for this entry
+ </DT
+><DT
+><A
+HREF="r839.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list
+ </DT
+><DT
+><A
+HREF="r869.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__list_for_each</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list
+ </DT
+><DT
+><A
+HREF="r903.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_prev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list backwards
+ </DT
+><DT
+><A
+HREF="r933.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_safe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list safe against removal of list entry
+ </DT
+><DT
+><A
+HREF="r970.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over list of given type
+ </DT
+><DT
+><A
+HREF="r1007.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry_reverse</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate backwards over list of given type.
+ </DT
+><DT
+><A
+HREF="r1044.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry_safe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over list of given type safe against removal of list entry
+ </DT
+><DT
+><A
+HREF="r1088.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over an rcu-protected list
+ </DT
+><DT
+><A
+HREF="r1118.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_safe_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over an rcu-protected list safe
+ </DT
+><DT
+><A
+HREF="r1158.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over rcu list of given type
+ </DT
+><DT
+><A
+HREF="r1195.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_continue_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over an rcu-protected list 
+ </DT
+><DT
+><A
+HREF="r1228.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_del_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from hash list without re-initialization
+ </DT
+><DT
+><A
+HREF="r1256.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over list of given type
+ </DT
+><DT
+><A
+HREF="r1300.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_continue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over a hlist continuing after existing point
+ </DT
+><DT
+><A
+HREF="r1337.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_from</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over a hlist continuing from existing point
+ </DT
+><DT
+><A
+HREF="r1374.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_safe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over list of given type safe against removal of list entry
+ </DT
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r409.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r447.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>put_unaligned</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

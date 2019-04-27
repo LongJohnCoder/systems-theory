@@ -1,0 +1,52 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=fastfat
+TARGETTYPE=DRIVER
+DRIVERTYPE=FS
+TARGET_DESTINATION=system32\drivers
+
+INCLUDES=..\..\..\public\sdk\inc;
+         
+SOURCES=acchksup.c \
+        allocsup.c \
+        cachesup.c \
+        cleanup.c  \
+        close.c    \
+        create.c   \
+        devctrl.c  \
+        deviosup.c \
+        dirctrl.c  \
+        dirsup.c   \
+        ea.c       \
+        easup.c    \
+        fatdata.c  \
+        fatinit.c  \
+        fileinfo.c \
+        filobsup.c \
+        flush.c    \
+        fsctrl.c   \
+        fspdisp.c  \
+        lockctrl.c \
+        namesup.c  \
+        pnp.c      \
+        read.c     \
+        resrcsup.c \
+        shutdown.c \
+        strucsup.c \
+        splaysup.c \
+        timesup.c  \
+        verfysup.c \
+        volinfo.c  \
+        workque.c  \
+        write.c    \
+        fastfat.rc
+
+PRECOMPILED_INCLUDE=precomp.h

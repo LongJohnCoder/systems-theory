@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>File Locks</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="The Linux VFS"
+HREF="c4792.html"><LINK
+REL="PREVIOUS"
+TITLE="get_super"
+HREF="r6133.html"><LINK
+REL="NEXT"
+TITLE="posix_lock_file"
+HREF="r6162.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r6133.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 6. The Linux VFS</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r6162.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN6160"
+>6.4. File Locks</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r6162.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_lock_file</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Apply a POSIX-style lock to a file
+ </DT
+><DT
+><A
+HREF="r6195.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>locks_mandatory_area</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Check for a conflicting lock
+ </DT
+><DT
+><A
+HREF="r6253.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__break_lease</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	revoke all outstanding leases on file
+ </DT
+><DT
+><A
+HREF="r6290.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>lease_get_mtime</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r6323.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_block_lock</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      blocks waiting for a file lock
+ </DT
+><DT
+><A
+HREF="r6356.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_unblock_lock</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      stop waiting for a file lock
+ </DT
+><DT
+><A
+HREF="r6389.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>lock_may_read</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      checks that the region is free of locks
+ </DT
+><DT
+><A
+HREF="r6430.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>lock_may_write</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      checks that the region is free of locks
+ </DT
+><DT
+><A
+HREF="r6471.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>locks_mandatory_locked</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Check for an active lock
+ </DT
+><DT
+><A
+HREF="r6498.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fcntl_getlease</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Enquire what lease is currently active
+ </DT
+><DT
+><A
+HREF="r6538.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fcntl_setlease</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	sets a lease on an open file
+ </DT
+><DT
+><A
+HREF="r6579.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sys_flock</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      <CODE
+CLASS="FUNCTION"
+>flock</CODE
+> system call.
+ </DT
+><DT
+><A
+HREF="r6627.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_locks_status</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	reports lock usage in /proc/locks
+ </DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r6133.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r6162.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_super</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c4792.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_lock_file</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Homework: Singularity</title>
+<link rel="stylesheet" href="homework.css" type="text/css" />
+</head>
+<body>
+
+<h1>Homework: Singularity</h1>
+
+
+<p>Submit two items to the <a href="https://6828.scripts.mit.edu/2017/handin.py/">the submission web
+    site</a>:
+  <ul>
+    
+    <li>Submit your own question about the paper (e.g., what you find most
+confusing about the paper or the paper's general context/problem) before 11:59pm
+the night before. You cannot use the question below. To the extent possible,
+      during lecture we will try to answer questions submitted the evening before.
+      
+    <li>Submit your answer for the question below before the beginning of the lecture
+
+  </ul>
+<p>
+
+<div class="question">
+  <p><b>Answer the following question</b>:
+
+In Singularity only one process can have a pointer to an object in the exchange
+heap.  Ben proposes to modify Singularity to maintain a reference count for each
+object in the exchange heap and collect the object when the reference count is
+zero.  When a process dies, he arranges to decrease the reference counter for
+each object in the exchange heap to which the dying process has a pointer.
+
+In Ben's design several processes can share an object in the heap.  This would
+allow Ben to use the exchange heap, for example, for a shared buffer cache.
+
+What problem does Singularity try to solve by disallowing shared objects in the
+exchange heap?
+</p>
+</div>
+
+</body>
+</html>

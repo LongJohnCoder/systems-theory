@@ -1,0 +1,7 @@
+LIBRARY PCIIDEX.SYS
+
+EXPORTS
+PciIdeXDebugPrint=PciIdeDebugPrint
+PciIdeXGetBusData
+PciIdeXInitialize
+PciIdeXSetBusData

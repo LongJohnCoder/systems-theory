@@ -1,0 +1,35 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=tinyldr
+TARGETTYPE=LIBRARY
+
+LINKLIBS=..\lib\obj$(BUILD_ALT_DIR)\*\bldr.lib \
+          $(DDK_LIB_PATH)\libcntpr.lib
+
+INCLUDES=\
+         $(DDK_INC_PATH); \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\ddk\inc; \
+         ..\..\..\public\internal\base\inc; \
+         ..\..\ntos\inc; \
+         ..\inc; \
+
+SOURCES=advboot.c       \
+        bootstat.c      \
+        hiber.c         \
+        osloader.c      \
+        regboot.c       \
+        i386\initx86.c  \
+        i386\parsboot.c \
+        bldrlog.mc      \
+        osloader.rc
+
+PRECOMPILED_INCLUDE=precomp.h

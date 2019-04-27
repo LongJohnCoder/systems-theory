@@ -1,0 +1,32 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=template
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=retail
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib
+
+INCLUDES=..\..\..\base\ntos\inc;..\..\..\public\sdk\inc;..\
+
+SOURCES=\
+        ..\main.c        \
+        ..\template.rc    
+
+PRECOMPILED_INCLUDE=..\precomp.h
+
+!if $(FREEBUILD)
+RUN_WPP=$(SOURCES) -km -func:TracePrint((LEVEL,FLAGS,MSG,...))
+!else
+C_DEFINES=$(C_DEFINES) -DDEBUG_USE_KDPRINT
+!endif
+
+

@@ -1,0 +1,19 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=startup.com
+TARGETTYPE=UMAPPL_NOLIB
+TARGET_DESTINATION=system32
+
+INCLUDES=
+
+SOURCES=
+
+NTTARGETFILES=tbx86.com

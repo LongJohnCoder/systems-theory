@@ -1,0 +1,44 @@
+Global variables:
+
+int writers = 1; /* number of writers allowed to write */
+int readers = 0;  /* number of readers executing */
+int writers_waiting = 0; /* number of writers waiting */
+int readers_waiting = 0; /* number of readers waiting */
+boolean writersPriority = true; /* true if writers have priority */
+
+readAcquire {
+
+  /* Everything is atomic except for the block operation */
+  while (writers ==0   ||( (writers_waiting> 0) && writersPriority)) {
+    readersWaiting ++;
+    block;
+    readersWaiting --;
+  }
+  readersWaiting --;
+  readers++;
+
+}
+
+readRelease {
+  readers--;
+  writersPriority = !writersPriority; /* toggle writers Priority */
+}
+
+writeAcquire {
+  
+  /* Everything is atomic except for the block operation */
+  while (writers == 0 || readers > 0 || (readers_waiting > 0 && !writersPriority)) {
+    writers_waiting++;
+    block;
+    writers_waiting--;
+  }
+ 
+  writersWaiting--;
+  writers = 0;
+  
+}
+
+writeRelease {
+  writers = 1;
+  writersPriority = !writersPriority; /* toggle writers Priority */
+}

@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>proc_doulongvec_ms_jiffies_minmax</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="sysctl interface"
+HREF="c4357.html#AEN4359"><LINK
+REL="PREVIOUS"
+TITLE="proc_doulongvec_minmax"
+HREF="r4622.html"><LINK
+REL="NEXT"
+TITLE="proc_dointvec_jiffies"
+HREF="r4736.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r4622.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r4736.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN4679"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_doulongvec_ms_jiffies_minmax</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN4683"
+></A
+><H2
+>Name</H2
+>proc_doulongvec_ms_jiffies_minmax&nbsp;--&nbsp;      read a vector of millisecond values with min/max values
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN4686"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN4688"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int proc_doulongvec_ms_jiffies_minmax </CODE
+>(ctl_table * table, int write, struct file * filp, void __user * buffer, size_t * lenp);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN4702"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>table</VAR
+></DT
+><DD
+><P
+>      the sysctl table
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>write</VAR
+></DT
+><DD
+><P
+>      <CODE
+CLASS="CONSTANT"
+>TRUE</CODE
+> if this is a write to the sysctl file
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>filp</VAR
+></DT
+><DD
+><P
+>      the file structure
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>buffer</VAR
+></DT
+><DD
+><P
+>      the user buffer
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>lenp</VAR
+></DT
+><DD
+><P
+>      the size of the user buffer
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN4731"
+></A
+><H2
+>Description</H2
+><P
+>   Reads/writes up to table-&gt;maxlen/sizeof(unsigned long) unsigned long
+   values from/to the user buffer, treated as an ASCII string. The values
+   are treated as milliseconds, and converted to jiffies when they are stored.
+   </P
+><P
+>&#13;   This routine will ensure the values are within the range specified by
+   table-&gt;extra1 (min) and table-&gt;extra2 (max).
+   </P
+><P
+>&#13;   Returns 0 on success.
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r4622.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r4736.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_doulongvec_minmax</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c4357.html#AEN4359"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dointvec_jiffies</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

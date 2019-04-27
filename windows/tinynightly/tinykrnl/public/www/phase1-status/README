@@ -1,0 +1,45 @@
+# 1. Your php.ini need's to allow PHP to fopen to open files trough HTTP
+     Inorder to do that change the following line in php.ini
+     allow_url_fopen = OFF to allow_url_fopen = On
+
+     Or else it wont be able to grab the data from the modules status.txt
+
+
+# 2. Add following FLAGS to the every module status.txt files inorder to display 
+     the Boots,Works,Mature flags on the status page
+
+     Example of lines to add to module status.txt to get status.php view that the module
+     Boots,Works, and is Mature...
+
+     Boots: 1
+     Works: 1
+     Mature: 1
+
+     Example of lines to add to module status.txt to get status.php view that the module 
+     only boots...
+
+     Boots: 1
+     Works:
+     Mature:
+
+     As you can see, we only checks if one of these flags is = 1, 
+     otherwise dont display that on the status page
+
+# 3. The file we want to open with our webbrowser is status.php
+     files.php and definitions.php is included in status.php
+
+# 4. Edit the following lines in status.php...
+     <link rel="stylesheet" type="text/css" href="http://www.tinykrnl.org/sinorca-screen.css" media="screen" title="Sinorca (screen)" />
+     <link rel="stylesheet alternative" type="text/css" href="http://www.tinykrnl.org/sinorca-screen-alt.css" media="screen" title="Sinorca(alternative)" />
+     <link rel="stylesheet" type="text/css" href="http://www.tinykrnl.org/sinorca-print.css" media="print" />
+  
+     I specified the whole HTTP location to the css files just to be able to test the design on my webserver.
+
+
+Hope you find any use of this PHP script
+
+Regards
+Peter Johansson
+
+linuxmad@gmail.com
+Pete-J on Freenode

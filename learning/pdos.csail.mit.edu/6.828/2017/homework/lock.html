@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Homework: Locking</title>
+<link rel="stylesheet" href="homework.css" type="text/css" />
+</head>
+<body>
+
+<h1>Homework: Threads and Locking</h1>
+
+<p>In this assignment you will explore parallel programming with threads and
+locks using a hash table.
+You should do this homework on a real computer (not xv6, not qemu)
+that has multiple cores.
+Most recent laptops have
+multicore processors. Submit your solutions before the beginning of the next
+lecture to <a href="https://6828.scripts.mit.edu/2017/handin.py/">the submission web
+site</a>.
+
+<p>Download <a href="ph.c">ph.c</a> and compile it on your laptop or Athena
+machine (you can use your OS' gcc; you don't need the 6.828 tools):
+<pre>
+$ gcc -g -O2 ph.c -pthread
+$ ./a.out 2
+</pre>
+
+The 2 specifies the number of threads that execute put and get operations on the the hash table.
+
+<p>After running for a little while, the program will produce output similar
+to this:
+
+<pre>
+0: put time = 2.871728
+1: put time = 2.957073
+1: get time = 12.731078
+1: 1 keys missing
+0: get time = 12.731874
+0: 1 keys missing
+completion time = 15.689165
+</pre>
+
+<p>Each thread runs in two phases.  In the first phase each thread puts NKEYS/nthread
+keys into the hash table.  In the second phase, each thread gets NKEYS from the hash
+table.  The print statements tell you how long each phase took for each thread.
+The completion time at the bottom tells you the total runtime for the
+application.  In the output above, the completion time for the application is about 16 seconds.  Each
+thread computed for about 16 seconds (~3 for put + ~13 for get).
+
+<p>To see if using two threads improved performance,
+let's compare against a single thread:
+
+<pre>
+$ ./a.out 1
+0: put time = 5.350298
+0: get time = 11.690395
+0: 0 keys missing
+completion time = 17.040894
+</pre>
+The completion time for the 1 thread case (~17s) is slightly larger than for the 2
+thread case (~15.6s), but the two-thread case did twice as much total
+work during the get phase.
+Thus the two-thread case achieved nearly 2x parallel speedup for the get phase on two cores,
+which is very good.
+The put phase achieved some speedup too but not perfect; two threads concurrently
+inserted the same number of keys in a bit more than half time (~2.9s) of the 1-thread
+case (~5.3s).
+
+<p>When you run this application, you may see no parallelism if you are running
+on a machine with only one core or if the machine is busy running other applications.
+
+<p>Independent of whether you see speedup, you will likely observe that the code is
+incorrect. In the two-thread run, the application inserted 1 key in phase 1 that phase 2 couldn't
+find.  When we run the application on our four-core machine with 4 threads:
+<pre>
+2: put time = 1.516581
+1: put time = 1.529754
+0: put time = 1.816878
+3: put time = 2.113230
+2: get time = 15.635937
+2: 21 keys missing
+3: get time = 15.694796
+3: 21 keys missing
+1: get time = 15.714341
+1: 21 keys missing
+0: get time = 15.746386
+0: 21 keys missing
+completion time = 17.866878
+</pre> 
+
+<p>Two points: 1) The completion time is about the same as for 2 threads, but
+this run did twice as many gets as with 2 threads; we are achieving good
+parallelism. 2) More keys are missing.  In your runs, there may be more or fewer
+keys missing.  There may be even 0 keys missing in some runs.  If you run with 1
+thread, there will never be any keys missing.
+Why are there missing keys
+with 2 or more threads, but not with 1 thread?  Identify a sequence of
+events that can lead to keys missing for 2 threads.
+
+<p>To avoid this sequence of events, insert lock and unlock statements in
+<tt>put</tt> and <tt>get</tt> so that the number of keys missing is always 0.  The
+relevant pthread calls are (for more see the manual pages, man pthread):
+
+<pre>
+pthread_mutex_t lock;     // declare a lock
+pthread_mutex_init(&lock, NULL);   // initialize the lock
+pthread_mutex_lock(&lock);  // acquire lock
+pthread_mutex_unlock(&lock);  // release lock
+</pre>
+
+<p>Test your code first with 1 thread, then test it with 2 threads.
+Is it correct (i.e. have you eliminated missing keys?)?  Is the
+two-threaded version faster than the single-threaded version?
+
+<p>Modify your code so that <tt>get</tt> operations run in parallel while
+maintaining correctness.
+(Hint: are the locks in <tt>get</tt> necessary for
+correctness in this application?)
+
+<p>Modify your code so that some <tt>put</tt> operations run in parallel 
+while maintaining correctness. (Hint: would a lock per bucket work?)
+
+<div class="question">
+<p><b>Submit</b>: your modified ph.c
+</div>
+
+</body>
+</html>

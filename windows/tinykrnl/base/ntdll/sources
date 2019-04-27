@@ -1,0 +1,55 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=ntdll
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+BUFFER_OVERFLOW_CHECKS=NTDLL
+TARGET_DESTINATION=system32
+
+LINKLIBS=..\ntos\rtl\obj$(BUILD_ALT_DIR)\*\rtl.lib \
+          $(DDK_LIB_PATH)\libcntpr.lib \
+          $(DDK_LIB_PATH)\BufferOverflow.lib
+
+INCLUDES=\
+         $(DDK_INC_PATH); \
+         ..\..\public\sdk\inc; \
+         ..\..\public\ddk\inc
+
+SOURCES=compat.c        \
+        cookie.c        \
+        csrinit.c       \
+        csrutil.c       \
+        curdir.c        \
+        dlluistb.c      \
+        importtablehash.cpp \
+        ldrapi.c        \
+        ldrinit.c       \
+        ldrsnap.c       \
+        ldrutil.c       \
+        memstm.c        \
+        query.c         \
+        resource.c      \
+        secmem.c        \
+        seurtl.c        \
+        sxsactctx.c     \
+        sxsctxact.c     \
+        sxsctxsrch.c    \
+        sxsisol.cpp     \
+        sxsquery.c      \
+        sxsstorage.c    \
+        sxsstoragemap.c \
+        verifier.c      \
+        i386\ldrctx.c   \
+        i386\ntstub.c   \
+        i386\userdisp.asm \
+        ntdll.rc
+
+PRECOMPILED_INCLUDE=precomp.h

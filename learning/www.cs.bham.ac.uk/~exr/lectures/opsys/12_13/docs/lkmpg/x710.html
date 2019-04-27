@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>The /proc File System</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="The /proc File System"
+HREF="c708.html"><LINK
+REL="PREVIOUS"
+TITLE="The /proc File System"
+HREF="c708.html"><LINK
+REL="NEXT"
+TITLE="Read and Write a /proc File"
+HREF="x769.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c708.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. The /proc File System</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x769.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN710"
+></A
+>5.1. The /proc File System</H1
+><P
+>	In Linux, there is an additional mechanism for the kernel and kernel modules to send information to processes --- the
+	<TT
+CLASS="FILENAME"
+>/proc</TT
+> file system.  Originally designed to allow easy access to information about
+	processes (hence the name), it is now used by every bit of the kernel which has something interesting to report, such as
+	<TT
+CLASS="FILENAME"
+>/proc/modules</TT
+> which provides the list of modules and <TT
+CLASS="FILENAME"
+>/proc/meminfo</TT
+> 
+	which stats memory usage statistics.
+	</P
+><P
+>The method to use the proc file system is very similar to the one used with device drivers --- a structure is created
+	with all the information needed for the <TT
+CLASS="FILENAME"
+>/proc</TT
+> file, including pointers to any handler
+	functions (in our case there is only one, the one called when somebody attempts to read from the <TT
+CLASS="FILENAME"
+>/proc</TT
+> file). Then, <TT
+CLASS="FUNCTION"
+>init_module</TT
+> registers the structure with the kernel and
+	<TT
+CLASS="FUNCTION"
+>cleanup_module</TT
+> unregisters it.</P
+><P
+>The reason we use <TT
+CLASS="FUNCTION"
+>proc_register_dynamic</TT
+><A
+NAME="AEN736"
+HREF="#FTN.AEN736"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+> is because we don't want to determine the inode number
+	used for our file in advance, but to allow the kernel to determine it to prevent clashes. Normal file systems are located on a
+	disk, rather than just in memory (which is where <TT
+CLASS="FILENAME"
+>/proc</TT
+> is), and in that case the inode
+	number is a pointer to a disk location where the file's index-node (inode for short) is located. The inode contains
+	information about the file, for example the file's permissions, together with a pointer to the disk location or locations
+	where the file's data can be found.</P
+><P
+>	Because we don't get called when the file is opened or closed, there's nowhere for us to put
+	<TT
+CLASS="VARNAME"
+>try_module_get</TT
+> and <TT
+CLASS="VARNAME"
+>try_module_put</TT
+> in this module, and if
+	the file is opened and then the module is removed, there's no way to avoid the consequences.
+	</P
+><P
+>        Here a simple example showing how to use a /proc file. This is the HelloWorld for the /proc filesystem.
+	There are three parts: create the file <TT
+CLASS="FILENAME"
+>/proc/helloworld</TT
+> in the function <TT
+CLASS="FUNCTION"
+>init_module</TT
+>,
+	return a value (and a buffer) when the file <TT
+CLASS="FILENAME"
+>/proc/helloworld</TT
+> is read in the callback
+	function <TT
+CLASS="FUNCTION"
+>procfs_read</TT
+>, and delete the file <TT
+CLASS="FILENAME"
+>/proc/helloworld</TT
+> 
+	in the function <TT
+CLASS="FUNCTION"
+>cleanup_module</TT
+>.
+	</P
+><P
+>        The <TT
+CLASS="FILENAME"
+>/proc/helloworld</TT
+> is created when the module is loaded with the function
+	<TT
+CLASS="FUNCTION"
+>create_proc_entry</TT
+>. The return value is a 'struct proc_dir_entry *', and it
+	will be used to configure the file <TT
+CLASS="FILENAME"
+>/proc/helloworld</TT
+> (for example, the owner of this file).
+	A null return value means that the creation has failed.
+	</P
+><P
+>        Each time, everytime the file <TT
+CLASS="FILENAME"
+>/proc/helloworld</TT
+> is read, the function 
+	<TT
+CLASS="FUNCTION"
+>procfs_read</TT
+> is called.
+	Two parameters of this function are very important: the buffer (the first parameter) and the offset (the third one).
+	The content of the buffer will be returned to the application which read it (for example the cat command). The offset 
+	is the current position in the file. If the return value of the function isn't null, then this function is
+	called again. So be careful with this function, if it never returns zero, the read function is called endlessly.
+	</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cat /proc/helloworld
+HelloWorld!
+        </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN765"
+></A
+><P
+><B
+>Example 5-1. procfs1.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*
+ *  procfs1.c -  create a "file" in /proc
+ *
+ */
+
+#include &#60;linux/module.h&#62;	/* Specifically, a module */
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/proc_fs.h&#62;	/* Necessary because we use the proc fs */
+
+#define procfs_name "helloworld"
+
+/**
+ * This structure hold information about the /proc file
+ *
+ */
+struct proc_dir_entry *Our_Proc_File;
+
+/* Put data into the proc fs file.
+ * 
+ * Arguments
+ * =========
+ * 1. The buffer where the data is to be inserted, if
+ *    you decide to use it.
+ * 2. A pointer to a pointer to characters. This is
+ *    useful if you don't want to use the buffer
+ *    allocated by the kernel.
+ * 3. The current position in the file
+ * 4. The size of the buffer in the first argument.
+ * 5. Write a "1" here to indicate EOF.
+ * 6. A pointer to data (useful in case one common 
+ *    read for multiple /proc/... entries)
+ *
+ * Usage and Return Value
+ * ======================
+ * A return value of zero means you have no further
+ * information at this time (end of file). A negative
+ * return value is an error condition.
+ *
+ * For More Information
+ * ====================
+ * The way I discovered what to do with this function
+ * wasn't by reading documentation, but by reading the
+ * code which used it. I just looked to see what uses
+ * the get_info field of proc_dir_entry struct (I used a
+ * combination of find and grep, if you're interested),
+ * and I saw that  it is used in &#60;kernel source
+ * directory&#62;/fs/proc/array.c.
+ *
+ * If something is unknown about the kernel, this is
+ * usually the way to go. In Linux we have the great
+ * advantage of having the kernel source code for
+ * free - use it.
+ */
+int
+procfile_read(char *buffer,
+	      char **buffer_location,
+	      off_t offset, int buffer_length, int *eof, void *data)
+{
+	int ret;
+	
+	printk(KERN_INFO "procfile_read (/proc/%s) called\n", procfs_name);
+	
+	/* 
+	 * We give all of our information in one go, so if the
+	 * user asks us if we have more information the
+	 * answer should always be no.
+	 *
+	 * This is important because the standard read
+	 * function from the library would continue to issue
+	 * the read system call until the kernel replies
+	 * that it has no more information, or until its
+	 * buffer is filled.
+	 */
+	if (offset &#62; 0) {
+		/* we have finished to read, return 0 */
+		ret  = 0;
+	} else {
+		/* fill the buffer, return the buffer size */
+		ret = sprintf(buffer, "HelloWorld!\n");
+	}
+
+	return ret;
+}
+
+int init_module()
+{
+	Our_Proc_File = create_proc_entry(procfs_name, 0644, NULL);
+	
+	if (Our_Proc_File == NULL) {
+		remove_proc_entry(procfs_name, &#38;proc_root);
+		printk(KERN_ALERT "Error: Could not initialize /proc/%s\n",
+		       procfs_name);
+		return -ENOMEM;
+	}
+
+	Our_Proc_File-&#62;read_proc = procfile_read;
+	Our_Proc_File-&#62;owner 	 = THIS_MODULE;
+	Our_Proc_File-&#62;mode 	 = S_IFREG | S_IRUGO;
+	Our_Proc_File-&#62;uid 	 = 0;
+	Our_Proc_File-&#62;gid 	 = 0;
+	Our_Proc_File-&#62;size 	 = 37;
+
+	printk(KERN_INFO "/proc/%s created\n", procfs_name);	
+	return 0;	/* everything is ok */
+}
+
+void cleanup_module()
+{
+	remove_proc_entry(procfs_name, &#38;proc_root);
+	printk(KERN_INFO "/proc/%s removed\n", procfs_name);
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN736"
+HREF="x710.html#AEN736"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>In version 2.0, in version 2.2 this is done
+	automatically if we set the inode to zero.</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c708.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x769.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The /proc File System</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c708.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Read and Write a /proc File</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,199 @@
+<HTML
+><HEAD
+><TITLE
+>Common Pitfalls</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="book1.htm"><LINK
+REL="PREVIOUS"
+TITLE="Symmetric Multi Processing"
+HREF="c1324.htm"><LINK
+REL="NEXT"
+TITLE="Changes: 2.0 To 2.2"
+HREF="a1387.htm"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c1324.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="a1387.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="AEN1350"
+></A
+>Chapter 14. Common Pitfalls</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN1352"
+></A
+>Common Pitfalls</H1
+><A
+NAME="AEN1354"
+></A
+><P
+>Before I send you on your way to go out into the world and write kernel modules, there are a few things I need to warn
+	you about. If I fail to warn you and something bad happens, please report the problem to me for a full refund of the amount I
+	was paid for your copy of the book.</P
+><A
+NAME="AEN1357"
+></A
+><A
+NAME="AEN1359"
+></A
+><A
+NAME="AEN1362"
+></A
+><A
+NAME="AEN1364"
+></A
+><A
+NAME="AEN1367"
+></A
+><A
+NAME="AEN1370"
+></A
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Using standard libraries</DT
+><DD
+><P
+>You can't do that.  In a kernel module you can only use kernel functions, which are the functions you can
+			see in <TT
+CLASS="FILENAME"
+>/proc/kallsyms</TT
+>.</P
+></DD
+><DT
+>Disabling interrupts</DT
+><DD
+><P
+>You might need to do this for a short time and that is OK, but if you don't enable them afterwards, your
+			system will be stuck and you'll have to power it off.</P
+></DD
+><DT
+>Sticking your head inside a large carnivore</DT
+><DD
+><P
+>I probably don't have to warn you about this, but I figured I will anyway, just in case.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c1324.htm"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.htm"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="a1387.htm"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Symmetric Multi Processing</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Changes: 2.0 To 2.2</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

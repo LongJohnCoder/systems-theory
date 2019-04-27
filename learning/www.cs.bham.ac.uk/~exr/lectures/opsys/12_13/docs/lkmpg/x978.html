@@ -1,0 +1,465 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>System Calls</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="System Calls"
+HREF="c976.html"><LINK
+REL="PREVIOUS"
+TITLE="System Calls"
+HREF="c976.html"><LINK
+REL="NEXT"
+TITLE="Blocking Processes"
+HREF="c1050.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c976.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 8. System Calls</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c1050.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN978"
+></A
+>8.1. System Calls</H1
+><P
+>So far, the only thing we've done was to use well defined kernel mechanisms to register <TT
+CLASS="FILENAME"
+>/proc</TT
+> files and device handlers. This is fine if you want to do something the kernel programmers
+	thought you'd want, such as write a device driver. But what if you want to do something unusual, to change the behavior of the
+	system in some way? Then, you're mostly on your own.</P
+><P
+>This is where kernel programming gets dangerous. While writing the example below, I killed the
+	<TT
+CLASS="FUNCTION"
+>open()</TT
+> system call. This meant I couldn't open any files, I couldn't run any programs, and I couldn't
+	<B
+CLASS="COMMAND"
+>shutdown</B
+> the computer.  I had to pull the power switch.  Luckily, no files died. To ensure you won't lose
+	any files either, please run <B
+CLASS="COMMAND"
+>sync</B
+> right before you do the <B
+CLASS="COMMAND"
+>insmod</B
+> and the
+	<B
+CLASS="COMMAND"
+>rmmod</B
+>.</P
+><P
+>Forget about <TT
+CLASS="FILENAME"
+>/proc</TT
+> files, forget about device files. They're just minor details.
+	The <EM
+>real</EM
+> process to kernel communication mechanism, the one used by all processes, is system calls. When
+	a process requests a service from the kernel (such as opening a file, forking to a new process, or requesting more memory),
+	this is the mechanism used. If you want to change the behaviour of the kernel in interesting ways, this is the place to do it.
+	By the way, if you want to see which system calls a program uses, run <B
+CLASS="COMMAND"
+>strace &#60;arguments&#62;</B
+>.</P
+><P
+>In general, a process is not supposed to be able to access the kernel. It can't access kernel memory and it can't call
+	kernel functions. The hardware of the CPU enforces this (that's the reason why it's called `protected mode').</P
+><P
+>System calls are an exception to this general rule. What happens is that the process fills the registers with the
+	appropriate values and then calls a special instruction which jumps to a previously defined location in the kernel (of course,
+	that location is readable by user processes, it is not writable by them). Under Intel CPUs, this is done by means of interrupt
+	0x80.  The hardware knows that once you jump to this location, you are no longer running in restricted user mode, but as the
+	operating system kernel --- and therefore you're allowed to do whatever you want.</P
+><P
+>The location in the kernel a process can jump to is called <EM
+>system_call</EM
+>. The procedure at that
+	location checks the system call number, which tells the kernel what service the process requested. Then, it looks at the table
+	of system calls (<TT
+CLASS="VARNAME"
+>sys_call_table</TT
+>) to see the address of the kernel function to call. Then it calls the
+	function, and after it returns, does a few system checks and then return back to the process (or to a different process, if
+	the process time ran out). If you want to read this code, it's at the source file
+	<TT
+CLASS="FILENAME"
+>arch/$&#60;$architecture$&#62;$/kernel/entry.S</TT
+>, after the line <TT
+CLASS="FUNCTION"
+>ENTRY(system_call)</TT
+>.</P
+><P
+>So, if we want to change the way a certain system call works, what we need to do is to write our own function to
+	implement it (usually by adding a bit of our own code, and then calling the original function) and then change the pointer at
+	<TT
+CLASS="VARNAME"
+>sys_call_table</TT
+> to point to our function.  Because we might be removed later and we don't want to leave the
+	system in an unstable state, it's important for <TT
+CLASS="FUNCTION"
+>cleanup_module</TT
+> to restore the table to its original
+	state.</P
+><P
+>The source code here is an example of such a kernel module. We want to `spy' on a certain user, and to
+	<TT
+CLASS="FUNCTION"
+>printk()</TT
+> a message whenever that user opens a file. Towards this end, we replace the system call to open
+	a file with our own function, called <TT
+CLASS="FUNCTION"
+>our_sys_open</TT
+>. This function checks the uid (user's id) of the
+	current process, and if it's equal to the uid we spy on, it calls <TT
+CLASS="FUNCTION"
+>printk()</TT
+> to display the name of the
+	file to be opened.  Then, either way, it calls the original <TT
+CLASS="FUNCTION"
+>open()</TT
+> function with the same parameters, to
+	actually open the file.</P
+><P
+>The <TT
+CLASS="FUNCTION"
+>init_module</TT
+> function replaces the appropriate location in <TT
+CLASS="VARNAME"
+>sys_call_table</TT
+> and
+	keeps the original pointer in a variable. The <TT
+CLASS="FUNCTION"
+>cleanup_module</TT
+> function uses that variable to restore
+	everything back to normal.  This approach is dangerous, because of the possibility of two kernel modules changing the same
+	system call. Imagine we have two kernel modules, A and B.  A's open system call will be A_open and B's will be B_open. Now,
+	when A is inserted into the kernel, the system call is replaced with A_open, which will call the original sys_open when it's
+	done. Next, B is inserted into the kernel, which replaces the system call with B_open, which will call what it thinks is the
+	original system call, A_open, when it's done.</P
+><P
+>Now, if B is removed first, everything will be well---it will simply restore the system call to A_open, which calls the
+	original. However, if A is removed and then B is removed, the system will crash. A's removal will restore the system call to
+	the original, sys_open, cutting B out of the loop.  Then, when B is removed, it will restore the system call to what
+	<EM
+>it</EM
+> thinks is the original, A_open, which is no longer in memory. At first glance, it appears we could
+	solve this particular problem by checking if the system call is equal to our open function and if so not changing it at all
+	(so that B won't change the system call when it's removed), but that will cause an even worse problem. When A is removed, it
+	sees that the system call was changed to B_open so that it is no longer pointing to A_open, so it won't restore it to sys_open
+	before it is removed from memory.  Unfortunately, B_open will still try to call A_open which is no longer there, so that even
+	without removing B the system would crash.</P
+><P
+>Note that all the related problems make syscall stealing unfeasiable for production use. In order to keep people from
+	doing potential harmful things sys_call_table is no longer exported. This means, if you want to do something more than a
+	mere dry run of this example, you will have to patch your current kernel in order to have sys_call_table exported. 
+	In the example directory you will find a README and the patch. As you can imagine, such modifications are not to be
+	taken lightly. Do not try this on valueable systems (ie systems that you do not own - or cannot restore easily).
+	You'll need to get the complete sourcecode of this guide as a tarball in order to get the patch and the README.
+	Depending on your kernel version, you might even need to hand apply the patch. Still here? Well, so is this chapter.
+	If Wyle E. Coyote was a kernel hacker, this would be the first thing he'd try. ;)
+			
+	</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1046"
+></A
+><P
+><B
+>Example 8-1. syscall.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*
+ *  syscall.c
+ *
+ *  System call "stealing" sample.
+ */
+
+/* 
+ * Copyright (C) 2001 by Peter Jay Salzman 
+ */
+
+/* 
+ * The necessary header files 
+ */
+
+/*
+ * Standard in kernel modules 
+ */
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/module.h&#62;	/* Specifically, a module, */
+#include &#60;linux/moduleparam.h&#62;	/* which will have params */
+#include &#60;linux/unistd.h&#62;	/* The list of system calls */
+
+/* 
+ * For the current (process) structure, we need
+ * this to know who the current user is. 
+ */
+#include &#60;linux/sched.h&#62;
+#include &#60;asm/uaccess.h&#62;
+
+/* 
+ * The system call table (a table of functions). We
+ * just define this as external, and the kernel will
+ * fill it up for us when we are insmod'ed
+ *
+ * sys_call_table is no longer exported in 2.6.x kernels.
+ * If you really want to try this DANGEROUS module you will
+ * have to apply the supplied patch against your current kernel
+ * and recompile it.
+ */
+extern void *sys_call_table[];
+
+/* 
+ * UID we want to spy on - will be filled from the
+ * command line 
+ */
+static int uid;
+module_param(uid, int, 0644);
+
+/* 
+ * A pointer to the original system call. The reason
+ * we keep this, rather than call the original function
+ * (sys_open), is because somebody else might have
+ * replaced the system call before us. Note that this
+ * is not 100% safe, because if another module
+ * replaced sys_open before us, then when we're inserted
+ * we'll call the function in that module - and it
+ * might be removed before we are.
+ *
+ * Another reason for this is that we can't get sys_open.
+ * It's a static variable, so it is not exported. 
+ */
+asmlinkage int (*original_call) (const char *, int, int);
+
+/* 
+ * The function we'll replace sys_open (the function
+ * called when you call the open system call) with. To
+ * find the exact prototype, with the number and type
+ * of arguments, we find the original function first
+ * (it's at fs/open.c).
+ *
+ * In theory, this means that we're tied to the
+ * current version of the kernel. In practice, the
+ * system calls almost never change (it would wreck havoc
+ * and require programs to be recompiled, since the system
+ * calls are the interface between the kernel and the
+ * processes).
+ */
+asmlinkage int our_sys_open(const char *filename, int flags, int mode)
+{
+	int i = 0;
+	char ch;
+
+	/* 
+	 * Check if this is the user we're spying on 
+	 */
+	if (uid == current-&#62;uid) {
+		/* 
+		 * Report the file, if relevant 
+		 */
+		printk("Opened file by %d: ", uid);
+		do {
+			get_user(ch, filename + i);
+			i++;
+			printk("%c", ch);
+		} while (ch != 0);
+		printk("\n");
+	}
+
+	/* 
+	 * Call the original sys_open - otherwise, we lose
+	 * the ability to open files 
+	 */
+	return original_call(filename, flags, mode);
+}
+
+/* 
+ * Initialize the module - replace the system call 
+ */
+int init_module()
+{
+	/* 
+	 * Warning - too late for it now, but maybe for
+	 * next time... 
+	 */
+	printk(KERN_ALERT "I'm dangerous. I hope you did a ");
+	printk(KERN_ALERT "sync before you insmod'ed me.\n");
+	printk(KERN_ALERT "My counterpart, cleanup_module(), is even");
+	printk(KERN_ALERT "more dangerous. If\n");
+	printk(KERN_ALERT "you value your file system, it will ");
+	printk(KERN_ALERT "be \"sync; rmmod\" \n");
+	printk(KERN_ALERT "when you remove this module.\n");
+
+	/* 
+	 * Keep a pointer to the original function in
+	 * original_call, and then replace the system call
+	 * in the system call table with our_sys_open 
+	 */
+	original_call = sys_call_table[__NR_open];
+	sys_call_table[__NR_open] = our_sys_open;
+
+	/* 
+	 * To get the address of the function for system
+	 * call foo, go to sys_call_table[__NR_foo]. 
+	 */
+
+	printk(KERN_INFO "Spying on UID:%d\n", uid);
+
+	return 0;
+}
+
+/* 
+ * Cleanup - unregister the appropriate file from /proc 
+ */
+void cleanup_module()
+{
+	/* 
+	 * Return the system call back to normal 
+	 */
+	if (sys_call_table[__NR_open] != our_sys_open) {
+		printk(KERN_ALERT "Somebody else also played with the ");
+		printk(KERN_ALERT "open system call\n");
+		printk(KERN_ALERT "The system may be left in ");
+		printk(KERN_ALERT "an unstable state.\n");
+	}
+
+	sys_call_table[__NR_open] = original_call;
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c976.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c1050.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>System Calls</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c976.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Blocking Processes</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

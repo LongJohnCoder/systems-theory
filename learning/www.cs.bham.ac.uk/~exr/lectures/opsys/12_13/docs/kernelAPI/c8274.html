@@ -1,0 +1,622 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Network device support</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="sk_chk_filter"
+HREF="r8240.html"><LINK
+REL="NEXT"
+TITLE="init_etherdev"
+HREF="r8278.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r8240.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r8278.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="NETDEV"
+></A
+>Chapter 8. Network device support</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN8276"
+>8.1. Driver Support</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r8278.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>init_etherdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Register ethernet device
+ </DT
+><DT
+><A
+HREF="r8315.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_etherdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Allocates and sets up an ethernet device
+ </DT
+><DT
+><A
+HREF="r8343.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_fddidev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register FDDI device
+ </DT
+><DT
+><A
+HREF="r8371.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_hippi_dev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register HIPPI device
+ </DT
+><DT
+><A
+HREF="r8399.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_trdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register token ring device
+ </DT
+><DT
+><A
+HREF="r8427.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_fcdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register fibre channel device
+ </DT
+><DT
+><A
+HREF="r8455.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_add_pack</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   add packet handler
+ </DT
+><DT
+><A
+HREF="r8482.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_remove_pack</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove packet handler
+ </DT
+><DT
+><A
+HREF="r8510.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_remove_pack</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove packet handler
+ </DT
+><DT
+><A
+HREF="r8538.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netdev_boot_setup_check</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check boot time settings
+ </DT
+><DT
+><A
+HREF="r8564.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get_by_name</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its name
+ </DT
+><DT
+><A
+HREF="r8592.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_get_by_name</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its name
+ </DT
+><DT
+><A
+HREF="r8620.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	test if a device exists
+ </DT
+><DT
+><A
+HREF="r8647.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get_by_index</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its ifindex
+ </DT
+><DT
+><A
+HREF="r8675.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_get_by_index</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its ifindex
+ </DT
+><DT
+><A
+HREF="r8701.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_getbyhwaddr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its hardware address
+ </DT
+><DT
+><A
+HREF="r8737.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_get_by_flags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find any device with given flags
+ </DT
+><DT
+><A
+HREF="r8770.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get_by_flags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find any device with given flags
+ </DT
+><DT
+><A
+HREF="r8804.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_alloc_name</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate a name for a device
+ </DT
+><DT
+><A
+HREF="r8839.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_alloc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate a network device and name
+ </DT
+><DT
+><A
+HREF="r8879.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netdev_state_change</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      device changes state
+ </DT
+><DT
+><A
+HREF="r8905.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_load</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      load a network module
+ </DT
+><DT
+><A
+HREF="r8931.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      prepare an interface for use.
+ </DT
+><DT
+><A
+HREF="r8959.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      shutdown an interface.
+ </DT
+><DT
+><A
+HREF="r8987.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_netdevice_notifier</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a network notifier block
+ </DT
+><DT
+><A
+HREF="r9013.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_netdevice_notifier</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a network notifier block
+ </DT
+><DT
+><A
+HREF="r9040.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>call_netdevice_notifiers</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      call all network notifier blocks
+ </DT
+><DT
+><A
+HREF="r9075.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_queue_xmit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      transmit a buffer
+ </DT
+><DT
+><A
+HREF="r9102.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netif_rx</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	post buffer to the network code
+ </DT
+><DT
+><A
+HREF="r9131.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_gifconf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	register a SIOCGIF handler
+ </DT
+><DT
+><A
+HREF="r9164.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netdev_set_master</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	set up master/slave pair
+ </DT
+><DT
+><A
+HREF="r9199.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_set_promiscuity</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      update promiscuity count on a device
+ </DT
+><DT
+><A
+HREF="r9232.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_set_allmulti</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      update allmulti count on a device
+ </DT
+><DT
+><A
+HREF="r9266.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_ioctl</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	network device ioctl
+ </DT
+><DT
+><A
+HREF="r9299.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_new_index</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	allocate an ifindex
+ </DT
+><DT
+><A
+HREF="r9326.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_netdevice</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a network device
+ </DT
+><DT
+><A
+HREF="r9358.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>free_netdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      free network device
+ </DT
+><DT
+><A
+HREF="r9384.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_netdevice</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove device from the kernel
+ </DT
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r8240.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r8278.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sk_chk_filter</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>init_etherdev</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Manage /proc file with seq_file</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="The /proc File System"
+HREF="c708.html"><LINK
+REL="PREVIOUS"
+TITLE="Manage /proc file with standard filesystem"
+HREF="x810.html"><LINK
+REL="NEXT"
+TITLE="Using /proc For Input"
+HREF="c885.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x810.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. The /proc File System</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c885.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN861"
+></A
+>5.4. Manage /proc file with seq_file</H1
+><P
+>	As we have seen, writing a /proc file may be quite "complex". So to help people writting
+	/proc file, there is an API named seq_file that helps formating a /proc file for output.
+        It's based on sequence, which is composed of 3 functions: start(), next(), and stop(). 
+        The seq_file API starts a sequence when a user read the /proc file.
+	</P
+><P
+>	A sequence begins with the call of the function start(). If the return is a non NULL value,
+	the function next() is called. This function is an iterator, the goal is to go thought
+	all the data. Each time next() is called, the function show() is also called. It writes
+	data values in the buffer read by the user. The function next() is called until it returns
+	NULL. The sequence ends when next() returns NULL, then the function stop() is called.
+	</P
+><P
+>	BE CARREFUL: when a sequence is finished, another one starts. That means that at the end
+	of function stop(), the function start() is called again. This loop finishes when the 
+        function start() returns NULL. You can see a scheme of this in the figure "How seq_file works".
+	</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN868"
+></A
+><P
+><B
+>Figure 5-1. How seq_file works</B
+></P
+><P
+><IMG
+SRC="figures/seq_file.png"></P
+></DIV
+><P
+> 
+        Seq_file provides basic functions for file_operations, as seq_read, seq_lseek, and some others.
+        But nothing to write in the /proc file. Of course, you can still use the same way as in the 
+        previous example.
+	</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN872"
+></A
+><P
+><B
+>Example 5-4. procfs4.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/**
+ *  procfs4.c -  create a "file" in /proc
+ * 	This program uses the seq_file library to manage the /proc file.
+ *
+ */
+
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/module.h&#62;	/* Specifically, a module */
+#include &#60;linux/proc_fs.h&#62;	/* Necessary because we use proc fs */
+#include &#60;linux/seq_file.h&#62;	/* for seq_file */
+
+#define PROC_NAME	"iter"
+
+MODULE_AUTHOR("Philippe Reynes");
+MODULE_LICENSE("GPL");
+
+/**
+ * This function is called at the beginning of a sequence.
+ * ie, when:
+ *	- the /proc file is read (first time)
+ *	- after the function stop (end of sequence)
+ *
+ */
+static void *my_seq_start(struct seq_file *s, loff_t *pos)
+{
+	static unsigned long counter = 0;
+
+	/* beginning a new sequence ? */	
+	if ( *pos == 0 )
+	{	
+		/* yes =&#62; return a non null value to begin the sequence */
+		return &#38;counter;
+	}
+	else
+	{
+		/* no =&#62; it's the end of the sequence, return end to stop reading */
+		*pos = 0;
+		return NULL;
+	}
+}
+
+/**
+ * This function is called after the beginning of a sequence.
+ * It's called untill the return is NULL (this ends the sequence).
+ *
+ */
+static void *my_seq_next(struct seq_file *s, void *v, loff_t *pos)
+{
+	unsigned long *tmp_v = (unsigned long *)v;
+	(*tmp_v)++;
+	(*pos)++;
+	return NULL;
+}
+
+/**
+ * This function is called at the end of a sequence
+ * 
+ */
+static void my_seq_stop(struct seq_file *s, void *v)
+{
+	/* nothing to do, we use a static value in start() */
+}
+
+/**
+ * This function is called for each "step" of a sequence
+ *
+ */
+static int my_seq_show(struct seq_file *s, void *v)
+{
+	loff_t *spos = (loff_t *) v;
+	
+	seq_printf(s, "%Ld\n", *spos);
+	return 0;
+}
+
+/**
+ * This structure gather "function" to manage the sequence
+ *
+ */
+static struct seq_operations my_seq_ops = {
+	.start = my_seq_start,
+	.next  = my_seq_next,
+	.stop  = my_seq_stop,
+	.show  = my_seq_show
+};
+
+/**
+ * This function is called when the /proc file is open.
+ *
+ */
+static int my_open(struct inode *inode, struct file *file)
+{
+	return seq_open(file, &#38;my_seq_ops);
+};
+
+/**
+ * This structure gather "function" that manage the /proc file
+ *
+ */
+static struct file_operations my_file_ops = {
+	.owner   = THIS_MODULE,
+	.open    = my_open,
+	.read    = seq_read,
+	.llseek  = seq_lseek,
+	.release = seq_release
+};
+	
+	
+/**
+ * This function is called when the module is loaded
+ *
+ */
+int init_module(void)
+{
+	struct proc_dir_entry *entry;
+
+	entry = create_proc_entry(PROC_NAME, 0, NULL);
+	if (entry) {
+		entry-&#62;proc_fops = &#38;my_file_ops;
+	}
+	
+	return 0;
+}
+
+/**
+ * This function is called when the module is unloaded.
+ *
+ */
+void cleanup_module(void)
+{
+	remove_proc_entry(PROC_NAME, NULL);
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>	
+	If you want more information, you can read this web page:
+	</P
+><P
+></P
+><UL
+><LI
+><P
+><A
+HREF="http://lwn.net/Articles/22355/"
+TARGET="_top"
+>http://lwn.net/Articles/22355/</A
+></P
+></LI
+><LI
+><P
+><A
+HREF="http://www.kernelnewbies.org/documents/seq_file_howto.txt"
+TARGET="_top"
+>http://www.kernelnewbies.org/documents/seq_file_howto.txt</A
+></P
+></LI
+></UL
+><P
+>		You can also read the code of fs/seq_file.c in the linux kernel.
+	</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x810.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c885.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Manage /proc file with standard filesystem</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c708.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Using /proc For Input</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

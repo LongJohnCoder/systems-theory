@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>mtrr_add</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="MTRR Handling"
+HREF="x10067.html"><LINK
+REL="PREVIOUS"
+TITLE="MTRR Handling"
+HREF="x10067.html"><LINK
+REL="NEXT"
+TITLE="mtrr_del"
+HREF="r10130.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x10067.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r10130.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN10069"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mtrr_add</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN10073"
+></A
+><H2
+>Name</H2
+>mtrr_add&nbsp;--&nbsp;   Add a memory type region
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN10076"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN10078"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int mtrr_add </CODE
+>(unsigned long base, unsigned long size, unsigned int type, char increment);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN10090"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>base</VAR
+></DT
+><DD
+><P
+>      Physical base address of region
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>size</VAR
+></DT
+><DD
+><P
+>      Physical size of region
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>type</VAR
+></DT
+><DD
+><P
+>      Type of MTRR desired
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>increment</VAR
+></DT
+><DD
+><P
+>      If this is true do usage counting on the region
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN10113"
+></A
+><H2
+>Description</H2
+><P
+>   Memory type region registers control the caching on newer Intel and
+   non Intel processors. This function allows drivers to request an
+   MTRR is added. The details and hardware specifics of each processor's
+   implementation are hidden from the caller, but nevertheless the 
+   caller should expect to need to provide a power of two size on an
+   equivalent power of two boundary.
+   </P
+><P
+>&#13;   If the region cannot be added either because all regions are in use
+   or the CPU cannot support it a negative value is returned. On success
+   the register number for this entry is returned, but should be treated
+   as a cookie only.
+   </P
+><P
+>&#13;   On a multiprocessor machine the changes are made to all processors.
+   This is required on x86 by the Intel processors.
+   </P
+><P
+>&#13;   The available types are
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>MTRR_TYPE_UNCACHABLE</CODE
+>	-	No caching
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>MTRR_TYPE_WRBACK</CODE
+>	-	Write data back in bursts whenever
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>MTRR_TYPE_WRCOMB</CODE
+>	-	Write data back soon but allow bursts
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>MTRR_TYPE_WRTHROUGH</CODE
+>	-	Cache reads but not writes
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN10127"
+></A
+><H2
+>BUGS</H2
+><P
+>    Needs a quiet flag for the cases where drivers do not mind
+   failures and do not wish system log messages to be sent.
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x10067.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r10130.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>MTRR Handling</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="x10067.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mtrr_del</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,731 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Linux Networking</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="get_locks_status"
+HREF="r6627.html"><LINK
+REL="NEXT"
+TITLE="struct sk_buff"
+HREF="r6675.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r6627.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r6675.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="NETCORE"
+></A
+>Chapter 7. Linux Networking</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN6673"
+>7.1. Socket Buffer Functions</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r6675.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>struct sk_buff</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   socket buffer
+ </DT
+><DT
+><A
+HREF="r6724.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_empty</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check if a queue is empty
+ </DT
+><DT
+><A
+HREF="r6750.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_get</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      reference buffer
+ </DT
+><DT
+><A
+HREF="r6776.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kfree_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      free an sk_buff
+ </DT
+><DT
+><A
+HREF="r6802.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_cloned</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is the buffer a clone
+ </DT
+><DT
+><A
+HREF="r6829.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_shared</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is the buffer shared
+ </DT
+><DT
+><A
+HREF="r6855.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_share_check</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check if buffer is shared and if so clone it
+ </DT
+><DT
+><A
+HREF="r6889.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_unshare</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      make a copy of a shared buffer
+ </DT
+><DT
+><A
+HREF="r6926.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_peek</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r6954.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_peek_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r6982.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_len</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get queue length
+ </DT
+><DT
+><A
+HREF="r7008.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_queue_head</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list head
+ </DT
+><DT
+><A
+HREF="r7042.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_head</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list head
+ </DT
+><DT
+><A
+HREF="r7076.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_queue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list tail
+ </DT
+><DT
+><A
+HREF="r7110.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list tail
+ </DT
+><DT
+><A
+HREF="r7144.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_dequeue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the head of the queue
+ </DT
+><DT
+><A
+HREF="r7171.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_dequeue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the head of the queue
+ </DT
+><DT
+><A
+HREF="r7198.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_insert</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	insert a buffer
+ </DT
+><DT
+><A
+HREF="r7231.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_append</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	append a buffer
+ </DT
+><DT
+><A
+HREF="r7264.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_unlink</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	remove a buffer from a list
+ </DT
+><DT
+><A
+HREF="r7291.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_dequeue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the tail of the queue
+ </DT
+><DT
+><A
+HREF="r7318.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_dequeue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the head of the queue
+ </DT
+><DT
+><A
+HREF="r7345.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_put</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add data to a buffer
+ </DT
+><DT
+><A
+HREF="r7378.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_push</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add data to the start of a buffer
+ </DT
+><DT
+><A
+HREF="r7411.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_pull</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove data from the start of a buffer
+ </DT
+><DT
+><A
+HREF="r7444.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_headroom</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      bytes at buffer head
+ </DT
+><DT
+><A
+HREF="r7470.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_tailroom</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      bytes at buffer end
+ </DT
+><DT
+><A
+HREF="r7496.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_reserve</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      adjust headroom
+ </DT
+><DT
+><A
+HREF="r7529.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_trim</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove end from a buffer
+ </DT
+><DT
+><A
+HREF="r7562.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_orphan</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      orphan a buffer
+ </DT
+><DT
+><A
+HREF="r7589.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_purge</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      empty a list
+ </DT
+><DT
+><A
+HREF="r7615.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_queue_purge</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      empty a list
+ </DT
+><DT
+><A
+HREF="r7641.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_alloc_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate an skbuff for sending
+ </DT
+><DT
+><A
+HREF="r7676.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_alloc_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate an skbuff for sending
+ </DT
+><DT
+><A
+HREF="r7704.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_cow</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      copy header of skb when it is required
+ </DT
+><DT
+><A
+HREF="r7739.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_padto</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      pad an skbuff up to a minimal size
+ </DT
+><DT
+><A
+HREF="r7772.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_over_panic</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   	private function
+ </DT
+><DT
+><A
+HREF="r7813.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_under_panic</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      	private function
+ </DT
+><DT
+><A
+HREF="r7854.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	allocate a network buffer
+ </DT
+><DT
+><A
+HREF="r7891.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__kfree_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      private function
+ </DT
+><DT
+><A
+HREF="r7917.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_clone</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	duplicate an sk_buff
+ </DT
+><DT
+><A
+HREF="r7954.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_copy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	create private copy of an sk_buff
+ </DT
+><DT
+><A
+HREF="r7990.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_copy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	create copy of an sk_buff with private head.
+ </DT
+><DT
+><A
+HREF="r8024.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_expand_head</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      reallocate header of <CODE
+CLASS="STRUCTNAME"
+>sk_buff</CODE
+>
+ </DT
+><DT
+><A
+HREF="r8073.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_copy_expand</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	copy and expand sk_buff
+ </DT
+><DT
+><A
+HREF="r8127.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_pad</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	zero pad the tail of an skb
+ </DT
+><DT
+><A
+HREF="r8161.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__pskb_pull_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      advance tail of skb header
+ </DT
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r6627.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r6675.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_locks_status</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>struct sk_buff</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Bit Operations</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Basic C Library Functions"
+HREF="c1425.html"><LINK
+REL="PREVIOUS"
+TITLE="strsep"
+HREF="r2690.html"><LINK
+REL="NEXT"
+TITLE="set_bit"
+HREF="r2728.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r2690.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Basic C Library Functions</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r2728.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN2726"
+>3.3. Bit Operations</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r2728.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Atomically set a bit in memory
+ </DT
+><DT
+><A
+HREF="r2763.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set a bit in memory
+ </DT
+><DT
+><A
+HREF="r2797.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>clear_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Clears a bit in memory
+ </DT
+><DT
+><A
+HREF="r2833.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__change_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Toggle a bit in memory
+ </DT
+><DT
+><A
+HREF="r2867.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>change_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Toggle a bit in memory
+ </DT
+><DT
+><A
+HREF="r2902.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_and_set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r2935.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__test_and_set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r2968.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_and_clear_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Clear a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r3001.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__test_and_clear_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Clear a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r3034.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_and_change_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Change a bit and return its new value
+ </DT
+><DT
+><A
+HREF="r3067.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Determine whether a bit is set
+ </DT
+><DT
+><A
+HREF="r3097.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_first_zero_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first zero bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3130.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_first_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first set bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3163.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_next_zero_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first zero bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3200.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_next_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first set bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3237.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ffz</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find first zero in word.
+ </DT
+><DT
+><A
+HREF="r3263.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__ffs</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find first bit in word.
+ </DT
+><DT
+><A
+HREF="r3289.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ffs</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find first bit set
+ </DT
+><DT
+><A
+HREF="r3315.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hweight32</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      returns the hamming weight of a N-bit word
+ </DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r2690.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r2728.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strsep</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c1425.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>set_bit</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

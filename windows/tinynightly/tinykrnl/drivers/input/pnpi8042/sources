@@ -1,0 +1,38 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=i8042prt
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=
+
+INCLUDES=..\..\..\base\ntos\inc; \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\internal\base\inc
+
+SOURCES=\
+        i8042log.mc     \
+        hook.c          \
+        i8042cmn.c      \
+        i8042dep.c      \
+        i8042str.c      \
+        kbdcmn.c        \
+        kbddep.c        \
+        kbdpnp.c        \
+        moucmn.c        \
+        moudep.c        \
+        moupnp.c        \
+        pnp.c           \
+        sysbtn.c        \
+        wmi.c           \
+        i8042prt.rc 
+
+PRECOMPILED_INCLUDE=precomp.h

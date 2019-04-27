@@ -1,0 +1,25 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=kbdclass
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=
+
+INCLUDES=..\..\..\base\ntos\inc; \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\internal\base\inc
+
+SOURCES=\
+        kbdlog.mc   \
+        kbdclass.c  \
+        kbdclass.rc 
+

@@ -1,0 +1,21 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=NLS
+TARGETTYPE=NOTARGET
+TARGET_DESTINATION=system32
+
+SOURCES=
+        
+MISCFILES=c_1252.nls    \
+          c_437.nls     \
+          l_intl.nls
+
+        

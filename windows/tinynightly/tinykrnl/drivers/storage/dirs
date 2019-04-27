@@ -1,0 +1,6 @@
+DIRS= \
+     classpnp \
+     disk \
+     ide \
+     partmgr \
+     newft

@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>fb_find_mode</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Frame Buffer Video Mode Database"
+HREF="x14419.html"><LINK
+REL="PREVIOUS"
+TITLE="Frame Buffer Video Mode Database"
+HREF="x14419.html"><LINK
+REL="NEXT"
+TITLE="__fb_try_mode"
+HREF="r14504.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x14419.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r14504.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN14421"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_find_mode</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN14425"
+></A
+><H2
+>Name</H2
+>fb_find_mode&nbsp;--&nbsp;   finds a valid video mode
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN14428"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN14430"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int __init fb_find_mode </CODE
+>(struct fb_var_screeninfo * var, struct fb_info * info, const char * mode_option, const struct fb_videomode * db, unsigned int dbsize, const struct fb_videomode * default_mode, unsigned int default_bpp);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14448"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>var</VAR
+></DT
+><DD
+><P
+>      frame buffer user defined part of display
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>info</VAR
+></DT
+><DD
+><P
+>      frame buffer info structure
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>mode_option</VAR
+></DT
+><DD
+><P
+>      string video mode to find
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>db</VAR
+></DT
+><DD
+><P
+>      video mode database
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>dbsize</VAR
+></DT
+><DD
+><P
+>      size of <VAR
+CLASS="PARAMETER"
+>db</VAR
+>
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>default_mode</VAR
+></DT
+><DD
+><P
+>      default video mode to fall back to
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>default_bpp</VAR
+></DT
+><DD
+><P
+>      default color depth in bits per pixel
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14487"
+></A
+><H2
+>Description</H2
+><P
+>   Finds a suitable video mode, starting with the specified mode
+   in <VAR
+CLASS="PARAMETER"
+>mode_option</VAR
+> with fallback to <VAR
+CLASS="PARAMETER"
+>default_mode</VAR
+>.  If
+   <VAR
+CLASS="PARAMETER"
+>default_mode</VAR
+> fails, all modes in the video mode database will
+   be tried.
+   </P
+><P
+>&#13;   Valid mode specifiers for <VAR
+CLASS="PARAMETER"
+>mode_option</VAR
+>:
+   </P
+><P
+>&#13;   &lt;xres&gt;x&lt;yres&gt;[-&lt;bpp&gt;][@&lt;refresh&gt;] or
+   &lt;name&gt;[-&lt;bpp&gt;][@&lt;refresh&gt;]
+   </P
+><P
+>&#13;   with &lt;xres&gt;, &lt;yres&gt;, &lt;bpp&gt; and &lt;refresh&gt; decimal numbers and
+   &lt;name&gt; a string.
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14497"
+></A
+><H2
+>NOTE</H2
+><P
+>    The passed struct <VAR
+CLASS="PARAMETER"
+>var</VAR
+> is _not_ cleared!  This allows you
+   to supply values for e.g. the grayscale and accel_flags fields.
+   </P
+><P
+>&#13;   Returns zero for failure, 1 if using specified <VAR
+CLASS="PARAMETER"
+>mode_option</VAR
+>,
+   2 if using specified <VAR
+CLASS="PARAMETER"
+>mode_option</VAR
+> with an ignored refresh rate,
+   3 if default mode is used, 4 if fall back to any valid mode.
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x14419.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r14504.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Frame Buffer Video Mode Database</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="x14419.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__fb_try_mode</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

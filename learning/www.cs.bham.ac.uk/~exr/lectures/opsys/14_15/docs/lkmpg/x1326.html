@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Symmetrical Multi-Processing</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Symmetric Multi Processing"
+HREF="c1324.html"><LINK
+REL="PREVIOUS"
+TITLE="Symmetric Multi Processing"
+HREF="c1324.html"><LINK
+REL="NEXT"
+TITLE="Common Pitfalls"
+HREF="c1350.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c1324.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Symmetric Multi Processing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c1350.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN1326"
+></A
+>13.1. Symmetrical Multi-Processing</H1
+><P
+>One of the easiest and cheapest ways to improve hardware performance is to put more than one CPU on the board.  This can
+	be done either making the different CPU's take on different jobs (asymmetrical multi-processing) or by making them all run in
+	parallel, doing the same job (symmetrical multi-processing, a.k.a. SMP).  Doing asymmetrical multi-processing effectively
+	requires specialized knowledge about the tasks the computer should do, which is unavailable in a general purpose operating
+	system such as Linux.  On the other hand, symmetrical multi-processing is relatively easy to implement.</P
+><P
+>By relatively easy, I mean exactly that: not that it's <EM
+>really</EM
+> easy.  In a symmetrical
+	multi-processing environment, the CPU's share the same memory, and as a result code running in one CPU can affect the memory
+	used by another.  You can no longer be certain that a variable you've set to a certain value in the previous line still has
+	that value; the other CPU might have played with it while you weren't looking.  Obviously, it's impossible to program like
+	this.</P
+><P
+>In the case of process programming this normally isn't an issue, because a process will normally only run on one CPU at
+	a time<A
+NAME="AEN1344"
+HREF="#FTN.AEN1344"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+>.  The
+	kernel, on the other hand, could be called by different processes running on different CPU's.</P
+><P
+>In version 2.0.x, this isn't a problem because the entire kernel is in one big spinlock.  This means that if one CPU is
+	in the kernel and another CPU wants to get in, for example because of a system call, it has to wait until the first CPU is
+	done.  This makes Linux SMP safe<A
+NAME="AEN1347"
+HREF="#FTN.AEN1347"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+>, but
+	inefficient.</P
+><P
+>In version 2.2.x, several CPU's can be in the kernel at the same time.  This is something module writers need to be
+	aware of.</P
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1344"
+HREF="x1326.html#AEN1344"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>The exception is threaded processes, which can run on several CPU's at once.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1347"
+HREF="x1326.html#AEN1347"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>Meaning it is safe to use it with SMP</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c1324.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c1350.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Symmetric Multi Processing</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c1324.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Common Pitfalls</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

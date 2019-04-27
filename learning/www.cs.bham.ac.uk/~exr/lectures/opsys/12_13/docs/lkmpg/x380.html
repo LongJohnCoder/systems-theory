@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Building modules for a precompiled kernel</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hello World"
+HREF="c119.html"><LINK
+REL="PREVIOUS"
+TITLE="Modules Spanning Multiple Files"
+HREF="x351.html"><LINK
+REL="NEXT"
+TITLE="Preliminaries"
+HREF="c425.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x351.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Hello World</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c425.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN380"
+></A
+>2.8. Building modules for a precompiled kernel</H1
+><P
+>	Obviously, we strongly suggest you to recompile your kernel, so that you can enable a number of useful debugging features, such as
+	forced module unloading (<TT
+CLASS="LITERAL"
+>MODULE_FORCE_UNLOAD</TT
+>): when this option is enabled, you can force the kernel to unload a module even  
+	when it believes it is unsafe, via a <B
+CLASS="COMMAND"
+>rmmod -f module</B
+> command. This option can save you a lot of time and a number of reboots 
+	during the development of a module.
+	</P
+><P
+>	Nevertheless, there is a number of cases in which you may want to load your module into a precompiled running kernel, such as the ones shipped
+	with common Linux distributions, or a kernel you have compiled in the past. In certain circumstances you could require to compile and insert a 
+	module into a running kernel which you are not allowed to recompile, or on a machine that you prefer not to reboot.
+	If you can't think of a case that will force you to use modules for a precompiled kernel you
+	might want to skip this and treat the rest of this chapter as a big footnote.
+	</P
+><P
+>	Now, if you just install a kernel source tree, use it to compile your kernel module and you try to insert your module into the kernel,
+	in most cases you would obtain an error as follows:
+	</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>insmod: error inserting 'poet_atkm.ko': -1 Invalid module format
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>	Less cryptical information are logged to <TT
+CLASS="FILENAME"
+>/var/log/messages</TT
+>:
+	</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Jun  4 22:07:54 localhost kernel: poet_atkm: version magic '2.6.5-1.358custom 686 
+REGPARM 4KSTACKS gcc-3.3' should be '2.6.5-1.358 686 REGPARM 4KSTACKS gcc-3.3'
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>	In other words, your kernel refuses to accept your module because version strings (more precisely, version magics) 
+	do not match. Incidentally, version magics are stored in the module object in the form of a static string, starting with 
+	<TT
+CLASS="LITERAL"
+>vermagic:</TT
+>. 
+	Version data are inserted in your module when it is linked against the <TT
+CLASS="FILENAME"
+>init/vermagic.o</TT
+> file.
+	To inspect version magics and other strings stored in a given module, issue the 
+	<B
+CLASS="COMMAND"
+>modinfo module.ko</B
+> command:
+	</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>[root@pcsenonsrv 02-HelloWorld]# modinfo hello-4.ko 
+license:        GPL
+author:         Peter Jay Salzman &#60;p@dirac.org&#62;
+description:    A sample driver
+vermagic:       2.6.5-1.358 686 REGPARM 4KSTACKS gcc-3.3
+depends:        
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>	To overcome this problem we could resort to the <B
+CLASS="COMMAND"
+>--force-vermagic</B
+> option, but this solution is potentially unsafe, 
+	and unquestionably inacceptable in production modules.
+	Consequently, we want to compile our module in an environment which was identical to the one in which our precompiled kernel was built.
+	How to do this, is the subject of the remainder of this chapter.</P
+><P
+>	First of all, make sure that a kernel source tree is available, having exactly the same version as 
+	your current kernel. Then, find the configuration file which was used to compile your precompiled kernel. 
+	Usually, this is available in your current <TT
+CLASS="FILENAME"
+>/boot</TT
+> directory, under a name like <TT
+CLASS="FILENAME"
+>config-2.6.x</TT
+>. 
+	You may just want to copy it to your kernel source tree:
+	<B
+CLASS="COMMAND"
+> cp /boot/config-`uname -r` /usr/src/linux-`uname -r`/.config</B
+>. </P
+><P
+>	Let's focus again on the previous error message: a closer look at the version magic strings suggests that, even with two configuration files
+	which are exactly the same, a slight difference in the version magic could be possible, and it is sufficient to prevent insertion of the module 
+	into the kernel.
+	That slight difference, namely the <TT
+CLASS="LITERAL"
+>custom</TT
+> string which appears in the module's version magic and not in the kernel's one,
+	is due to a modification with respect to the original, in the makefile that some distribution include.
+	Then, examine your <TT
+CLASS="FILENAME"
+>/usr/src/linux/Makefile</TT
+>, and make sure that the specified version information matches exactly the one used
+	for your current kernel. For example, you makefile could start as follows: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>VERSION = 2
+PATCHLEVEL = 6
+SUBLEVEL = 5
+EXTRAVERSION = -1.358custom
+...
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>	In this case, you need to restore the value of symbol <TT
+CLASS="LITERAL"
+>EXTRAVERSION</TT
+> to <TT
+CLASS="LITERAL"
+>-1.358</TT
+>. 
+	We suggest to keep a backup copy of the makefile used to compile your kernel available in <TT
+CLASS="FILENAME"
+>/lib/modules/2.6.5-1.358/build</TT
+>.
+	A simple <B
+CLASS="COMMAND"
+>cp /lib/modules/`uname -r`/build/Makefile /usr/src/linux-`uname -r`</B
+> should suffice.
+	Additionally, if you already started a kernel build with the previous (wrong) <TT
+CLASS="FILENAME"
+>Makefile</TT
+>, 
+	you should also rerun <B
+CLASS="COMMAND"
+>make</B
+>, or directly modify symbol <TT
+CLASS="LITERAL"
+>UTS_RELEASE</TT
+> in file 
+	<TT
+CLASS="FILENAME"
+>/usr/src/linux-2.6.x/include/linux/version.h</TT
+> according to contents of file
+	<TT
+CLASS="FILENAME"
+>/lib/modules/2.6.x/build/include/linux/version.h</TT
+>, or overwrite the latter with the first.
+	</P
+><P
+>	Now, please run <B
+CLASS="COMMAND"
+>make</B
+> to update configuration and version headers and objects:
+	</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>[root@pcsenonsrv linux-2.6.x]# make
+CHK     include/linux/version.h
+UPD     include/linux/version.h
+SYMLINK include/asm -&#62; include/asm-i386
+SPLIT   include/linux/autoconf.h -&#62; include/config/*
+HOSTCC  scripts/basic/fixdep
+HOSTCC  scripts/basic/split-include
+HOSTCC  scripts/basic/docproc
+HOSTCC  scripts/conmakehash
+HOSTCC  scripts/kallsyms
+CC      scripts/empty.o
+...
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>	If you do not desire to actually compile the kernel, you can interrupt the build process (<B
+CLASS="COMMAND"
+>CTRL-C</B
+>) just after the 
+	<TT
+CLASS="LITERAL"
+>SPLIT</TT
+> line, because at that time, the files you need will be are ready.
+	Now you can turn back to the directory of your module and compile it: It will be built exactly according your current kernel settings,
+	and it will load into it without any errors.
+	</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x351.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c425.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Modules Spanning Multiple Files</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c119.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Preliminaries</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

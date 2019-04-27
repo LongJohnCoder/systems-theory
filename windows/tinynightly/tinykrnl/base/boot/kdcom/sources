@@ -1,0 +1,28 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=kdcom
+TARGETTYPE=HAL
+TARGET_DESTINATION=system32
+
+INCLUDES=\
+         $(DDK_INC_PATH); \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\ddk\inc; \
+         ..\..\..\public\internal\base\inc
+         
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\hal.lib
+
+SOURCES=ixkdcom.c \
+        xxkdsup.c \
+        kdcom.c \
+        kdcomio.c \
+        kdcom.rc

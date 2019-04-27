@@ -1,0 +1,476 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>How Do Modules Get Into The Kernel?</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Introduction"
+HREF="c38.html"><LINK
+REL="PREVIOUS"
+TITLE="What Is A Kernel Module?"
+HREF="x40.html"><LINK
+REL="NEXT"
+TITLE="Hello World"
+HREF="c119.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x40.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 1. Introduction</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c119.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN44"
+></A
+>1.2. How Do Modules Get Into The Kernel?</H1
+><P
+>You can see what modules are already loaded into the kernel by running <B
+CLASS="COMMAND"
+>lsmod</B
+>, which gets its
+	information by reading the file <TT
+CLASS="FILENAME"
+>/proc/modules</TT
+>.</P
+><P
+>How do these modules find their way into the kernel?  When the kernel needs a feature that is not resident in the
+	kernel, the kernel module daemon kmod<A
+NAME="AEN62"
+HREF="#FTN.AEN62"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+> execs modprobe to load the module in.  modprobe is passed a string in one of two forms:</P
+><P
+></P
+><UL
+><LI
+><P
+>A module name like <TT
+CLASS="FILENAME"
+>softdog</TT
+> or <TT
+CLASS="FILENAME"
+>ppp</TT
+>.</P
+></LI
+><LI
+><P
+>A more generic identifier like <TT
+CLASS="VARNAME"
+>char-major-10-30</TT
+>.</P
+></LI
+></UL
+><P
+>If modprobe is handed a generic identifier, it first looks for that string in the file
+	<TT
+CLASS="FILENAME"
+>/etc/modprobe.conf</TT
+>.<A
+NAME="AEN74"
+HREF="#FTN.AEN74"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+>
+	If it finds an alias line like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>alias char-major-10-30 softdog
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>it knows that the generic identifier refers to the module <TT
+CLASS="FILENAME"
+>softdog.ko</TT
+>.</P
+><P
+>Next, modprobe looks through the file <TT
+CLASS="FILENAME"
+>/lib/modules/version/modules.dep</TT
+>, to see if other modules
+	must be loaded before the requested module may be loaded.  This file is created by <B
+CLASS="COMMAND"
+>depmod -a</B
+> and 
+	contains module dependencies. For example, <TT
+CLASS="FILENAME"
+>msdos.ko</TT
+> requires the <TT
+CLASS="FILENAME"
+>fat.ko</TT
+> module 
+	to be already loaded into the kernel. The requested module has a dependency on another module if the other module defines 
+	symbols	(variables or functions) that the requested module uses.</P
+><P
+>Lastly, modprobe uses insmod to first load any prerequisite modules into the kernel, and then the requested module.
+	modprobe directs insmod to <TT
+CLASS="FILENAME"
+>/lib/modules/version/</TT
+><A
+NAME="AEN87"
+HREF="#FTN.AEN87"
+><SPAN
+CLASS="footnote"
+>[3]</SPAN
+></A
+>, the standard directory for modules.  insmod is 
+	intended to be fairly dumb about the location of modules, whereas modprobe is aware of the default location of modules,
+	knows how to figure out the dependencies and load the modules in the right order.
+	So for example,	if you wanted to load the msdos module, you'd have to either run:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>insmod /lib/modules/2.6.11/kernel/fs/fat/fat.ko
+insmod /lib/modules/2.6.11/kernel/fs/msdos/msdos.ko
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+> or: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>modprobe msdos
+	</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+> What we've seen here is: <B
+CLASS="COMMAND"
+> insmod </B
+> requires you to pass it the full pathname and to insert the modules
+	in the right order, while <B
+CLASS="COMMAND"
+> modprobe </B
+> just takes the name, without any extension, and figures out
+	all it needs to know by parsing <TT
+CLASS="FILENAME"
+>/lib/modules/version/modules.dep</TT
+>.</P
+><P
+>Linux distros provide modprobe, insmod and depmod as a package called module-init-tools. In previous versions
+	that package was called modutils. Some distros also set up some wrappers that allow both packages to be installed
+	in parallel and do the right thing in order to be able to deal with 2.4 and 2.6 kernels. Users should not need to care
+	about the details, as long as they're running recent versions of those tools.</P
+><P
+>Now you know how modules get into the kernel.  There's a bit more to the story if you want to write your own modules
+	which depend on other modules (we calling this `stacking modules').  But this will have to wait for a future chapter. 
+	We have	a lot to cover before addressing this relatively high-level issue.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN99"
+></A
+>1.2.1. Before We Begin</H2
+><P
+>Before we delve into code, there are a few issues we need to cover.  Everyone's system is different and everyone has
+			their own groove.  Getting your first "hello world" program to compile and load correctly can sometimes be a trick.  Rest
+			assured, after you get over the initial hurdle of doing it for the first time, it will be smooth sailing
+			thereafter.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN102"
+></A
+>1.2.1.1. Modversioning</H3
+><P
+>A module compiled for one kernel won't load if you boot a different kernel unless you enable
+					<TT
+CLASS="LITERAL"
+>CONFIG_MODVERSIONS</TT
+> in the kernel.  We won't go into module versioning until later in this guide.
+					Until we cover modversions, the examples in the guide may not work if you're running a kernel with modversioning
+					turned on.  However, most stock Linux distro kernels come with it turned on.  If you're having trouble loading the
+					modules because of versioning errors, compile a kernel with modversioning turned off.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="USINGX"
+></A
+>1.2.1.2. Using X</H3
+><P
+>It is highly recommended that you type in, compile and load all the examples this guide discusses.  It's also
+					highly recommended you do this from a console.  You should not be working on this stuff in X.</P
+><P
+>Modules can't print to the screen like <TT
+CLASS="FUNCTION"
+>printf()</TT
+> can, but they can log information and
+					warnings, which ends up being printed on your screen, but only on a console.  If you insmod a module from an xterm,
+					the information and warnings will be logged, but only to your log files.  You won't see it unless you look through
+					your log files.  To have immediate access to this information, do all your work from the console.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN111"
+></A
+>1.2.1.3. Compiling Issues and Kernel Version</H3
+><P
+>Very often, Linux distros will distribute kernel source that has been patched in various non-standard ways,
+					which may cause trouble.</P
+><P
+>A more common problem is that some Linux distros distribute incomplete kernel headers.  You'll need to compile
+					your code using various header files from the Linux kernel.  Murphy's Law states that the headers that are missing are
+					exactly the ones that you'll need for your module work.</P
+><P
+>To avoid these two problems, I highly recommend that you download, compile and boot into a fresh, stock Linux
+					kernel which can be downloaded from any of the Linux kernel mirror sites.  See the Linux Kernel HOWTO for more
+					details.</P
+><P
+>Ironically, this can also cause a problem.  By default, gcc on your system may look for the kernel headers in
+					their default location rather than where you installed the new copy of the kernel (usually in <TT
+CLASS="FILENAME"
+>/usr/src/</TT
+>.  This can be fixed by using gcc's <TT
+CLASS="LITERAL"
+>-I</TT
+> switch.</P
+></DIV
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN62"
+HREF="x44.html#AEN62"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>In earlier versions of linux, this was known as
+	kerneld.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN74"
+HREF="x44.html#AEN74"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>If such a file exists. Note that the acual behavoir might be
+	distribution-dependent.	If you're interested in the details,read the man pages that came with module-init-tools,
+	and see for yourself what's really going on. You could use something like <B
+CLASS="COMMAND"
+> strace modprobe dummy </B
+>
+	to find out how dummy.ko gets loaded. FYI: The dummy.ko I'm talking about here is part of the mainline kernel
+	and can be found in the networking section. It needs to be compiled as a module (and installed, of course) for this to
+	work. </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN87"
+HREF="x44.html#AEN87"
+><SPAN
+CLASS="footnote"
+>[3]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>If you are modifying
+	the kernel, to avoid overwriting your existing modules you may want to use the <TT
+CLASS="VARNAME"
+>EXTRAVERSION</TT
+> variable in 
+	the kernel Makefile to create a seperate directory.</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x40.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c119.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>What Is A Kernel Module?</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c38.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Hello World</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,43 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources
+
+!ENDIF
+
+TARGETNAME=classpnp
+TARGETTYPE=EXPORT_DRIVER
+TARGET_DESTINATION=system32\drivers
+USE_OBJECT_ROOT=1
+
+INCLUDES=\
+         ..\inc; \
+         ..\..\inc; \
+         ..\..\..\public\sdk\inc;
+
+SOURCES=\
+        autorun.c   \
+        class.c     \
+        classwmi.c  \
+        class.rc    \
+        clntirp.c   \
+        create.c    \
+        dispatch.c  \
+        lock.c      \
+        utils.c     \
+        obsolete.c  \
+        data.c      \
+        dictlib.c   \
+        power.c     \
+        retry.c     \
+        xferpkt.c   \
+        debug.c     \
+        classlog.mof
+
+DLLDEF=$(OBJ_PATH)\$(O)\class.def
+
+NTTARGETFILE0=$(OBJ_PATH)\$O\classlog.h
+

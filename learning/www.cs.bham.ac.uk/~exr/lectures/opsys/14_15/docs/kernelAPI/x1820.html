@@ -1,0 +1,486 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>String Manipulation</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Basic C Library Functions"
+HREF="c1425.html"><LINK
+REL="PREVIOUS"
+TITLE="Basic C Library Functions"
+HREF="c1425.html"><LINK
+REL="NEXT"
+TITLE="strcpy"
+HREF="r1822.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c1425.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Basic C Library Functions</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r1822.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN1820"
+>3.2. String Manipulation</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r1822.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Copy a <CODE
+CLASS="CONSTANT"
+>NUL</CODE
+> terminated string
+ </DT
+><DT
+><A
+HREF="r1853.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a length-limited, <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string
+ </DT
+><DT
+><A
+HREF="r1896.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcat</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Append one <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string to another
+ </DT
+><DT
+><A
+HREF="r1927.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncat</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Append a length-limited, <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string to another
+ </DT
+><DT
+><A
+HREF="r1968.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Compare two strings
+ </DT
+><DT
+><A
+HREF="r1998.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Compare two length-limited strings
+ </DT
+><DT
+><A
+HREF="r2035.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strchr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the first occurrence of a character in a string
+ </DT
+><DT
+><A
+HREF="r2065.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strrchr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the last occurrence of a character in a string
+ </DT
+><DT
+><A
+HREF="r2095.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlen</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the length of a string
+ </DT
+><DT
+><A
+HREF="r2118.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strnlen</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the length of a length-limited string
+ </DT
+><DT
+><A
+HREF="r2148.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcspn</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Calculate the length of the initial substring of <VAR
+CLASS="PARAMETER"
+>s</VAR
+> which does
+ </DT
+><DT
+><A
+HREF="r2183.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strpbrk</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the first occurrence of a set of characters
+ </DT
+><DT
+><A
+HREF="r2213.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memset</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Fill a region of memory with the given value
+ </DT
+><DT
+><A
+HREF="r2255.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>bcopy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy one area of memory to another
+ </DT
+><DT
+><A
+HREF="r2301.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memcpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy one area of memory to another
+ </DT
+><DT
+><A
+HREF="r2343.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memmove</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy one area of memory to another
+ </DT
+><DT
+><A
+HREF="r2385.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memcmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Compare two areas of memory
+ </DT
+><DT
+><A
+HREF="r2422.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memscan</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find a character in an area of memory.
+ </DT
+><DT
+><A
+HREF="r2464.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strstr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the first substring in a <CODE
+CLASS="CONSTANT"
+>NUL</CODE
+> terminated string
+ </DT
+><DT
+><A
+HREF="r2495.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memchr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find a character in an area of memory.
+ </DT
+><DT
+><A
+HREF="r2538.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strnicmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Case insensitive, length-limited string comparison
+ </DT
+><DT
+><A
+HREF="r2575.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlcpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a <CODE
+CLASS="CONSTANT"
+>NUL</CODE
+> terminated string into a sized buffer
+ </DT
+><DT
+><A
+HREF="r2617.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlcat</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Append a length-limited, <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string to another
+ </DT
+><DT
+><A
+HREF="r2655.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strspn</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Calculate the length of the initial substring of <VAR
+CLASS="PARAMETER"
+>s</VAR
+> which only
+ </DT
+><DT
+><A
+HREF="r2690.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strsep</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Split a string into tokens
+ </DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c1425.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r1822.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Basic C Library Functions</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c1425.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcpy</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

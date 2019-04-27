@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Inode Handling</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="The Linux VFS"
+HREF="c4792.html"><LINK
+REL="PREVIOUS"
+TITLE="The Linux VFS"
+HREF="c4792.html"><LINK
+REL="NEXT"
+TITLE="clear_inode"
+HREF="r5471.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c4792.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 6. The Linux VFS</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r5471.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN5469"
+>6.2. Inode Handling</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r5471.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>clear_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   clear an inode
+ </DT
+><DT
+><A
+HREF="r5497.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>invalidate_inodes</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      discard the inodes on a device
+ </DT
+><DT
+><A
+HREF="r5523.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>new_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      obtain an inode
+ </DT
+><DT
+><A
+HREF="r5549.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iunique</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get a unique inode number
+ </DT
+><DT
+><A
+HREF="r5585.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ilookup5</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      search for an inode in the inode cache
+ </DT
+><DT
+><A
+HREF="r5643.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ilookup</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      search for an inode in the inode cache
+ </DT
+><DT
+><A
+HREF="r5681.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iget5_locked</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      obtain an inode from a mounted file system
+ </DT
+><DT
+><A
+HREF="r5754.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iget_locked</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      obtain an inode from a mounted file system
+ </DT
+><DT
+><A
+HREF="r5797.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__insert_inode_hash</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      hash an inode
+ </DT
+><DT
+><A
+HREF="r5830.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>remove_inode_hash</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove an inode from the hash
+ </DT
+><DT
+><A
+HREF="r5856.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iput</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      put an inode 
+ </DT
+><DT
+><A
+HREF="r5882.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>bmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a block number in a file
+ </DT
+><DT
+><A
+HREF="r5915.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>update_atime</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	update the access time
+ </DT
+><DT
+><A
+HREF="r5943.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>inode_update_time</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	update mtime and ctime time
+ </DT
+><DT
+><A
+HREF="r5976.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>make_bad_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   mark an inode bad due to an I/O error
+ </DT
+><DT
+><A
+HREF="r6003.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>is_bad_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is an inode errored
+ </DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c4792.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r5471.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The Linux VFS</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c4792.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>clear_inode</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

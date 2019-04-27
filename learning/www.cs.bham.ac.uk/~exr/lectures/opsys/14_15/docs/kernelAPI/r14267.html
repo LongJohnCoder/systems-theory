@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>fb_copy_cmap</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Frame Buffer Colormap"
+HREF="x14194.html"><LINK
+REL="PREVIOUS"
+TITLE="fb_dealloc_cmap"
+HREF="r14240.html"><LINK
+REL="NEXT"
+TITLE="fb_set_cmap"
+HREF="r14320.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r14240.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r14320.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN14267"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_copy_cmap</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN14271"
+></A
+><H2
+>Name</H2
+>fb_copy_cmap&nbsp;--&nbsp;      copy a colormap
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN14274"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN14276"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int fb_copy_cmap </CODE
+>(struct fb_cmap * from, struct fb_cmap * to, int fsfromto);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14286"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>from</VAR
+></DT
+><DD
+><P
+>      frame buffer colormap structure
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>to</VAR
+></DT
+><DD
+><P
+>      frame buffer colormap structure
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>fsfromto</VAR
+></DT
+><DD
+><P
+>      determine copy method
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14304"
+></A
+><H2
+>Description</H2
+><P
+>   Copy contents of colormap from <VAR
+CLASS="PARAMETER"
+>from</VAR
+> to <VAR
+CLASS="PARAMETER"
+>to</VAR
+>.
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14309"
+></A
+><H2
+>0</H2
+><P
+>    memcpy function
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14312"
+></A
+><H2
+>1</H2
+><P
+>    <CODE
+CLASS="FUNCTION"
+>copy_from_user</CODE
+> function to copy from userspace
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN14316"
+></A
+><H2
+>2</H2
+><P
+>    <CODE
+CLASS="FUNCTION"
+>copy_to_user</CODE
+> function to copy to userspace
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r14240.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r14320.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_dealloc_cmap</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="x14194.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_set_cmap</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

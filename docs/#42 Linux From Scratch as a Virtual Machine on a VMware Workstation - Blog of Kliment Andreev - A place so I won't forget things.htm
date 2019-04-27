@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html prefix="og: http://ogp.me/ns#" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blog.iandreev.com/xmlrpc.php">
+	
+	<title>#42 Linux From Scratch as a Virtual Machine on a VMware Workstation - Blog of Kliment Andreev - A place so I won't forget things</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v7.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://blog.iandreev.com/?p=729">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="#42 Linux From Scratch as a Virtual Machine on a VMware Workstation - Blog of Kliment Andreev - A place so I won't forget things">
+<meta property="og:description" content="Linux from scratch is a web-site that gives you step-by-step instructions on how to build your own version of Linux. It’s a minimal install, without any GUI even DHCP is not configured by default. The instructions are fairly straightforward but they don’t refer to any type of hardware. In this article I’ll describe how to build a bootable Linux as a VM on VMware Workstation. I strongly suggest that you read through the entire book. I’ll use shortcuts and skip stuff that’s not necessary, so it’s better to have the book in front of you. You’ll need VMware Workstation (I …">
+<meta property="og:url" content="https://blog.iandreev.com/?p=729">
+<meta property="og:site_name" content="Blog of Kliment Andreev - A place so I won't forget things">
+<meta property="article:section" content="Linux">
+<meta property="article:published_time" content="2013-09-21T08:38:30-04:00">
+<meta property="article:modified_time" content="2016-10-14T19:59:40-04:00">
+<meta property="og:updated_time" content="2016-10-14T19:59:40-04:00">
+<meta property="og:image" content="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=741%2C665&amp;ssl=1">
+<meta property="og:image:secure_url" content="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=741%2C665&amp;ssl=1">
+<meta property="og:image:width" content="741">
+<meta property="og:image:height" content="665">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Linux from scratch is a web-site that gives you step-by-step instructions on how to build your own version of Linux. It’s a minimal install, without any GUI even DHCP is not configured by default. The instructions are fairly straightforward but they don’t refer to any type of hardware. In this article I’ll describe how to build a bootable Linux as a VM on VMware Workstation. I strongly suggest that you read through the entire book. I’ll use shortcuts and skip stuff that’s not necessary, so it’s better to have the book in front of you. You’ll need VMware Workstation (I […]">
+<meta name="twitter:title" content="#42 Linux From Scratch as a Virtual Machine on a VMware Workstation - Blog of Kliment Andreev - A place so I won't forget things">
+<meta name="twitter:image" content="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=741%2C665&amp;ssl=1">
+<script async="" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/analytics.js"></script><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Person","url":"https:\/\/blog.iandreev.com\/","sameAs":[],"@id":"#person","name":"Kliment Andreev"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://secure.gravatar.com/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Blog of Kliment Andreev - A place so I won't forget things » Feed" href="https://blog.iandreev.com/?feed=rss2">
+<link rel="alternate" type="application/rss+xml" title="Blog of Kliment Andreev - A place so I won't forget things » Comments Feed" href="https://blog.iandreev.com/?feed=comments-rss2">
+<link rel="alternate" type="application/rss+xml" title="Blog of Kliment Andreev - A place so I won't forget things » #42 Linux From Scratch as a Virtual Machine on a VMware Workstation Comments Feed" href="https://blog.iandreev.com/?feed=rss2&amp;p=729">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blog.iandreev.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56692,8205,9792,65039],[55357,56692,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="ecko_plugin_css-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/eckoplugin.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/dashicons.css" type="text/css" media="all">
+<link rel="stylesheet" id="post-views-counter-frontend-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/frontend.css" type="text/css" media="all">
+<link rel="stylesheet" id="toc-screen-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/screen.css" type="text/css" media="all">
+<link rel="stylesheet" id="ecko_css-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="ecko-fonts-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack-widget-social-icons-styles-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/social-icons.css" type="text/css" media="all">
+<!--[if lte IE 8]>
+<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='https://blog.iandreev.com/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel-ie8fix.css?ver=20121024' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="jetpack_css-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/jquery.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/spin.js"></script><style type="text/css"></style>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/jquery_002.js"></script>
+<link rel="https://api.w.org/" href="https://blog.iandreev.com/index.php?rest_route=/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blog.iandreev.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blog.iandreev.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.9.6">
+<link rel="shortlink" href="https://wp.me/p5jX9w-bL">
+<link rel="alternate" type="application/json+oembed" href="https://blog.iandreev.com/index.php?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729">
+<link rel="alternate" type="text/xml+oembed" href="https://blog.iandreev.com/index.php?rest_route=%2Foembed%2F1.0%2Fembed&amp;url=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729&amp;format=xml">
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/library.js"></script>
+<!-- This code is added by WP Analytify (2.1.16) https://analytify.io/downloads/analytify-wordpress-plugin/ !-->
+					<script>
+						(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+							(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+							m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						})
+
+
+						(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+							ga('create', 'UA-47045249-1', 'auto');ga('send', 'pageview');					</script>
+
+					<!-- This code is added by WP Analytify (2.1.16) !--><style data-context="foundation-flickity-css">/*! Flickity v2.0.2
+http://flickity.metafizzy.co
+---------------------------------------------- */.flickity-enabled{position:relative}.flickity-enabled:focus{outline:0}.flickity-viewport{overflow:hidden;position:relative;height:100%}.flickity-slider{position:absolute;width:100%;height:100%}.flickity-enabled.is-draggable{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.flickity-enabled.is-draggable .flickity-viewport{cursor:move;cursor:-webkit-grab;cursor:grab}.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down{cursor:-webkit-grabbing;cursor:grabbing}.flickity-prev-next-button{position:absolute;top:50%;width:44px;height:44px;border:none;border-radius:50%;background:#fff;background:hsla(0,0%,100%,.75);cursor:pointer;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.flickity-prev-next-button:hover{background:#fff}.flickity-prev-next-button:focus{outline:0;box-shadow:0 0 0 5px #09F}.flickity-prev-next-button:active{opacity:.6}.flickity-prev-next-button.previous{left:10px}.flickity-prev-next-button.next{right:10px}.flickity-rtl .flickity-prev-next-button.previous{left:auto;right:10px}.flickity-rtl .flickity-prev-next-button.next{right:auto;left:10px}.flickity-prev-next-button:disabled{opacity:.3;cursor:auto}.flickity-prev-next-button svg{position:absolute;left:20%;top:20%;width:60%;height:60%}.flickity-prev-next-button .arrow{fill:#333}.flickity-page-dots{position:absolute;width:100%;bottom:-25px;padding:0;margin:0;list-style:none;text-align:center;line-height:1}.flickity-rtl .flickity-page-dots{direction:rtl}.flickity-page-dots .dot{display:inline-block;width:10px;height:10px;margin:0 8px;background:#333;border-radius:50%;opacity:.25;cursor:pointer}.flickity-page-dots .dot.is-selected{opacity:1}</style><style data-context="foundation-slideout-css">.slideout-menu{position:fixed;left:0;top:0;bottom:0;right:auto;z-index:0;width:256px;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}.slideout-menu.pushit-right{left:auto;right:0}.slideout-panel{position:relative;z-index:1;will-change:transform}.slideout-open,.slideout-open .slideout-panel,.slideout-open body{overflow:hidden}.slideout-open .slideout-menu{display:block}.pushit{display:none}</style>
+<link rel="dns-prefetch" href="https://v0.wordpress.com/">
+<link rel="dns-prefetch" href="https://i0.wp.com/">
+<link rel="dns-prefetch" href="https://i1.wp.com/">
+<link rel="dns-prefetch" href="https://i2.wp.com/">
+<style type="text/css">img#wpstats{display:none}</style>			<meta property="fb:app_id" content="">
+			<meta property="fb:admins" content="">
+						<meta property="og:url" content="https://blog.iandreev.com/?p=729">
+			<meta property="og:title" content="#42 Linux From Scratch as a Virtual Machine on a VMware Workstation">
+			<meta property="og:description" content="Linux from scratch is a web-site that gives you step-by-step instructions on how to build your own version of Linux. It’s a minimal install, without any GUI even DHCP is not configured by default. The instructions are fairly straightforward but they don’t refer to any type of hardware. In this article I’ll describe how to build a bootable Linux as a VM on VMware Workstation. I strongly suggest that you read through the entire book. I’ll use shortcuts and skip stuff that’s not necessary, so it’s better to have the book in front of you. You’ll need VMware Workstation (I […]">
+			<meta property="og:type" content="article">
+			<meta property="og:image" content="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=680%2C610&amp;ssl=1">
+								<style type="text/css">
+
+								
+																									.top-bar .searchnav{ display: block !important; }
+				
+																				
+																								
+																																
+												
+													body.single .header-post .background { -webkit-animation: none; -moz-animation: none; animation: none; }
+																																												
+																												
+													footer.page-footer{ display:none; }
+																
+																					.disclaimer .ecko{ display:none !important; }
+				
+								
+			 </style>
+		<link rel="stylesheet" type="text/css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/shCore.css"><link rel="stylesheet" type="text/css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/shThemeFadeToGrey.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<link rel="icon" href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2016/09/cropped-Blog_C-512.png?fit=32%2C32&amp;ssl=1" sizes="32x32">
+<link rel="icon" href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2016/09/cropped-Blog_C-512.png?fit=192%2C192&amp;ssl=1" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2016/09/cropped-Blog_C-512.png?fit=180%2C180&amp;ssl=1">
+<meta name="msapplication-TileImage" content="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2016/09/cropped-Blog_C-512.png?fit=270%2C270&amp;ssl=1">
+<style>.ios7.web-app-mode.has-fixed header{ background-color: rgba(3,122,221,.88);}</style><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/services.css"><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+
+<body class="post-template-default single single-post postid-729 single-format-standard page-layout-full-width" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+
+	<div class="backtotop"><i class="fa fa-angle-double-up"></i></div>
+
+		
+	<div class="top-bar top-bar-main top-bar-solid top-bar-scroll">
+		<div class="wrapper-body">
+			<div class="logo">
+															<h2 itemprop="headline"><a href="https://blog.iandreev.com/">Blog of Kliment Andreev – A place so I won't forget things</a></h2>
+												</div>
+			<nav>
+				<div class="option responsivenav"><span class="shownav"><i class="fa fa-bars"></i></span></div>
+				<div class="option searchnav"><span class="showsearch"><i class="fa fa-search"></i></span></div>
+				<div class="menu-main-container">
+					<div class="menu"><ul>
+<li class="page_item page-item-2747"><a href="https://blog.iandreev.com/?page_id=2747">About</a></li>
+<li class="page_item page-item-2754"><a href="https://blog.iandreev.com/?page_id=2754">Contact</a></li>
+</ul></div>
+				</div>
+			</nav>
+			<div class="searchbar">
+				<form role="search" method="get" class="searchform" action="https://blog.iandreev.com/">
+					<input name="s" class="query" placeholder="Enter Search Query..." autocomplete="off" type="text">
+					<span class="submit">Search</span>
+				</form>
+			</div>
+			<div class="responsivemenu">
+				<div class="menu"><ul>
+<li class="page_item page-item-2747"><a href="https://blog.iandreev.com/?page_id=2747">About</a></li>
+<li class="page_item page-item-2754"><a href="https://blog.iandreev.com/?page_id=2754">Contact</a></li>
+</ul></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	
+		
+	<section class="header header-post">
+		
+	<div class="top-bar top-bar-main ">
+		<div class="wrapper-body">
+			<div class="logo">
+															<h2 itemprop="headline"><a href="https://blog.iandreev.com/">Blog of Kliment Andreev – A place so I won't forget things</a></h2>
+												</div>
+			<nav>
+				<div class="option responsivenav"><span class="shownav"><i class="fa fa-bars"></i></span></div>
+				<div class="option searchnav"><span class="showsearch"><i class="fa fa-search"></i></span></div>
+				<div class="menu-main-container">
+					<div class="menu"><ul>
+<li class="page_item page-item-2747"><a href="https://blog.iandreev.com/?page_id=2747">About</a></li>
+<li class="page_item page-item-2754"><a href="https://blog.iandreev.com/?page_id=2754">Contact</a></li>
+</ul></div>
+				</div>
+			</nav>
+			<div class="searchbar">
+				<form role="search" method="get" class="searchform" action="https://blog.iandreev.com/">
+					<input name="s" class="query" placeholder="Enter Search Query..." autocomplete="off" type="text">
+					<span class="submit">Search</span>
+				</form>
+			</div>
+			<div class="responsivemenu">
+				<div class="menu"><ul>
+<li class="page_item page-item-2747"><a href="https://blog.iandreev.com/?page_id=2747">About</a></li>
+<li class="page_item page-item-2754"><a href="https://blog.iandreev.com/?page_id=2754">Contact</a></li>
+</ul></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+		<div class="background post-slider-background" style="background-image:url('https://blog.iandreev.com/wp-content/uploads/2013/09/01.png');"></div>
+		<div class="shadow"></div>
+		<div class="wrapper-body">
+			<section class="post-title post-title-header">
+				<a class="category" style="background:#7fbb00;" href="https://blog.iandreev.com/?cat=12">Linux</a>				<h1 itemprop="name headline">#42 Linux From Scratch as a Virtual Machine on a VMware Workstation</h1>
+				<hr>
+				<ul class="meta">
+					<li class="author"><a href="https://blog.iandreev.com/?author=266"><i class="fa fa-user"></i>Kliment Andreev</a></li>
+					<li class="date"><a href="https://blog.iandreev.com/?p=729"><i class="fa fa-clock-o"></i><time datetime="2013-09-21">21st Sep '13</time></a></li>
+					<li class="comments"><a href="https://blog.iandreev.com/?p=729#comments"><i class="fa fa-comments-o"></i>3</a></li>
+				</ul>
+			</section>
+			<div class="scrolltocontent">
+				<i class="fa fa-angle-double-down"></i>
+			</div>
+		</div>
+	</section>
+
+
+		<section class="page-content">
+			<div class="wrapper-body">
+
+				<div id="post-729" class="page-main post-729 post type-post status-publish format-standard has-post-thumbnail hentry category-linux post-style-banner" style="border-right: 1px solid rgb(236, 236, 236);">
+
+					
+					<section class="post-contents">
+
+						<div class="post-views post-729 entry-meta">
+			<span class="post-views-icon dashicons dashicons-visibility"></span>
+			<span class="post-views-label">Post Views: </span>
+			<span class="post-views-count">6,276</span>
+			</div><p><a href="http://www.linuxfromscratch.org/" title="Linux From Scratch" target="_blank">Linux from scratch</a>
+ is a web-site that gives you step-by-step instructions on how to build 
+your own version of Linux. It’s a minimal install, without any GUI even 
+DHCP is not configured by default. The instructions are fairly 
+straightforward but they don’t refer to any type of hardware. In this 
+article I’ll describe how to build a bootable Linux as a VM on VMware 
+Workstation. I strongly suggest that you read through the entire book. 
+I’ll use shortcuts and skip stuff that’s not necessary, so it’s better 
+to have the book in front of you. </p>
+<p>You’ll need VMware Workstation (I used version 9.0.2), LiveCD of CentOS version 6.4, putty and the <a href="http://www.linuxfromscratch.org/lfs/downloads/7.3/LFS-BOOK-7.3.pdf" target="_blank">LFS book v7.3</a>. Make sure you can allocate 2GB of RAM, 20GB disk and if you can, add 2 CPUs for faster compilation. </p>
+<p>Boot from the LiveCD and once you see the CentOS running, open the terminal from the Applications menu. </p>
+<p><a href="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture.png"><img data-attachment-id="800" data-permalink="https://blog.iandreev.com/?attachment_id=800" data-orig-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture.png?fit=639%2C274&amp;ssl=1" data-orig-size="639,274" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture" data-image-description="" data-medium-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture.png?fit=300%2C128&amp;ssl=1" data-large-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture.png?fit=639%2C274&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture.png" alt="Capture" class="aligncenter size-full wp-image-800" srcset="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture.png?w=639&amp;ssl=1 639w, https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture.png?resize=300%2C128&amp;ssl=1 300w" sizes="(max-width: 639px) 100vw, 639px" data-no-retina="true" width="639" height="274"></a></p>
+<p>Then type: </p>
+<div><div id="highlighter_520376" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">sudo</code> <code class="bash functions">fdisk</code> <code class="bash plain">-l</code></div></div></td></tr></tbody></table></div></div>
+<p>If you see <strong><em>/dev/sda</em></strong> at the end of the output, you are OK. In addition do:</p>
+<div><div id="highlighter_452382" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">sudo</code> <code class="bash functions">ifconfig</code> <code class="bash plain">-a</code></div><div class="line number2 index1 alt1"><code class="bash functions">sudo</code> <code class="bash plain">route -n</code></div></div></td></tr></tbody></table></div></div>
+<p>Make sure that you have an IP assigned to <em>eth0</em> interface and that you can actually browse the internet (e.g. <em>ping www.yahoo.com</em>
+ should resolve to some IP). Write down the IP, subnet mask, gateway and
+ the broadcast IP. You’ll need these later. Then log as root.</p>
+<div><div id="highlighter_361258" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">su</code> <code class="bash plain">-</code></div><div class="line number2 index1 alt1"><code class="bash plain">chkconfig sshd on</code></div><div class="line number3 index2 alt2"><code class="bash plain">service sshd start</code></div><div class="line number4 index3 alt1"><code class="bash plain">chkconfig iptables off</code></div><div class="line number5 index4 alt2"><code class="bash plain">service iptables stop</code></div><div class="line number6 index5 alt1"><code class="bash functions">passwd</code> <code class="bash plain">root</code></div></div></td></tr></tbody></table></div></div>
+<p>These commands enable and start the ssh daemon and disable and stop 
+the firewall. The last command asks you to change the root password. 
+We’ll use putty instead of the VM console, because it’s easier to copy 
+and paste text from the book. Create a new putty session and log as root
+ using the password that you’ve just changed and IP address that you got
+ from <em>ifconfig</em> output. Now, copy and paste the script on <strong><em>page xvii</em>i</strong> from the book. Most likely, you’ll see an output like this.</p>
+<p><a href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png"><img data-attachment-id="731" data-permalink="https://blog.iandreev.com/?attachment_id=731" data-orig-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=741%2C665&amp;ssl=1" data-orig-size="741,665" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="01" data-image-description="" data-medium-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=300%2C269&amp;ssl=1" data-large-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?fit=741%2C665&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/01.png" alt="" title="01" class="aligncenter size-full wp-image-731" srcset="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?w=741&amp;ssl=1 741w, https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/01.png?resize=300%2C269&amp;ssl=1 300w" sizes="(max-width: 741px) 100vw, 741px" data-no-retina="true" width="741" height="665"></a></p>
+<p>This tells us that we need bison, gcc and texinfo. Install them.</p>
+<div><div id="highlighter_39627" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">yum </code><code class="bash functions">install</code> <code class="bash plain">bison</code></div></div></td></tr></tbody></table></div></div>
+<p>Answer <strong><em>y</em></strong> when prompted. </p>
+<div><div id="highlighter_185396" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">ln</code> <code class="bash plain">–s </code><code class="bash plain">/usr/bin/bison</code> <code class="bash plain">/usr/bin/yacc</code></div></div></td></tr></tbody></table></div></div>
+<p>Install gcc and texinfo. </p>
+<div><div id="highlighter_71823" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">yum </code><code class="bash functions">install</code> <code class="bash functions">gcc</code></div><div class="line number2 index1 alt1"><code class="bash plain">yum </code><code class="bash functions">install</code> <code class="bash plain">texinfo</code></div></div></td></tr></tbody></table></div></div>
+<p>Mind that you are installing these programs on a RAM disk, not on a 
+drive, so if you decide to take a break, shut down the VM  and continue 
+later, you won’t be able to do so. You’ll have to do everything from the
+ beginning. </p>
+<p>Now it’s time to create the partitions. We’ll create one root partition and one swap. </p>
+<div><div id="highlighter_48892" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">fdisk</code> <code class="bash plain">/dev/sda</code></div></div></td></tr></tbody></table></div></div>
+<p>Type <strong><em>n</em></strong> for a new partition, type <strong><em>p</em></strong> for primary, type <strong><em>1</em></strong> for first partition, hit enter for default 1 and type <strong><em>+18432M</em></strong>.
+ +18432M means 18432MB or 18GB. That’s because we have 20GB drive and 
+we’ll use 18GB for the Linux partition and 2GB for swap. If you decided 
+to use a bigger or smaller disk, adjust your values.</p>
+<p><a href="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/024.jpg"><img data-attachment-id="740" data-permalink="https://blog.iandreev.com/?attachment_id=740" data-orig-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/024.jpg?fit=622%2C488&amp;ssl=1" data-orig-size="622,488" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379628543&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="02" data-image-description="" data-medium-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/024.jpg?fit=300%2C235&amp;ssl=1" data-large-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/024.jpg?fit=622%2C488&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/024.jpg" alt="" title="02" class="aligncenter size-full wp-image-740" srcset="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/024.jpg?w=622&amp;ssl=1 622w, https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/024.jpg?resize=300%2C235&amp;ssl=1 300w" sizes="(max-width: 622px) 100vw, 622px" data-no-retina="true" width="622" height="488"></a></p>
+<p>Create the swap now. Again, use <strong><em>n</em></strong> for a new partition, <strong><em>p</em></strong>
+ for a primary primary partition and use default values afterwards. This
+ will create a swap partition using the rest of the disk. Finally, type <strong><em>t</em></strong> to change the the type of the partition number <strong><em>2</em></strong>, and use code <strong><em>82</em></strong> for swap. </p>
+<p><a href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/03.jpg"><img data-attachment-id="741" data-permalink="https://blog.iandreev.com/?attachment_id=741" data-orig-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/03.jpg?fit=635%2C506&amp;ssl=1" data-orig-size="635,506" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379628866&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="03" data-image-description="" data-medium-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/03.jpg?fit=300%2C239&amp;ssl=1" data-large-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/03.jpg?fit=635%2C506&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/03.jpg" alt="" title="03" class="aligncenter size-full wp-image-741" srcset="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/03.jpg?w=635&amp;ssl=1 635w, https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/03.jpg?resize=300%2C239&amp;ssl=1 300w" sizes="(max-width: 635px) 100vw, 635px" data-no-retina="true" width="635" height="506"></a></p>
+<p>Write the changes using <strong><em>w</em></strong> and then do:</p>
+<div><div id="highlighter_405563" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">fdisk</code> <code class="bash plain">-l</code></div></div></td></tr></tbody></table></div></div>
+<p>You should have an output like this at the end.</p>
+<p><a href="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/04.jpg"><img data-attachment-id="742" data-permalink="https://blog.iandreev.com/?attachment_id=742" data-orig-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/04.jpg?fit=636%2C346&amp;ssl=1" data-orig-size="636,346" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379628988&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="04" data-image-description="" data-medium-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/04.jpg?fit=300%2C163&amp;ssl=1" data-large-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/04.jpg?fit=636%2C346&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/04.jpg" alt="" title="04" class="aligncenter size-full wp-image-742" srcset="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/04.jpg?w=636&amp;ssl=1 636w, https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/04.jpg?resize=300%2C163&amp;ssl=1 300w" sizes="(max-width: 636px) 100vw, 636px" data-no-retina="true" width="636" height="346"></a></p>
+<p>Create the partitions. </p>
+<div><div id="highlighter_227154" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">mke2fs -jv </code><code class="bash plain">/dev/sda1</code></div><div class="line number2 index1 alt1"><code class="bash plain">mkswap </code><code class="bash plain">/dev/sda2</code></div></div></td></tr></tbody></table></div></div>
+<p>Look at page 15, paragraph <em>2.4. Mounting the New Partition</em> and execute those commands. Replace <strong><em><xxx></xxx></em></strong> with <strong><em>sda1</em></strong>. We won’t have any separate partition for <strong><em>/usr</em></strong>, so the commands are:</p>
+<p><a href="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/06.jpg"><img data-attachment-id="744" data-permalink="https://blog.iandreev.com/?attachment_id=744" data-orig-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/06.jpg?fit=645%2C495&amp;ssl=1" data-orig-size="645,495" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379629400&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="06" data-image-description="" data-medium-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/06.jpg?fit=300%2C230&amp;ssl=1" data-large-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/06.jpg?fit=645%2C495&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/06.jpg" alt="" title="06" class="aligncenter size-full wp-image-744" srcset="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/06.jpg?w=645&amp;ssl=1 645w, https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/06.jpg?resize=300%2C230&amp;ssl=1 300w" sizes="(max-width: 645px) 100vw, 645px" data-no-retina="true" width="645" height="495"></a></p>
+<p>Execute these three commands: </p>
+<div><div id="highlighter_437257" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">mkdir</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">$LFS</code><code class="bash plain">/sources</code></div><div class="line number2 index1 alt1"><code class="bash functions">chmod</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">a+wt $LFS</code><code class="bash plain">/sources</code></div><div class="line number3 index2 alt2"><code class="bash functions">cd</code> <code class="bash plain">/mnt/lfs/sources</code></div></div></td></tr></tbody></table></div></div>
+<p>At this point if you want to shut down the VM and continue later, 
+you’ll still have to go through enabling sshd, disabling firewall, 
+installing gcc, bison…and executing the commands for defining the LFS. 
+The only thing that you don’t have to do is the fdisk part and creating 
+partitions. </p>
+<p>The next part deals with downloading all of the necessary programs. I made a list with the URL links, so download this file <a href="http://blog.iandreev.com/wp-content/uploads/2013/09/wget-list.txt">file</a>, once it opens up in a browser, select all, copy, then go back to your putty session. There, type:</p>
+<div><div id="highlighter_390412" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">vi</code> <code class="bash plain">wget-list</code></div></div></td></tr></tbody></table></div></div>
+<p>Then hit <strong><em>i</em></strong> key, right-click to paste, hit <strong><em>ESC</em></strong> and then hit <strong><em>:wq</em></strong> to save and quit. You should have a file called wget-list. Type the following command to verify.</p>
+<div><div id="highlighter_534713" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">ls</code> <code class="bash plain">-l</code></div></div></td></tr></tbody></table></div></div>
+<p>Make sure that you are actually in sources folder by issuing <em>pwd</em> command. </p>
+<div><div id="highlighter_447655" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">pwd</code></div></div></td></tr></tbody></table></div></div>
+<p>Now, execute <em>wget</em> to download all of the sources.</p>
+<div><div id="highlighter_684847" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">wget -i wget-list -P $LFS</code><code class="bash plain">/sources</code></div></div></td></tr></tbody></table></div></div>
+<p>The only program that I had problems downloading it was zlib, so you 
+can execute this command below. Hit ENTER once it completes. In 
+addition, when you start the installation of all these 71 files that 
+you’ve downloaded, some might be missing in case some of the URLs 
+change. In that case, just google e.g. zlib-1.2.tar.bz2 for example and 
+once you found the link, do <em>wget link</em>. Same thing that I did with zlib (command below).</p>
+<div><div id="highlighter_700752" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">wget http:</code><code class="bash plain">//downloads</code><code class="bash plain">.sourceforge.net</code><code class="bash plain">/project/libpng/zlib/1</code><code class="bash plain">.2.7</code><code class="bash plain">/zlib-1</code><code class="bash plain">.2.7.</code><code class="bash functions">tar</code><code class="bash plain">.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Flibpng%2Ffiles%2Fzlib%2F1.2.7%2F&amp;amp;ts=1376492544&amp;amp;use_mirror=hivelocity</code></div></div></td></tr></tbody></table></div></div>
+<p>Once all files are downloaded, type:</p>
+<div><div id="highlighter_157090" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">ls</code> <code class="bash plain">| </code><code class="bash functions">wc</code> <code class="bash plain">-l</code></div></div></td></tr></tbody></table></div></div>
+<p>You should have 72 as a result. 71 files + the wget-list file. If the
+ number is not correct, scroll up in putty and see what failed. You 
+might also want to increase the number of scrollback buffer lines in 
+putty.</p>
+<p>Finally, execute these commands.</p>
+<div><div id="highlighter_793372" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">mkdir</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">$LFS</code><code class="bash plain">/tools</code></div><div class="line number2 index1 alt1"><code class="bash functions">ln</code> <code class="bash plain">-sv $LFS</code><code class="bash plain">/tools</code> <code class="bash plain">/</code></div></div></td></tr></tbody></table></div></div>
+<p>Look at page 27, <em>4.3. Adding the LFS user</em> and <em>4.4. Setting Up the Environment</em>. Do exactly what they say. </p>
+<p>Now that we have all the sources downloaded, we need to install them.
+ This is a screenshot from the book. It says that it is very important 
+and it is. </p>
+<p><a href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/08.jpg"><img data-attachment-id="752" data-permalink="https://blog.iandreev.com/?attachment_id=752" data-orig-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/08.jpg?fit=648%2C260&amp;ssl=1" data-orig-size="648,260" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379631809&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="08" data-image-description="" data-medium-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/08.jpg?fit=300%2C120&amp;ssl=1" data-large-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/08.jpg?fit=648%2C260&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/08.jpg" alt="" title="08" class="aligncenter size-full wp-image-752" srcset="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/08.jpg?w=648&amp;ssl=1 648w, https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/08.jpg?resize=300%2C120&amp;ssl=1 300w" sizes="(max-width: 648px) 100vw, 648px" data-no-retina="true" width="648" height="260"></a></p>
+<p>In other words, once you are in <strong><em>/mnt/lfs/sources</em></strong>, you’ll be doing <strong><em>tar xvf <filename></filename></em></strong> for all sources as described starting as of page 35. For example for the first source you’ll do:</p>
+<p><a href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/091.jpg"><img data-attachment-id="754" data-permalink="https://blog.iandreev.com/?attachment_id=754" data-orig-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/091.jpg?fit=472%2C135&amp;ssl=1" data-orig-size="472,135" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379632230&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="09" data-image-description="" data-medium-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/091.jpg?fit=300%2C85&amp;ssl=1" data-large-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/091.jpg?fit=472%2C135&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/091.jpg" alt="" title="09" class="aligncenter size-full wp-image-754" srcset="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/091.jpg?w=472&amp;ssl=1 472w, https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/091.jpg?resize=300%2C85&amp;ssl=1 300w" sizes="(max-width: 472px) 100vw, 472px" data-no-retina="true" width="472" height="135"></a></p>
+<p>IMPORTANT: make sure that you are in <strong><em>/mnt/lfs/sources</em></strong>, do <strong><em>tar xvf whatever.gz</em></strong> or <strong><em>tar xvf whatever.xz</em></strong>. Once the files are extracted you’ll have to <strong><em>cd</em></strong> to that directory and follow up the instructions for compiling the source. Once you are done, go back using <strong><em>cd ..</em></strong>, and then delete the source extract folder with <strong><em>rm -Rf binutils-2.23.1</em></strong>
+ and any other directories that you were instructed to do so. If you 
+don’t do that, you’ll have problems when compiling these same programs 
+later. </p>
+<p>So, for the first program we’ll have to execute:</p>
+<div><div id="highlighter_490481" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">tar</code> <code class="bash plain">xvf binutils-2.23.1.</code><code class="bash functions">tar</code><code class="bash plain">.bz2</code></div><div class="line number2 index1 alt1"><code class="bash functions">cd</code> <code class="bash plain">binutils-2.23.1</code></div></div></td></tr></tbody></table></div></div>
+<p>follow the instructions on page 35.</p>
+<div><div id="highlighter_368685" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">mkdir</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">..</code><code class="bash plain">/binutils-build</code></div><div class="line number2 index1 alt1"><code class="bash functions">cd</code> <code class="bash plain">..</code><code class="bash plain">/binutils-build</code></div><div class="line number3 index2 alt2"><code class="bash plain">..</code><code class="bash plain">/binutils-2</code><code class="bash plain">.23.1</code><code class="bash plain">/configure</code> <code class="bash plain">\</code></div><div class="line number4 index3 alt1"><code class="bash plain">--prefix=</code><code class="bash plain">/tools</code> <code class="bash plain">\</code></div><div class="line number5 index4 alt2"><code class="bash plain">--with-sysroot=$LFS \</code></div><div class="line number6 index5 alt1"><code class="bash plain">--with-lib-path=</code><code class="bash plain">/tools/lib</code> <code class="bash plain">\</code></div><div class="line number7 index6 alt2"><code class="bash plain">--target=$LFS_TGT \</code></div><div class="line number8 index7 alt1"><code class="bash plain">--disable-nls \</code></div><div class="line number9 index8 alt2"><code class="bash plain">--disable-werror</code></div></div></td></tr></tbody></table></div></div>
+<p>The book mentions something called SBU (Standard Build Unit). For 
+Binutils, SBU is 1.0 (you’ll see SBU value for all sources in the book).
+ The SBU value depends on your hardware. On my laptop 1 SBU is about 5 
+mins. To check how much is 1 SBU on your computer, do <strong><em>time make -j2</em></strong> when compiling binutils. So, when it tells you to do <strong><em>make</em></strong>, do <strong><em>make -j2</em></strong>. If the book says it will take 5 SBUs, it means it takes about 25 minutes.</p>
+<p><a href="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/10.jpg"><img data-attachment-id="790" data-permalink="https://blog.iandreev.com/?attachment_id=790" data-orig-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/10.jpg?fit=648%2C317&amp;ssl=1" data-orig-size="648,317" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Kliment Andreev&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1379792547&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="10" data-image-description="" data-medium-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/10.jpg?fit=300%2C146&amp;ssl=1" data-large-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/10.jpg?fit=648%2C317&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/10.jpg" alt="" title="10" class="aligncenter size-full wp-image-790" srcset="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/10.jpg?w=648&amp;ssl=1 648w, https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/10.jpg?resize=300%2C146&amp;ssl=1 300w" sizes="(max-width: 648px) 100vw, 648px" data-no-retina="true" width="648" height="317"></a> </p>
+<p>Finally, type:</p>
+<div><div id="highlighter_498733" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">make</code> <code class="bash functions">install</code></div><div class="line number2 index1 alt1"><code class="bash functions">cd</code> <code class="bash plain">..</code></div><div class="line number3 index2 alt2"><code class="bash functions">rm</code> <code class="bash plain">-Rf binutils-build</code></div><div class="line number4 index3 alt1"><code class="bash functions">rm</code> <code class="bash plain">-Rf binutils-2.23.1</code></div></div></td></tr></tbody></table></div></div>
+<p>If you get an error when you do <em>make install</em>, type <em>exit</em> and then:</p>
+<div><div id="highlighter_731459" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">chown</code> <code class="bash plain">-R lfs tools</code></div><div class="line number2 index1 alt1"><code class="bash functions">su</code> <code class="bash plain">- lfs</code></div><div class="line number3 index2 alt2"><code class="bash functions">cd</code> <code class="bash plain">/mnt/lfs/sources/binutils-build</code></div><div class="line number4 index3 alt1"><code class="bash functions">make</code> <code class="bash functions">install</code></div></div></td></tr></tbody></table></div></div>
+<p>From now on, everything should be straightforward as described in the
+ book. Follow the instructions to build the rest of the sources and stop
+ once you reach page 74. </p>
+<p>Once you have compiled all of the sources, type <em>exit</em> to go back logged as root. Make sure that <em><strong>echo $LFS</strong></em> returns <em><strong>/mnt/lfs</strong></em>. Otherwise, you’ll have to define it and make sure that the <em>/dev/sda1</em> is mounted. Skip the stripping part at paragraph <em>5.33 Stripping</em> and proceed with paragraph <em>5.34 Changing Ownership</em> logged as root. Do:</p>
+<div><div id="highlighter_451725" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">chown</code> <code class="bash plain">-R root:root $LFS</code><code class="bash plain">/tools</code></div></div></td></tr></tbody></table></div></div>
+<p>Then, follow up instructions closely up to page 85. Once you reach page 86, make sure that you are in <strong><em>/sources</em></strong> folder. This is the same <strong><em>/mnt/lfs/sources</em></strong> folder, but this time you are running in <strong><em><a href="http://en.wikipedia.org/wiki/Chroot" target="_blank">chroot</a></em></strong> environment. At this point, LFS does not have to be defined. The same rules apply here as well: Make sure you are in <em><strong>/sources</strong></em> environment, extract the tarball with <em><strong>tar xvf, cd </strong></em>to that folder and follow up the instructions. For example, for the first tarball, do:</p>
+<div><div id="highlighter_128039" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">tar</code> <code class="bash plain">xvf linux-3.8.1.</code><code class="bash functions">tar</code><code class="bash plain">.xz</code></div><div class="line number2 index1 alt1"><code class="bash functions">cd</code> <code class="bash plain">linux-3.8.1</code></div><div class="line number3 index2 alt2"><code class="bash functions">make</code> <code class="bash plain">mrporper</code></div><div class="line number4 index3 alt1"><code class="bash functions">make</code> <code class="bash plain">headers_check</code></div><div class="line number5 index4 alt2"><code class="bash functions">make</code> <code class="bash plain">INSTALL_HDR_PATH=dest headers_install</code></div><div class="line number6 index5 alt1"><code class="bash functions">find</code> <code class="bash plain">dest</code><code class="bash plain">/include</code> <code class="bash plain">\( -name .</code><code class="bash functions">install</code> <code class="bash plain">-o -name ..</code><code class="bash functions">install</code><code class="bash plain">.cmd \) -delete</code></div><div class="line number7 index6 alt2"><code class="bash functions">cp</code> <code class="bash plain">-rv dest</code><code class="bash plain">/include/</code><code class="bash plain">* </code><code class="bash plain">/usr/include</code></div><div class="line number8 index7 alt1"><code class="bash functions">cd</code> <code class="bash plain">..</code></div><div class="line number9 index8 alt2"><code class="bash functions">rm</code> <code class="bash plain">-Rf linux-3.8.1</code></div></div></td></tr></tbody></table></div></div>
+<p>Similarly to what you did before, just follow up instructions for all
+ tarballs. Pay special attention for the checks especially for binutils,
+ gcc and mpfr. Once you reach page 196, feel free to skip paragraph <em>6.63 About Debugging Symbols</em> and <em>6.64 Stripping Again</em>. Now, type:</p>
+<div><div id="highlighter_878150" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">logout</code></div></div></td></tr></tbody></table></div></div>
+<p>and re-enter again with:</p>
+<div><div id="highlighter_216523" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">chroot </code><code class="bash string">"$LFS"</code> <code class="bash plain">/usr/bin/env</code> <code class="bash plain">-i \</code></div><div class="line number2 index1 alt1"><code class="bash plain">HOME=</code><code class="bash plain">/root</code> <code class="bash plain">TERM=</code><code class="bash string">"$TERM"</code> <code class="bash plain">PS1=</code><code class="bash string">'\u:\w\$ '</code> <code class="bash plain">\</code></div><div class="line number3 index2 alt2"><code class="bash plain">PATH=</code><code class="bash plain">/bin</code><code class="bash plain">:</code><code class="bash plain">/usr/bin</code><code class="bash plain">:</code><code class="bash plain">/sbin</code><code class="bash plain">:</code><code class="bash plain">/usr/sbin</code> <code class="bash plain">\</code></div><div class="line number4 index3 alt1"><code class="bash plain">/bin/bash</code> <code class="bash plain">--login</code></div></div></td></tr></tbody></table></div></div>
+<p>Create the network interface configuration file. </p>
+<div><div id="highlighter_682779" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">cd</code> <code class="bash plain">/etc/sysconfig/</code></div><div class="line number2 index1 alt1"><code class="bash functions">cat</code> <code class="bash plain">&gt; </code><code class="bash functions">ifconfig</code><code class="bash plain">.eth0 &lt;&lt; </code><code class="bash string">"EOF"</code></div><div class="line number3 index2 alt2"><code class="bash plain">ONBOOT=</code><code class="bash functions">yes</code></div><div class="line number4 index3 alt1"><code class="bash plain">IFACE=eth0</code></div><div class="line number5 index4 alt2"><code class="bash plain">SERVICE=ipv4-static</code></div><div class="line number6 index5 alt1"><code class="bash plain">IP=192.168.1.1</code></div><div class="line number7 index6 alt2"><code class="bash plain">GATEWAY=192.168.1.2</code></div><div class="line number8 index7 alt1"><code class="bash plain">PREFIX=24</code></div><div class="line number9 index8 alt2"><code class="bash plain">BROADCAST=192.168.1.255</code></div><div class="line number10 index9 alt1"><code class="bash plain">EOF</code></div></div></td></tr></tbody></table></div></div>
+<p>Mind that DHCP won’t work. There is a section in the book <a href="http://www.linuxfromscratch.org/blfs/" target="_blank">Beyond LFS</a>
+ that explains how to use DHCP. For now, just pick up a static IP that 
+you can use. If your NIC in VMware Workstation is set for “Bridged”, 
+then use an IP that’s in the same subnet as your Windows 7 host. If you 
+use NAT, then the IP will most likely be in 192.168.something segment. 
+Next, create the <strong><em>resolv.conf</em></strong> file. I use my 
+provider’s DNS and one Google’s DNS. In my case it looks like this. If 
+you are not on a Comcast network, put Google’s DNS first.</p>
+<p><a href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture01.png"><img data-attachment-id="812" data-permalink="https://blog.iandreev.com/?attachment_id=812" data-orig-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture01.png?fit=373%2C204&amp;ssl=1" data-orig-size="373,204" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture01" data-image-description="" data-medium-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture01.png?fit=300%2C164&amp;ssl=1" data-large-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture01.png?fit=373%2C204&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture01.png" alt="Capture01" class="aligncenter size-full wp-image-812" srcset="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture01.png?w=373&amp;ssl=1 373w, https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture01.png?resize=300%2C164&amp;ssl=1 300w" sizes="(max-width: 373px) 100vw, 373px" data-no-retina="true" width="373" height="204"></a></p>
+<p>Create the <strong><em>/etc/hosts</em></strong> file as described on page 203. In my case, it looks like this.</p>
+<p><a href="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture02.png"><img data-attachment-id="813" data-permalink="https://blog.iandreev.com/?attachment_id=813" data-orig-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture02.png?fit=504%2C195&amp;ssl=1" data-orig-size="504,195" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture02" data-image-description="" data-medium-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture02.png?fit=300%2C116&amp;ssl=1" data-large-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture02.png?fit=504%2C195&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture02.png" alt="Capture02" class="aligncenter size-full wp-image-813" srcset="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture02.png?w=504&amp;ssl=1 504w, https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture02.png?resize=300%2C116&amp;ssl=1 300w" sizes="(max-width: 504px) 100vw, 504px" data-no-retina="true" width="504" height="195"></a></p>
+<p>Read everything up to page 209, when you need to install the bootscripts. Then, configure Sysvinit as described in paragraph <em>7.7.1 Configuring Sysvinit</em>. Follow the instructions up to page 222 and for the locale on page 222 use <em><strong>en_US.iso88591</strong></em>.</p>
+<p>Finally for <em><strong>/etc/fstab</strong></em>, I’ve used these settings.</p>
+<p><a href="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture03.png"><img data-attachment-id="814" data-permalink="https://blog.iandreev.com/?attachment_id=814" data-orig-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture03.png?fit=555%2C318&amp;ssl=1" data-orig-size="555,318" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture03" data-image-description="" data-medium-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture03.png?fit=300%2C171&amp;ssl=1" data-large-file="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture03.png?fit=555%2C318&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture03.png" alt="Capture03" class="aligncenter size-full wp-image-814" srcset="https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture03.png?w=555&amp;ssl=1 555w, https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture03.png?resize=300%2C171&amp;ssl=1 300w" sizes="(max-width: 555px) 100vw, 555px" data-no-retina="true" width="555" height="318"></a></p>
+<p>Now, the most important part comes with the kernel configuration and 
+compiling. The book is vague about what options to use, and if you don’t
+ use the proper options, the server will boot up and stop with a kernel 
+panic error. </p>
+<p>So, do:</p>
+<div><div id="highlighter_573595" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">cd</code> <code class="bash plain">/sources</code></div><div class="line number2 index1 alt1"><code class="bash functions">tar</code> <code class="bash plain">xvf linux-3.8.1.</code><code class="bash functions">tar</code><code class="bash plain">.xz</code></div><div class="line number3 index2 alt2"><code class="bash functions">cd</code> <code class="bash plain">linux-3.8.1</code></div><div class="line number4 index3 alt1"><code class="bash functions">make</code> <code class="bash plain">mrproper</code></div><div class="line number5 index4 alt2"><code class="bash functions">make</code> <code class="bash plain">menuconfig</code></div></div></td></tr></tbody></table></div></div>
+<p>When this screen shows up, make sure you know how to navigate and select/deselect options. It’s fairly simple.</p>
+<p><a href="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture04.png"><img data-attachment-id="815" data-permalink="https://blog.iandreev.com/?attachment_id=815" data-orig-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture04.png?fit=624%2C538&amp;ssl=1" data-orig-size="624,538" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture04" data-image-description="" data-medium-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture04.png?fit=300%2C258&amp;ssl=1" data-large-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture04.png?fit=624%2C538&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture04.png" alt="Capture04" class="aligncenter size-full wp-image-815" srcset="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture04.png?w=624&amp;ssl=1 624w, https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture04.png?resize=300%2C258&amp;ssl=1 300w" sizes="(max-width: 624px) 100vw, 624px" data-no-retina="true" width="624" height="538"></a></p>
+<p>For LFS to work as a VM, you must select (built-in, not module):</p>
+<p>– Device Drivers, Generic Driver Options, Maintain a devtmpfs filesystem to mount at /dev<br>
+– Device Drivers, Network device support, Ethernet Driver support, AMD PCnet32 PCI support<br>
+– Device Drivers, Fusion MPT device support (select the three drivers for SPI, FC, SAS)<br>
+– Device Drivers, SCSI device support, SCSI low-level drivers<br>
+– File Systems, Ext3 Journaling file system support</p>
+<p>Once you exit the kernel configuration, do: </p>
+<div><div id="highlighter_30655" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">make</code></div><div class="line number2 index1 alt1"><code class="bash functions">make</code> <code class="bash plain">modules_install</code></div><div class="line number3 index2 alt2"><code class="bash functions">cp</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">arch</code><code class="bash plain">/x86/boot/bzImage</code> <code class="bash plain">/boot/vmlinuz-3</code><code class="bash plain">.8.1-lfs-7.3</code></div><div class="line number4 index3 alt1"><code class="bash functions">cp</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">System.map </code><code class="bash plain">/boot/System</code><code class="bash plain">.map-3.8.1</code></div><div class="line number5 index4 alt2"><code class="bash functions">cp</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">.config </code><code class="bash plain">/boot/config-3</code><code class="bash plain">.8.1</code></div><div class="line number6 index5 alt1"><code class="bash functions">install</code> <code class="bash plain">-d </code><code class="bash plain">/usr/share/doc/linux-3</code><code class="bash plain">.8.1</code></div><div class="line number7 index6 alt2"><code class="bash functions">cp</code> <code class="bash plain">-r Documentation/* </code><code class="bash plain">/usr/share/doc/linux-3</code><code class="bash plain">.8.1</code></div></div></td></tr></tbody></table></div></div>
+<p>Finally, create <strong><em>/etc/modprobe.d/usb.conf</em></strong> by running the following:</p>
+<div><div id="highlighter_133875" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">install</code> <code class="bash plain">-</code><code class="bash functions">v</code> <code class="bash plain">-m755 -d </code><code class="bash plain">/etc/modprobe</code><code class="bash plain">.d</code></div><div class="line number2 index1 alt1"><code class="bash functions">cat</code> <code class="bash plain">&gt; </code><code class="bash plain">/etc/modprobe</code><code class="bash plain">.d</code><code class="bash plain">/usb</code><code class="bash plain">.conf &lt;&lt; </code><code class="bash string">"EOF"</code></div><div class="line number3 index2 alt2"><code class="bash comments"># Begin /etc/modprobe.d/usb.conf</code></div><div class="line number4 index3 alt1"><code class="bash functions">install</code> <code class="bash plain">ohci_hcd </code><code class="bash plain">/sbin/modprobe</code> <code class="bash plain">ehci_hcd ; </code><code class="bash plain">/sbin/modprobe</code> <code class="bash plain">-i ohci_hcd ; </code><code class="bash functions">true</code></div><div class="line number5 index4 alt2"><code class="bash functions">install</code> <code class="bash plain">uhci_hcd </code><code class="bash plain">/sbin/modprobe</code> <code class="bash plain">ehci_hcd ; </code><code class="bash plain">/sbin/modprobe</code> <code class="bash plain">-i uhci_hcd ; </code><code class="bash functions">true</code></div><div class="line number6 index5 alt1"><code class="bash comments"># End /etc/modprobe.d/usb.conf</code></div><div class="line number7 index6 alt2"><code class="bash plain">EOF</code></div></div></td></tr></tbody></table></div></div>
+<p>Now, install the GRUB bootloader with:</p>
+<div><div id="highlighter_227215" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">grub-</code><code class="bash functions">install</code> <code class="bash plain">/dev/sda</code></div></div></td></tr></tbody></table></div></div>
+<p>When it completes, create the bootloader config file with:</p>
+<div><div id="highlighter_280141" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">cat</code> <code class="bash plain">&gt; </code><code class="bash plain">/boot/grub/grub</code><code class="bash plain">.cfg &lt;&lt; </code><code class="bash string">"EOF"</code></div><div class="line number2 index1 alt1"><code class="bash comments"># Begin /boot/grub/grub.cfg</code></div><div class="line number3 index2 alt2"><code class="bash functions">set</code> <code class="bash plain">default=0</code></div><div class="line number4 index3 alt1"><code class="bash functions">set</code> <code class="bash plain">timeout=5</code></div><div class="line number5 index4 alt2"><code class="bash plain">insmod ext2</code></div><div class="line number6 index5 alt1"><code class="bash functions">set</code> <code class="bash plain">root=(hd0,1)</code></div><div class="line number7 index6 alt2"><code class="bash plain">menuentry </code><code class="bash string">"GNU/Linux, Linux 3.8.1-lfs-7.3"</code> <code class="bash plain">{</code></div><div class="line number8 index7 alt1"><code class="bash plain">linux </code><code class="bash plain">/boot/vmlinuz-3</code><code class="bash plain">.8.1-lfs-7.3 root=</code><code class="bash plain">/dev/sda1</code> <code class="bash plain">ro</code></div><div class="line number9 index8 alt2"><code class="bash plain">}</code></div><div class="line number10 index9 alt1"><code class="bash plain">EOF</code></div></div></td></tr></tbody></table></div></div>
+<p>Command <strong><em>set root=hd(0,1)</em></strong> means we will use 
+first hard drive (0) and the first partition (1). The syntax is 
+misleading, but it’s how it works. The parameter <strong><em>root=/dev/sda1</em></strong> means that <strong><em>/dev/sda1</em></strong> is where our root partition is.</p>
+<p>That’s it. Follow the simple clean-up in paragraph <em>9. The End</em>, and reboot with:</p>
+<div><div id="highlighter_902049" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">shutdown</code> <code class="bash plain">-r now</code></div></div></td></tr></tbody></table></div></div>
+<p>At this point, you want to disconnect the ISO image that you used to 
+boot CentOS, so the VM boots up from the HDD, not the ISO image. If 
+everything is OK, you’ll see the GRUB loader.</p>
+<p><a href="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture05.png"><img data-attachment-id="827" data-permalink="https://blog.iandreev.com/?attachment_id=827" data-orig-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture05.png?fit=718%2C393&amp;ssl=1" data-orig-size="718,393" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture05" data-image-description="" data-medium-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture05.png?fit=300%2C164&amp;ssl=1" data-large-file="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture05.png?fit=718%2C393&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture05.png" alt="Capture05" class="aligncenter size-full wp-image-827" srcset="https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture05.png?w=718&amp;ssl=1 718w, https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture05.png?resize=300%2C164&amp;ssl=1 300w" sizes="(max-width: 718px) 100vw, 718px" data-no-retina="true" width="718" height="393"></a></p>
+<p>….and if the kernel was properly configured and compiled, you’ll get the root prompt.</p>
+<p><a href="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture06.png"><img data-attachment-id="828" data-permalink="https://blog.iandreev.com/?attachment_id=828" data-orig-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture06.png?fit=724%2C493&amp;ssl=1" data-orig-size="724,493" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture06" data-image-description="" data-medium-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture06.png?fit=300%2C204&amp;ssl=1" data-large-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture06.png?fit=724%2C493&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture06.png" alt="Capture06" class="aligncenter size-full wp-image-828" srcset="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture06.png?w=724&amp;ssl=1 724w, https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture06.png?resize=300%2C204&amp;ssl=1 300w" sizes="(max-width: 724px) 100vw, 724px" data-no-retina="true" width="724" height="493"></a></p>
+<p>From the last screenshot, you can see that the NIC card was not recognized as <em>eth0</em>. But, look closer at the top of the screenshot and you’ll see that the NIC was renamed as <em>enp2s1</em>.
+ That’s because of the udev scripts. I didn’t have any success in making
+ the NIC work as eth0, so in order to make the NIC work, just log as 
+root. Then:</p>
+<div><div id="highlighter_310900" class="syntaxhighlighter  bash"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">mv</code> <code class="bash plain">/etc/sysconfig/ifconfig</code><code class="bash plain">.eth0 </code><code class="bash plain">/etc/sysconfig/ifconfig</code><code class="bash plain">.enp2s1</code></div></div></td></tr></tbody></table></div></div>
+<p>Edit the <strong>ifconfig.enp2s1</strong> file with vi or vim and change <strong><em>IFACE=eth0</em></strong> to <em><strong>IFACE=enp2s1</strong></em>.</p>
+<p>As previously mentioned, make sure you assign a static IP (you wrote 
+down that IP from the beginning, right?) that can reach the outside 
+world, either by using NAT or Bridged settings under NIC settings in 
+VMware Workstation. </p>
+<p><a href="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture1.png"><img data-attachment-id="837" data-permalink="https://blog.iandreev.com/?attachment_id=837" data-orig-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture1.png?fit=585%2C161&amp;ssl=1" data-orig-size="585,161" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Capture" data-image-description="" data-medium-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture1.png?fit=300%2C82&amp;ssl=1" data-large-file="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture1.png?fit=585%2C161&amp;ssl=1" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture1_002.png" alt="Capture" class="aligncenter size-full wp-image-837" srcset="https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture1.png?w=585&amp;ssl=1 585w, https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2013/09/Capture1.png?resize=300%2C82&amp;ssl=1 300w" sizes="(max-width: 585px) 100vw, 585px" data-no-retina="true" width="585" height="161"></a></p>
+<p>Once you are able to ping the outside world, I can only say CONGRATULATIONS!!!</p>
+
+						<div class="post-numbers">
+													</div>
+
+						
+	<div class="post-footer">
+		<div class="post-tags">
+					</div>
+		<ul class="post-social-share">
+			<li class="title">Share:</li>
+			<li><a href="http://twitter.com/share?text=%2342+Linux+From+Scratch+as+a+Virtual+Machine+on+a+VMware+Workstation&amp;url=https://blog.iandreev.com/?p=729" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Twitter" class="socialdark twitter"><i class="fa fa-twitter"></i></a></li>
+			<li><a href="https://www.facebook.com/sharer/sharer.php?u=https://blog.iandreev.com/?p=729" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Facebook" class="socialdark facebook"><i class="fa fa-facebook"></i></a></li>
+			<li><a href="https://plus.google.com/share?url=https://blog.iandreev.com/?p=729" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Google Plus" class="socialdark google"><i class="fa fa-google-plus"></i></a></li>
+			<li><a href="http://www.reddit.com/submit?url=https://blog.iandreev.com/?p=729&amp;title=%2342+Linux+From+Scratch+as+a+Virtual+Machine+on+a+VMware+Workstation" onclick="window.open(this.href, 'reddit-share', 'width=490,height=530');return false;" title="Reddit" class="socialdark reddit"><i class="fa fa-reddit"></i></a></li>
+			<li><a href="http://pinterest.com/pin/create/button/?url=https://blog.iandreev.com/?p=729&amp;description=%2342+Linux+From+Scratch+as+a+Virtual+Machine+on+a+VMware+Workstation" onclick="window.open(this.href, 'pinterest-share', 'width=490,height=530');return false;" title="LinkedIn" class="socialdark linkedin"><i class="fa fa-linkedin"></i></a></li>
+			<li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog.iandreev.com/?p=729&amp;title=%2342+Linux+From+Scratch+as+a+Virtual+Machine+on+a+VMware+Workstation" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;" title="Pinterest" class="socialdark pinterest"><i class="fa fa-pinterest"></i></a></li>
+		</ul>
+	</div>
+
+					</section>
+
+					
+	<section class="post-author-profile">
+		<div class="inner">
+			<div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+				<a href="https://blog.iandreev.com/?author=266" class="profile gravatar"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2.png" itemprop="image" alt="Kliment Andreev" id="grav-22279d867b2e244e6c643e256dcc51f2-0" class="grav-hashed" data-no-retina="true"></a>
+				<div class="meta">
+					<span class="title">Author</span>
+						
+					<h3 itemprop="name">
+						<a href="https://blog.iandreev.com/?author=266" itemprop="url" rel="author">Kliment Andreev</a>
+					</h3>						
+				</div>
+			</div>
+			<hr>
+			<p></p>
+			<ul class="authorsocial">
+																																									<li><a href="http://www.linkedin.com/pub/kliment-andreev/6/688/980/" target="_blank" class="socialminimal linkedin" title="LinkedIn"><i class="fa fa-linkedin"></i></a></li>
+																																																			</ul>
+		</div>
+	</section>
+
+					
+	<section class="post-related post-related-count-3">
+		<div class="post-footer-header">
+			<h3><i class="fa fa-newspaper-o"></i>Related Articles</h3>
+		</div>
+
+		
+		<a href="https://blog.iandreev.com/?p=2865" class="post-related-post">
+			<div class="background" style="background-image:url('https://blog.iandreev.com/wp-content/uploads/2016/11/ssl-tanusitvany.jpg');"></div>
+			<div class="info">
+				<span class="category" style="background:#7fbb00;">FreeBSD</span>				<h5>#99 Install SSL certificates in Apache for FreeBSD and CentOS</h5>
+			</div>
+		</a>
+		
+		<a href="https://blog.iandreev.com/?p=639" class="post-related-post">
+			<div class="background" style="background-image:url('https://blog.iandreev.com/wp-content/uploads/2013/04/Star-Destroyer-by-Death-Star-in-Rogue-One-A-Star-Wars-Story.jpg');"></div>
+			<div class="info">
+				<span class="category" style="background:#7fbb00;">Linux</span>				<h5>#37 Fedora 18: Configure Wireless on Latitude E6400</h5>
+			</div>
+		</a>
+		
+		<a href="https://blog.iandreev.com/?p=1591" class="post-related-post">
+			<div class="background" style="background-image:url('https://blog.iandreev.com/wp-content/uploads/2014/11/Upsala_Glacier_3.jpg');"></div>
+			<div class="info">
+				<span class="category" style="background:#7fbb00;">FreeBSD</span>				<h5>#62 Migrating WordPress site from one server to another</h5>
+			</div>
+		</a>
+		
+	</section>
+
+
+					
+	
+	<section class="post-comments">
+
+		<a class="commentanchor" id="comments"></a>
+
+		<div class="post-footer-header">
+			<h3><i class="fa fa-comment-o"></i>Comments</h3>
+		</div>
+
+		<div class="comments-main">
+
+			
+				<ul class="commentwrap">
+									<li class="comment byuser comment-author-dileepa even thread-even depth-1" id="comment-84">
+					<div class="contents">
+						<div class="profile">
+							<a href=""><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/ff3f3fa27803dd3607f222b742d88c58.jpeg" class="gravatar grav-hashed" alt="dileepa" id="grav-ff3f3fa27803dd3607f222b742d88c58-0" data-no-retina="true"></a>
+						</div>
+						<div class="main">
+							<div class="commentinfo">
+								<section class="meta">
+									<div class="left">
+										<h4 class="author"><a href=""><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/ff3f3fa27803dd3607f222b742d88c58_002.jpeg" class="gravatarsmall grav-hashed" alt="dileepa" id="grav-ff3f3fa27803dd3607f222b742d88c58-1" data-no-retina="true">dileepa</a></h4>
+										<span class="isauthor" title="Author"><i class="fa fa-user"></i>Author</span>
+										<a rel="nofollow" class="comment-reply-login" href="https://blog.iandreev.com/wp-login.php?redirect_to=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729">Log in to Reply</a>									</div>
+									<div class="right">
+										<div class="info"><time datetime="2013-11-06">November 6, 2013</time></div>
+									</div>
+								</section>
+							</div>
+							<div class="body">
+								<p>This is really help to me. </p>
+<p>mv /etc/sysconfig/ifconfig.eth0 /etc/sysconfig/ifconfig.enp2s1<br>
+Edit the ifconfig.enp2s1 file with vi or vim and change IFACE=eth0 to IFACE=enp2s1.</p>
+<p>I was stuck without doing above.</p>
+<p>Thank u very much.</p>
+							</div>
+						</div>
+					</div>
+					<hr>
+			</li><!-- #comment-## -->
+				<li class="comment byuser comment-author-puneet-singh odd alt thread-odd thread-alt depth-1" id="comment-101">
+					<div class="contents">
+						<div class="profile">
+							<a href="https://www.google.com/profiles/105800370019927479821"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/b63bc1a5cc336f22e9ce1868377f62cd_002.jpeg" class="gravatar grav-hashed" alt="Puneet Singh" id="grav-b63bc1a5cc336f22e9ce1868377f62cd-0" data-no-retina="true"></a>
+						</div>
+						<div class="main">
+							<div class="commentinfo">
+								<section class="meta">
+									<div class="left">
+										<h4 class="author"><a href="https://www.google.com/profiles/105800370019927479821"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/b63bc1a5cc336f22e9ce1868377f62cd.jpeg" class="gravatarsmall grav-hashed" alt="Puneet Singh" id="grav-b63bc1a5cc336f22e9ce1868377f62cd-1" data-no-retina="true">Puneet Singh</a></h4>
+										<span class="isauthor" title="Author"><i class="fa fa-user"></i>Author</span>
+										<a rel="nofollow" class="comment-reply-login" href="https://blog.iandreev.com/wp-login.php?redirect_to=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729">Log in to Reply</a>									</div>
+									<div class="right">
+										<div class="info"><time datetime="2014-05-09">May 9, 2014</time></div>
+									</div>
+								</section>
+							</div>
+							<div class="body">
+								<p>followed lfs 7.5 tutorial<br>
+getting following error<br>
+any fix ?<br>
+<a href="http://stackoverflow.com/questions/23558752/missing-gd-h-header-error-while-building-iso-via-lfs-7-5" rel="nofollow">http://stackoverflow.com/questions/23558752/missing-gd-h-header-error-while-building-iso-via-lfs-7-5</a></p>
+							</div>
+						</div>
+					</div>
+					<hr>
+			</li><!-- #comment-## -->
+				<li class="comment byuser comment-author-klimenta bypostauthor even thread-even depth-1" id="comment-102">
+					<div class="contents">
+						<div class="profile">
+							<a href="http://blog.iandreev.com/"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_003.png" class="gravatar grav-hashed" alt="Kliment Andreev" id="grav-22279d867b2e244e6c643e256dcc51f2-1" data-no-retina="true"></a>
+						</div>
+						<div class="main">
+							<div class="commentinfo">
+								<section class="meta">
+									<div class="left">
+										<h4 class="author"><a href="http://blog.iandreev.com/"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="Kliment Andreev" id="grav-22279d867b2e244e6c643e256dcc51f2-2" data-no-retina="true">Kliment Andreev</a></h4>
+										<span class="isauthor" title="Author"><i class="fa fa-user"></i>Author</span>
+										<a rel="nofollow" class="comment-reply-login" href="https://blog.iandreev.com/wp-login.php?redirect_to=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729">Log in to Reply</a>									</div>
+									<div class="right">
+										<div class="info"><time datetime="2014-05-10">May 10, 2014</time></div>
+									</div>
+								</section>
+							</div>
+							<div class="body">
+								<p>The tutorial described here is for v7.3. 7.5 is most likely different.</p>
+							</div>
+						</div>
+					</div>
+					<hr>
+			</li><!-- #comment-## -->
+				</ul>
+
+								
+			 
+				<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://blog.iandreev.com/?p=729#respond" style="display:none;">Cancel Reply</a></small></h3><p class="must-log-in">You must be <a href="https://blog.iandreev.com/wp-login.php?redirect_to=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729">logged in</a> to post a comment.</p> <!-- OneAll.com / Social Login for WordPress / v5.4.1 -->
+<div class="oneall_social_login">
+ <div class="oneall_social_login_providers" id="oneall_social_login_providers_329118" data-processed="true" style="min-height: 61px;"><iframe id="oa_social_login_frame_23319" scrolling="no" allowtransparency="true" data-processed="true" title="Login with Social Networks" name="OneAll Social Login" style="border: 0px none; width: 1330px; height: 61px; background-color: transparent;" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/a.htm" frameborder="0"></iframe></div>
+ <script data-cfasync="false" type="text/javascript">
+  oneall.api.plugins.social_login.build('oneall_social_login_providers_329118', {
+   'providers': ['github','google','linkedin','twitter','windowslive','wordpress'], 
+   'callback_uri': (window.location.href + ((window.location.href.split('?')[1] ? '&amp;': '?') + "oa_social_login_source=comments")), 
+   'css_theme_uri': 'https://secure.oneallcdn.com/css/api/socialize/themes/wordpress/default.css' 
+  });
+ </script>
+</div>	</div><!-- #respond -->
+	<p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+		</div>
+
+		
+	</section>
+
+
+				</div>
+
+				
+	<aside class="sidebar sidebar-page" style="border: 0px none;">
+
+						<section class="widget latestposts">
+											<h3 class="widget-title">Latest Posts</h3>
+						<hr>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3847" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2018/06/ng2WJzs.jpg?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=12" class="button rounded grayoutline tiny category">Linux</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3847">#128 CentOS: strongSwan site to site VPN using pre...</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-3" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3847"><i class="fa fa-clock-o"></i> <time datetime="2018-06-21">21st Jun '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 3 In this post, I’ll explain how to establish a IKEv2 VPN tunnel with strongSwan between two sites with public...</p>
+						</article>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3819" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i2.wp.com/blog.iandreev.com/wp-content/uploads/2018/04/Capture.png?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=23" class="button rounded grayoutline tiny category">C#</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3819">#127 Visual C#: Screenshot Grabber – Take sc...</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-4" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3819"><i class="fa fa-clock-o"></i> <time datetime="2018-04-21">21st Apr '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 132 I needed a tool that takes 
+screenshots at a regular interval. No bells and whistles, just simple 
+tool where you...</p>
+						</article>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3799" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2018/04/123.png?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=34" class="button rounded grayoutline tiny category">DevOps</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3799">#126 Chef: Deploy WordPress on CentOS 7</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-5" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3799"><i class="fa fa-clock-o"></i> <time datetime="2018-04-04">4th Apr '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 173 In this post, I’ll describe how to create a Chef cookbook for deploying WordPress. The blog engine will run...</p>
+						</article>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3765" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2018/03/Capture-17.png?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=4" class="button rounded grayoutline tiny category">FreeBSD</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3765">#125 ssh, RDP: Bypass your corporate firewall</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-6" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3765"><i class="fa fa-clock-o"></i> <time datetime="2018-03-23">23rd Mar '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 302 If you are behind a firewall and want to access some resources over SSH or RDP, most likely you won’t be...</p>
+						</article>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3729" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2018/03/Capture-14.png?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=4" class="button rounded grayoutline tiny category">FreeBSD</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3729">#124 postfix: relay client e-mails using SASL and ...</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-7" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3729"><i class="fa fa-clock-o"></i> <time datetime="2018-03-10">10th Mar '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 308 I have a bunch of test 
+CentOS/FreeBSD servers and I wanted to get all the notifications sent to
+ my e-mail instead...</p>
+						</article>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3617" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i1.wp.com/blog.iandreev.com/wp-content/uploads/2018/03/one-ring.jpg?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=33" class="button rounded grayoutline tiny category">pfSense</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3617">#123 pfSense: Mobile VPN clients (Windows 10, iPho...</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-8" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3617"><i class="fa fa-clock-o"></i> <time datetime="2018-03-07">7th Mar '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 787 Lately, I was playing with 
+pfSense trying to access my internal resources from outside (mostly my 
+Plex server) so...</p>
+						</article>
+											<article class="post">
+							<div class="top">
+								<a href="https://blog.iandreev.com/?p=3588" class="thumbnail">
+									<i class="fa fa-link"></i>
+									<span style="background-image:url('https://i0.wp.com/blog.iandreev.com/wp-content/uploads/2018/03/Capture.png?resize=150%2C150&amp;ssl=1');"></span>
+								</a>
+								<div class="info">
+									<a href="https://blog.iandreev.com/?cat=22" class="button rounded grayoutline tiny category">AWS</a> 									<h5 class="title"><a href="https://blog.iandreev.com/?p=3588">#122 AWS, pfsense: Site-to-site VPN using static r...</a></h5>
+									<section class="meta">
+										<span class="posted">Posted </span>
+										<span class="author"><span>by</span> <a href="https://blog.iandreev.com/?author=266"><img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/22279d867b2e244e6c643e256dcc51f2_002.png" class="gravatarsmall grav-hashed" alt="" id="grav-22279d867b2e244e6c643e256dcc51f2-9" data-no-retina="true"> Kliment Andreev</a></span> 
+										<span class="date"><span>on</span> <a href="https://blog.iandreev.com/?p=3588"><i class="fa fa-clock-o"></i> <time datetime="2018-03-02">2nd Mar '18</time></a></span>
+									</section>
+								</div>
+							</div>
+							<p class="excerpt">Post Views: 320 In this post I’ll describe how to configure a tunnel between pfSense and AWS. At home I have a box running...</p>
+						</article>
+									</section>
+								<section class="widget randomposts">
+												<article>
+							<a href="https://blog.iandreev.com/?p=3209" class="feature">
+								<span class="category" style="background:#7fbb00;">AWS</span> 								<img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Evil-genius.jpg" alt="#113 AWS: AD Connector – Use on-prem AD credentials to log to AWS" data-no-retina="true">
+							</a>
+							<h4><a href="https://blog.iandreev.com/?p=3209">#113 AWS: AD Connector – Use on-prem AD credentials to log to AWS</a></h4>
+							<div class="meta">
+								<a href="https://blog.iandreev.com/?author=266" class="author">Kliment Andreev</a>
+								<span class="divider">/</span>
+								<a href="https://blog.iandreev.com/?p=3209" class="date">17th Sep '17</a>
+							</div>
+						</article>
+												<article>
+							<a href="https://blog.iandreev.com/?p=235" class="feature">
+								<span class="category" style="background:#7fbb00;">FreeBSD</span> 								<img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/Capture1.png" alt="#18 postfix relay for other domain" data-no-retina="true">
+							</a>
+							<h4><a href="https://blog.iandreev.com/?p=235">#18 postfix relay for other domain</a></h4>
+							<div class="meta">
+								<a href="https://blog.iandreev.com/?author=266" class="author">Kliment Andreev</a>
+								<span class="divider">/</span>
+								<a href="https://blog.iandreev.com/?p=235" class="date">18th Jan '12</a>
+							</div>
+						</article>
+												<article>
+							<a href="https://blog.iandreev.com/?p=3140" class="feature">
+								<span class="category" style="background:#7fbb00;">AWS</span> 								<img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/14797031062_4cbe0f218f_o.jpg" alt="#111 AWS: Migrate VMs from VMware vCenter to Amazon AWS using AWS Connector" data-no-retina="true">
+							</a>
+							<h4><a href="https://blog.iandreev.com/?p=3140">#111 AWS: Migrate VMs from VMware vCenter to Amazon AWS using AWS Connector</a></h4>
+							<div class="meta">
+								<a href="https://blog.iandreev.com/?author=266" class="author">Kliment Andreev</a>
+								<span class="divider">/</span>
+								<a href="https://blog.iandreev.com/?p=3140" class="date">10th Sep '17</a>
+							</div>
+						</article>
+											</section>
+				
+	</aside>
+
+			</div>
+		</section>
+
+	
+
+
+	<footer class="page-footer">
+
+		
+	<div class="notification noresults"><i class="fa fa-info"></i> No More Results</div>
+
+
+		
+	<section class="nextprev">
+		<div class="wrapper-body">
+
+						<a href="https://blog.iandreev.com/?p=722" class="nextprev-post previous">
+								<div class="post-thumbnail">
+					<div class="background" style="background-image:url('https://blog.iandreev.com/wp-content/uploads/2013/08/monitoring-555x242.jpg');"></div>
+				</div>
+								<div class="info">
+					<span>Previous Post</span>
+					<h4>#41 Send SNMP trap to HP-SIM from command prompt</h4>
+				</div>
+			</a>
+			
+						<a href="https://blog.iandreev.com/?p=841" class="nextprev-post next">
+								<div class="post-thumbnail">
+					<div class="background" style="background-image:url('https://blog.iandreev.com/wp-content/uploads/2013/10/drum-and-bass-nights_i4_s3.jpg');"></div>
+				</div>
+								<div class="info">
+					<span>Next Post</span>
+					<h4>#43 Run PowerShell script as a scheduled task that uses Excel COM object</h4>
+				</div>
+			</a>
+			
+		</div>
+	</section>
+
+
+		<aside class="footer-widgets">
+			<div class="wrapper-body">
+								<section class="widget blog_info">
+										<a href="https://blog.iandreev.com/"><h2>Blog of Kliment Andreev – A place so I won't forget things</h2></a>
+										<hr>
+					<p>A place so I won't forget things</p>
+				</section>
+			<section class="widget"><h3 class="widget-title">Categories</h3><hr>		<ul>
+	<li class="cat-item cat-item-7"><a href="https://blog.iandreev.com/?cat=7">AIX</a> <span class="count">3</span>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.iandreev.com/?cat=22">AWS</a> <span class="count">15</span>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.iandreev.com/?cat=19">Azure</a> <span class="count">4</span>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.iandreev.com/?cat=23">C#</a> <span class="count">10</span>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.iandreev.com/?cat=9">Cisco</a> <span class="count">3</span>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.iandreev.com/?cat=20">Cloud</a> <span class="count">16</span>
+</li>
+	<li class="cat-item cat-item-34"><a href="https://blog.iandreev.com/?cat=34">DevOps</a> <span class="count">2</span>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.iandreev.com/?cat=13">ESX/ESXi</a> <span class="count">8</span>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.iandreev.com/?cat=4">FreeBSD</a> <span class="count">40</span>
+</li>
+	<li class="cat-item cat-item-17"><a href="https://blog.iandreev.com/?cat=17">General</a> <span class="count">8</span>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://blog.iandreev.com/?cat=12">Linux</a> <span class="count">28</span>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://blog.iandreev.com/?cat=8">MAC OS X</a> <span class="count">3</span>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.iandreev.com/?cat=15">NetApp</a> <span class="count">1</span>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.iandreev.com/?cat=3" title="OpenBSD">OpenBSD</a> <span class="count">7</span>
+</li>
+	<li class="cat-item cat-item-33"><a href="https://blog.iandreev.com/?cat=33">pfSense</a> <span class="count">3</span>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.iandreev.com/?cat=24">PowerShell</a> <span class="count">2</span>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://blog.iandreev.com/?cat=10">Programming</a> <span class="count">22</span>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.iandreev.com/?cat=11">SQL</a> <span class="count">2</span>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://blog.iandreev.com/?cat=1">Uncategorized</a> <span class="count">3</span>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.iandreev.com/?cat=31">Unix shell</a> <span class="count">1</span>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.iandreev.com/?cat=21">vCloud Air</a> <span class="count">1</span>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.iandreev.com/?cat=14">Windows</a> <span class="count">15</span>
+</li>
+	<li class="cat-item cat-item-32"><a href="https://blog.iandreev.com/?cat=32">WordPress</a> <span class="count">1</span>
+</li>
+		</ul>
+</section><section class="widget"><h3 class="widget-title">Meta</h3><hr>			<ul>
+						<li><a rel="nofollow" href="https://blog.iandreev.com/wp-login.php">Log in</a></li>
+			<li><a href="https://blog.iandreev.com/?feed=rss2">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://blog.iandreev.com/?feed=comments-rss2">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+			</section>			</div>
+		</aside>
+		<section class="copyright">
+			<div class="wrapper-body">
+						
+
+	<section class="disclaimer">
+		<p class="main">
+						Copyright © <a href="https://blog.iandreev.com/">Blog of Kliment Andreev – A place so I won't forget things</a>. 2018 • All rights reserved.
+					</p>
+		<p class="alt">
+						<span class="ecko"><a target="_blank" href="http://ecko.me/themes/wordpress/koala/">Koala WordPress Theme</a> by <a target="_blank" href="http://ecko.me/">EckoThemes</a>.</span>
+			<span class="wordpress">Published with <a target="_blank" href="http://wordpress.org/">WordPress</a>.</span>
+					</p>
+	</section>
+				<ul class="social">
+																																																																																																			</ul>
+			</div>
+		</section>
+		<div class="backtotop"><i class="fa fa-angle-double-up"></i></div>
+	</footer>
+
+
+	<!-- Powered by WPtouch: 4.3.28 -->	<div style="display:none">
+	</div>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/shCore.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/shBrushBash.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://blog.iandreev.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://blog.iandreev.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeFadeToGrey.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var PowerStatsParams = {"ajaxurl":"https:\/\/blog.iandreev.com\/wp-admin\/admin-ajax.php","ci":"YTo0OntzOjEyOiJjb250ZW50X3R5cGUiO3M6NDoicG9zdCI7czo4OiJjYXRlZ29yeSI7czoyOiIxMiI7czoxMDoiY29udGVudF9pZCI7aTo3Mjk7czo2OiJhdXRob3IiO3M6ODoia2xpbWVudGEiO30=.5a65ae57c6c634a88a5a406e5c056b98"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/wp-power-stats.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/photon.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/eckoplugin.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/devicepx-jetpack.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var tocplus = {"visibility_show":"show","visibility_hide":"hide","width":"Auto"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/front.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/wpgroho.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var ecko_theme_vars = {"general_hidecomments":"false","general_disable_syntax_highlighter":"","topbar_disable_sticky":"false","postpage_enable_cover_fade":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/theme.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/comment-reply.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/blog.iandreev.com\/wp-admin\/admin-ajax.php","nonce":"68e6d2a775","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"1","require_name_email":"1","login_url":"https:\/\/blog.iandreev.com\/wp-login.php?redirect_to=https%3A%2F%2Fblog.iandreev.com%2F%3Fp%3D729","blog_id":"1","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<p id=\"jp-carousel-commenting-as\">You must be <a href=\"#\" class=\"jp-carousel-comment-login\">logged in<\/a> to post a comment.<\/p>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/jetpack-carousel.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/wp-embed.js"></script>
+<script type="text/javascript" src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/e-201825.js" async="async" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:6.2.1',blog:'78637298',post:'729',tz:'-4',srv:'blog.iandreev.com'} ]);
+	_stq.push([ 'clickTrackerInit', '78637298', '729' ]);
+</script>
+
+
+<img src="%2342%20Linux%20From%20Scratch%20as%20a%20Virtual%20Machine%20on%20a%20VMware%20Workstation%20-%20Blog%20of%20Kliment%20Andreev%20-%20A%20place%20so%20I%20won't%20forget%20things_files/g.gif" alt=":)" id="wpstats" width="6" height="5"></body></html>

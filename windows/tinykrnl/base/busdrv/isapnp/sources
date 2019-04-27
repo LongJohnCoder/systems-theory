@@ -1,0 +1,36 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=isapnp
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib
+
+INCLUDES=..\..\..\base\ntos\inc; \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\internal\base\inc
+
+SOURCES=\
+        bus.c               \
+        dispatch.c          \
+        fdopnp.c            \
+        isolate.c           \
+        misc.c              \
+        power.c             \
+        resource.c          \
+        translate.c         \
+        pdopnp.c            \
+        init.c              \
+        isapnp.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+

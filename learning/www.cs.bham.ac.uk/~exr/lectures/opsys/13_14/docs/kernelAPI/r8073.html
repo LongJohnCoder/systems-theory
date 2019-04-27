@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>skb_copy_expand</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Socket Buffer Functions"
+HREF="c6671.html#AEN6673"><LINK
+REL="PREVIOUS"
+TITLE="pskb_expand_head"
+HREF="r8024.html"><LINK
+REL="NEXT"
+TITLE="skb_pad"
+HREF="r8127.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r8024.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r8127.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN8073"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_copy_expand</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN8077"
+></A
+><H2
+>Name</H2
+>skb_copy_expand&nbsp;--&nbsp;     	copy and expand sk_buff
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN8080"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN8082"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>struct sk_buff * skb_copy_expand </CODE
+>(const struct sk_buff * skb, int newheadroom, int newtailroom, int gfp_mask);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN8094"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>skb</VAR
+></DT
+><DD
+><P
+>      buffer to copy
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>newheadroom</VAR
+></DT
+><DD
+><P
+>      new free bytes at head
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>newtailroom</VAR
+></DT
+><DD
+><P
+>      new free bytes at tail
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>gfp_mask</VAR
+></DT
+><DD
+><P
+>      allocation priority
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN8117"
+></A
+><H2
+>Description</H2
+><P
+>   Make a copy of both an &amp;sk_buff and its data and while doing so
+   allocate additional space.
+   </P
+><P
+>&#13;   This is used when the caller wishes to modify the data and needs a
+   private copy of the data to alter as well as more space for new fields.
+   Returns <CODE
+CLASS="CONSTANT"
+>NULL</CODE
+> on failure or the pointer to the buffer
+   on success. The returned buffer has a reference count of 1.
+   </P
+><P
+>&#13;   You must pass <CODE
+CLASS="CONSTANT"
+>GFP_ATOMIC</CODE
+> as the allocation priority if this function
+   is called from an interrupt.
+ </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN8124"
+></A
+><H2
+>BUG ALERT</H2
+><P
+>    ip_summed is not copied. Why does this work? Is it used
+   only by netfilter in the cases when checksum is recalculated? --ANK
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r8024.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r8127.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_expand_head</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c6671.html#AEN6673"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_pad</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

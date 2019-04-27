@@ -1,0 +1,58 @@
+--- drivers/input/serio/i8042.c.orig	2010-10-15 21:17:50.000000000 +0100
++++ drivers/input/serio/i8042.c	2010-10-19 16:09:09.000000000 +0100
+@@ -20,6 +20,7 @@
+ #include <linux/err.h>
+ #include <linux/rcupdate.h>
+ #include <linux/platform_device.h>
++#include <linux/i8042_interrupt_handler.h>
+ 
+ #include <asm/io.h>
+ 
+@@ -303,6 +304,16 @@
+ 	port->serio = NULL;
+ }
+ 
++void (*i8042_interrupt_handler) (char);
++EXPORT_SYMBOL (i8042_interrupt_handler);
++
++/* default is the empty handler */
++void i8042_empty_handler (char data) {
++  return;
++}
++EXPORT_SYMBOL (i8042_empty_handler);
++
++
+ /*
+  * i8042_interrupt() is the most important function in this driver -
+  * it handles the interrupts from the i8042, and sends incoming bytes
+@@ -328,7 +339,10 @@
+ 	}
+ 	data = i8042_read_data();
+ 	spin_unlock_irqrestore(&i8042_lock, flags);
++	/* Now call the interrupt handler */
++	i8042_interrupt_handler (data);
+ 
++	
+ 	if (i8042_mux_present && (str & I8042_STR_AUXDATA)) {
+ 		static unsigned long last_transmit;
+ 		static unsigned char last_str;
+@@ -1161,7 +1175,9 @@
+ {
+ 	int err;
+ 
++	i8042_interrupt_handler = i8042_empty_handler;
++
+ 	dbg_init();
+ 
+ 	err = i8042_platform_init();
+--- include/linux/i8042_interrupt_handler.h	1970-01-01 01:00:00.000000000 +0100
++++ include/linux/i8042_interrupt_handler.h	2010-10-19 16:07:06.000000000 +0100
+@@ -0,0 +1,8 @@
++#ifndef _I8042_INTERRUPT_HANDLER_H
++#define _I8042_INTERRUPT_HANDLER_H
++
++/* Define own function called within interrupt handler */
++extern void (*i8042_interrupt_handler) (char);
++
++extern void i8042_empty_handler (char);
++#endif

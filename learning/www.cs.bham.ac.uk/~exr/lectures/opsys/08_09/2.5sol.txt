@@ -1,0 +1,57 @@
+Shared variables:
+
+freeChairs = n;
+BarberBusy = false;
+customerShaved = true;
+CriticalSectionFree = 1 /* the semaphore */
+
+Process Customer {
+    Acquire (CriticalSectionFree);
+    if (freeChairs == 0) {
+       Release (CriticalSectionFree);
+       exit; /* Customer leaves shop */
+    }
+
+    freeChairs --; /* Customer sits  down */
+    Release (CriticalSectionFree);
+    wakeup_Barber;
+    Acquire (CriticalSectionFree);
+    while (BarberBusy) {
+        Release (CriticalSectionFree);
+	sleep; /* Barber busy - wait until free */
+        Acquire (CriticalSectionFree);
+    }
+    BarberBusy = true; /* now our turn to be served */
+    customerShaved = false;
+    Release (CriticalSectionFree);
+    /* now get shaved */
+    Acquire (CriticalSectionFree);
+    customerShaved = true; /* necessary for synchronisation: customer
+                              now finished */
+    Release (CriticalSectionFree);
+    exit;
+}
+
+Process Barber {
+   while (1) {
+      Acquire (CriticalSectionFree);
+      while (freeChairs == n) {
+          Release (CriticalSectionFree);
+      	  sleep; /* nothing to do: no customers in shop */
+          Acquire (CriticalSectionFree);
+      }
+      freeChairs ++;
+      Release (CriticalSectionFree);
+      /* shave */
+
+      Acquire (CriticalSectionFree);
+      while (!customerShaved) {
+         Release (CriticalSectionFree);
+   	 sleep; /* wait for customer to finish */
+         Acquire (CriticalSectionFree);
+      }
+      BarberBusy = false;
+      Release (CriticalSectionFree);
+      wakeup_Customers;
+   }
+}      

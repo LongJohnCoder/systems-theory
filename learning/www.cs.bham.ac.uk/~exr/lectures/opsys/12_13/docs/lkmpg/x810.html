@@ -1,0 +1,475 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Manage /proc file with standard filesystem</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="The /proc File System"
+HREF="c708.html"><LINK
+REL="PREVIOUS"
+TITLE="Read and Write a /proc File"
+HREF="x769.html"><LINK
+REL="NEXT"
+TITLE="Manage /proc file with seq_file"
+HREF="x861.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x769.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. The /proc File System</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x861.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN810"
+></A
+>5.3. Manage /proc file with standard filesystem</H1
+><P
+>	We have seen how to read and write a /proc file with the /proc interface. But it's also possible
+	to manage /proc file with inodes. The main interest is to use advanced function, like permissions.
+	</P
+><P
+>	In Linux, there is a standard mechanism for file system registration. Since every file system has to have its own
+	functions to handle inode and file operations<A
+NAME="AEN814"
+HREF="#FTN.AEN814"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+>,
+	there is a special structure to hold pointers to all those functions, <TT
+CLASS="VARNAME"
+>struct inode_operations</TT
+>, which
+	includes a pointer to <TT
+CLASS="VARNAME"
+>struct file_operations</TT
+>. In /proc, whenever we register a new file, we're allowed to
+	specify which <TT
+CLASS="VARNAME"
+>struct inode_operations</TT
+> will be used to access to it. This is the mechanism we use, a
+	<TT
+CLASS="VARNAME"
+>struct inode_operations</TT
+> which includes a pointer to a <TT
+CLASS="VARNAME"
+>struct file_operations</TT
+> which
+	includes pointers to our <TT
+CLASS="FUNCTION"
+>procfs_read</TT
+> and <TT
+CLASS="FUNCTION"
+>procfs_write</TT
+> functions.
+	</P
+><P
+>	Another interesting point here is the <TT
+CLASS="FUNCTION"
+>module_permission</TT
+> function. This function is called whenever
+	a process tries to do something with the <TT
+CLASS="FILENAME"
+>/proc</TT
+> file, and it can decide whether to allow
+	access or not. Right now it is only based on the operation and the uid of the current user (as available in
+	<TT
+CLASS="VARNAME"
+>current</TT
+>, a pointer to a structure which includes information on the currently running process), but it
+	could be based on anything we like, such as what other processes are doing with the same file, the time of day, or the last
+	input we received.</P
+><P
+>	It's important to note that the standard roles of read and write are reversed in the kernel. Read functions are used for
+	output, whereas write functions are used for input. The reason for that is that read and write refer to the user's point of
+	view --- if a process reads something from the kernel, then the kernel needs to output it, and if a process writes something
+	to the kernel, then the kernel receives it as input.
+	</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN853"
+></A
+><P
+><B
+>Example 5-3. procfs3.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/* 
+ *  procfs3.c -  create a "file" in /proc, use the file_operation way
+ *  		to manage the file.
+ */
+ 
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/module.h&#62;	/* Specifically, a module */
+#include &#60;linux/proc_fs.h&#62;	/* Necessary because we use proc fs */
+#include &#60;asm/uaccess.h&#62;	/* for copy_*_user */
+
+#define PROC_ENTRY_FILENAME 	"buffer2k"
+#define PROCFS_MAX_SIZE 	2048
+
+/**
+ * The buffer (2k) for this module
+ *
+ */
+static char procfs_buffer[PROCFS_MAX_SIZE];
+
+/**
+ * The size of the data hold in the buffer
+ *
+ */
+static unsigned long procfs_buffer_size = 0;
+
+/**
+ * The structure keeping information about the /proc file
+ *
+ */
+static struct proc_dir_entry *Our_Proc_File;
+
+/**
+ * This funtion is called when the /proc file is read
+ *
+ */
+static ssize_t procfs_read(struct file *filp,	/* see include/linux/fs.h   */
+			     char *buffer,	/* buffer to fill with data */
+			     size_t length,	/* length of the buffer     */
+			     loff_t * offset)
+{
+	static int finished = 0;
+
+	/* 
+	 * We return 0 to indicate end of file, that we have
+	 * no more information. Otherwise, processes will
+	 * continue to read from us in an endless loop. 
+	 */
+	if ( finished ) {
+		printk(KERN_INFO "procfs_read: END\n");
+		finished = 0;
+		return 0;
+	}
+	
+	finished = 1;
+		
+	/* 
+	 * We use put_to_user to copy the string from the kernel's
+	 * memory segment to the memory segment of the process
+	 * that called us. get_from_user, BTW, is
+	 * used for the reverse. 
+	 */
+	if ( copy_to_user(buffer, procfs_buffer, procfs_buffer_size) ) {
+		return -EFAULT;
+	}
+
+	printk(KERN_INFO "procfs_read: read %lu bytes\n", procfs_buffer_size);
+
+	return procfs_buffer_size;	/* Return the number of bytes "read" */
+}
+
+/*
+ * This function is called when /proc is written
+ */
+static ssize_t
+procfs_write(struct file *file, const char *buffer, size_t len, loff_t * off)
+{
+	if ( len &#62; PROCFS_MAX_SIZE )	{
+		procfs_buffer_size = PROCFS_MAX_SIZE;
+	}
+	else	{
+		procfs_buffer_size = len;
+	}
+	
+	if ( copy_from_user(procfs_buffer, buffer, procfs_buffer_size) ) {
+		return -EFAULT;
+	}
+
+	printk(KERN_INFO "procfs_write: write %lu bytes\n", procfs_buffer_size);
+	
+	return procfs_buffer_size;
+}
+
+/* 
+ * This function decides whether to allow an operation
+ * (return zero) or not allow it (return a non-zero
+ * which indicates why it is not allowed).
+ *
+ * The operation can be one of the following values:
+ * 0 - Execute (run the "file" - meaningless in our case)
+ * 2 - Write (input to the kernel module)
+ * 4 - Read (output from the kernel module)
+ *
+ * This is the real function that checks file
+ * permissions. The permissions returned by ls -l are
+ * for referece only, and can be overridden here.
+ */
+
+static int module_permission(struct inode *inode, int op, struct nameidata *foo)
+{
+	/* 
+	 * We allow everybody to read from our module, but
+	 * only root (uid 0) may write to it 
+	 */
+	if (op == 4 || (op == 2 &#38;&#38; current-&#62;euid == 0))
+		return 0;
+
+	/* 
+	 * If it's anything else, access is denied 
+	 */
+	return -EACCES;
+}
+
+/* 
+ * The file is opened - we don't really care about
+ * that, but it does mean we need to increment the
+ * module's reference count. 
+ */
+int procfs_open(struct inode *inode, struct file *file)
+{
+	try_module_get(THIS_MODULE);
+	return 0;
+}
+
+/* 
+ * The file is closed - again, interesting only because
+ * of the reference count. 
+ */
+int procfs_close(struct inode *inode, struct file *file)
+{
+	module_put(THIS_MODULE);
+	return 0;		/* success */
+}
+
+static struct file_operations File_Ops_4_Our_Proc_File = {
+	.read 	 = procfs_read,
+	.write 	 = procfs_write,
+	.open 	 = procfs_open,
+	.release = procfs_close,
+};
+
+/* 
+ * Inode operations for our proc file. We need it so
+ * we'll have some place to specify the file operations
+ * structure we want to use, and the function we use for
+ * permissions. It's also possible to specify functions
+ * to be called for anything else which could be done to
+ * an inode (although we don't bother, we just put
+ * NULL). 
+ */
+
+static struct inode_operations Inode_Ops_4_Our_Proc_File = {
+	.permission = module_permission,	/* check for permissions */
+};
+
+/* 
+ * Module initialization and cleanup 
+ */
+int init_module()
+{
+	/* create the /proc file */
+	Our_Proc_File = create_proc_entry(PROC_ENTRY_FILENAME, 0644, NULL);
+	
+	/* check if the /proc file was created successfuly */
+	if (Our_Proc_File == NULL){
+		printk(KERN_ALERT "Error: Could not initialize /proc/%s\n",
+		       PROC_ENTRY_FILENAME);
+		return -ENOMEM;
+	}
+	
+	Our_Proc_File-&#62;owner = THIS_MODULE;
+	Our_Proc_File-&#62;proc_iops = &#38;Inode_Ops_4_Our_Proc_File;
+	Our_Proc_File-&#62;proc_fops = &#38;File_Ops_4_Our_Proc_File;
+	Our_Proc_File-&#62;mode = S_IFREG | S_IRUGO | S_IWUSR;
+	Our_Proc_File-&#62;uid = 0;
+	Our_Proc_File-&#62;gid = 0;
+	Our_Proc_File-&#62;size = 80;
+
+	printk(KERN_INFO "/proc/%s created\n", PROC_ENTRY_FILENAME);
+
+	return 0;	/* success */
+}
+
+void cleanup_module()
+{
+	remove_proc_entry(PROC_ENTRY_FILENAME, &#38;proc_root);
+	printk(KERN_INFO "/proc/%s removed\n", PROC_ENTRY_FILENAME);
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>	Still hungry for procfs examples? Well, first of all keep in mind, there are rumors around, claiming
+	that procfs is on it's way out, consider using sysfs instead. Second, if you really can't get enough, 
+	there's a highly recommendable bonus level for procfs below <TT
+CLASS="FILENAME"
+> linux/Documentation/DocBook/ </TT
+>. 
+	Use <B
+CLASS="COMMAND"
+> make help </B
+> in your toplevel kernel directory for instructions about how to convert it into 
+	your favourite format. Example: <B
+CLASS="COMMAND"
+> make htmldocs </B
+>. Consider using this mechanism, 
+	in case you want to document something kernel related yourself.
+	</P
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN814"
+HREF="x810.html#AEN814"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>The difference between the two is that file operations deal with
+	the file itself, and inode operations deal with ways of referencing the file, such as creating links to it.</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x769.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x861.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Read and Write a /proc File</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c708.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Manage /proc file with seq_file</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

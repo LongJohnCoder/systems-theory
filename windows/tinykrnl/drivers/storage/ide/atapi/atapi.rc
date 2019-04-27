@@ -1,0 +1,22 @@
+//+-------------------------------------------------------------------------
+//
+//  TinyKRNL
+//
+//  Copyright (C) TinyKRNL, 2006
+//
+//  File:       atapi.rc
+//
+//--------------------------------------------------------------------------
+
+#include <winver.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "IDE/ATAPI Port Driver"
+#define VER_INTERNALNAME_STR        "atapi.sys"
+#define VER_ORIGINALFILENAME_STR    "atapi.sys"
+#define VER_LANGNEUTRAL
+
+#include "common.ver"
+

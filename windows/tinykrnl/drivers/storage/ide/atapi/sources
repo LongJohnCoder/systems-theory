@@ -1,0 +1,46 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=atapi
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+         ..\share\obj$(BUILD_ALT_DIR)\*\ideshare.lib
+
+INCLUDES=\
+         ..\..\..\..\public\sdk\inc; \
+         ..\..\..\..\public\internal\drivers\inc; \
+         $(PROJECT_ROOT)\storage\inc;
+
+SOURCES=\
+        acpiutil.c      \
+        atapi.c         \
+        atapinit.c      \
+        chanfdo.c       \
+        crashdmp.c      \
+        detect.c        \
+        devpdo.c        \
+        fdopower.c      \
+        hack.c          \
+        ide.c           \
+        init.c          \
+        internal.c      \
+        luext.c         \
+        passthru.c      \
+        pdopower.c      \
+        port.c          \
+        regutils.c      \
+        wmi.c           \
+        atapi.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+
+

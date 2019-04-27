@@ -1,0 +1,58 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=pci
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib \
+        $(DDK_LIB_PATH)\wmilib.lib 
+
+INCLUDES=\
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\ddk\inc
+
+SOURCES=\
+        agpintrf.c        \
+        ar_busno.c        \
+        ar_memio.c        \
+        arb_comn.c        \
+        busintrf.c        \
+        busno.c           \
+        cardbus.c         \
+        config.c          \
+        debug.c           \
+        devhere.c         \
+        device.c          \
+        dispatch.c        \
+        enum.c            \
+        fdo.c             \
+        hookhal.c         \
+        id.c              \
+        ideintrf.c        \
+        init.c            \
+        lddintrf.c        \
+        locintrf.c        \
+        pciverifier.c     \
+        pdo.c             \
+        pmeintf.c         \
+        power.c           \
+        ppbridge.c        \
+        romimage.c        \
+        routintf.c        \
+        state.c           \
+        tr_irq.c          \
+        usage.c           \
+        utils.c           \
+        pci.rc    
+
+PRECOMPILED_INCLUDE=precomp.h
+

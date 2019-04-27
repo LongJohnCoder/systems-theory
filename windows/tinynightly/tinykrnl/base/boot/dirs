@@ -1,0 +1,7 @@
+DIRS= \
+     bd      \
+     bootvid \
+     lib     \     
+     bldr    \
+     kdcom   \
+     #tbx86

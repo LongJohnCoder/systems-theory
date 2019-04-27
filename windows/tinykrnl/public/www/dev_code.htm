@@ -1,0 +1,518 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-AU">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="description" content="Information about the project and its developers.">
+    <meta name="author" content="haran" />
+    <meta name="generator" content="Microsoft FrontPage 6.0" />
+
+    <!-- Navigational metadata for large websites (an accessibility feature): -->
+    <link rel="top"      href="./index.htm" title="Homepage" />
+    <link rel="up"       href="./index.htm" title="Up" />
+    <link rel="first"    href="./index.htm" title="First page" />
+    <link rel="previous" href="./index.htm" title="Previous page" />
+    <link rel="next"     href="./index.htm" title="Next page" />
+    <link rel="last"     href="./index.htm" title="Last page" />
+    <link rel="toc"      href="./index.htm" title="Table of contents" />
+    <link rel="index"    href="./index.htm" title="Site map" />
+
+    <link rel="stylesheet" type="text/css" href="sinorca-screen.css" media="screen" title="Sinorca (screen)" />
+    <link rel="stylesheet alternative" type="text/css" href="sinorca-screen-alt.css" media="screen" title="Sinorca (alternative)" />
+    <link rel="stylesheet" type="text/css" href="sinorca-print.css" media="print" />
+
+    <title>TinyKRNL Development - Coding Guidelines</title>
+    <script language="JavaScript" type="text/JavaScript" src="menu.js"></script>
+  </head>
+
+  <body onResize="P7_ReDoIt();P7_Snap('leftanchor','closer',0,0,'leftanchor','dropdownLayer',0,0)">
+   <!-- Hidden Dropdown Menus -->
+
+          <div id="drop1" style="position:absolute; left:328px; top:109px; z-index:2; visibility: hidden">
+          <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=1 bgcolor="#999999" colspan=3></td>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=3 bgcolor=#ffffff></td>
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td align=center>
+                         <font class="menu">
+                         <table border=0 cellpadding=3 cellspacing=0>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='about_proj.htm';P7_autoLayers(0)" align="left">
+								Project Information</td></tr>
+
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='about_devs.htm';P7_autoLayers(0)" align="left">
+								Developer Information</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='about_faq.htm';P7_autoLayers(0)" align="left">
+								FAQs</td></tr>
+                              </table>
+                         </font>
+                    </td>
+               </tr>
+               <tr>
+                    <td bgcolor=#ffffff colspan=3 height=3 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+
+               <tr>
+                    <td bgcolor="#999999" colspan=6 height=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+          </table>
+          </div>
+
+          <div id="drop2" style="position:absolute; left:246px; top:100px; z-index:2; visibility: hidden">
+          <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=1 bgcolor="#999999" colspan=3></td>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=3 bgcolor=#ffffff></td>
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+
+               <tr>
+                    <td align=center>
+                         <font class="menu">
+                         <table border=0 cellpadding=3 cellspacing=0>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_phase1.htm';P7_autoLayers(0)" align="left">
+								Phase 1 Development</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_phase2.htm';P7_autoLayers(0)" align="left">
+								Phase 2<font class="menu">
+                         		Development</font></td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_phase3.htm';P7_autoLayers(0)" align="left">
+								Phase 3
+                         <font class="menu">
+                         		Development</font></td></tr>
+
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_source.htm';P7_autoLayers(0)" align="left">
+								Source Code Access</td>
+								</tr>
+								<tr>
+									<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_build.htm';P7_autoLayers(0)" align="left">
+                         <font class="menu">
+                         			Build Environment</font></td>
+								</tr>
+								<tr>
+									<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_test.htm';P7_autoLayers(0)" align="left">
+                         <font class="menu">
+                         			Test Suite</font></td>
+								</tr>
+
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='dev_code.htm';P7_autoLayers(0)" align="left">
+								Coding Guidelines</td></tr>
+                              </table>
+                         </font>
+                    </td>
+               </tr>
+
+               <tr>
+                    <td bgcolor=#ffffff colspan=3 height=3 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td bgcolor="#999999" colspan=6 height=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+          </table>
+          </div>
+          
+          <div id="drop3" style="position:absolute; left:341px; top:100px; z-index:2; visibility: hidden">
+
+          <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=1 bgcolor="#999999" colspan=3></td>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=3 bgcolor=#ffffff></td>
+
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td align=center>
+                         <font class="menu">
+                         <table border=0 cellpadding=3 cellspacing=0>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='docu_doxy.htm';P7_autoLayers(0)" align="left">
+								Doxygen Documentation</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='books.htm';P7_autoLayers(0)" align="left">
+								Published Books</td></tr>
+
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='http://svn.tinykrnl.org/svn/tinykrnl/';P7_autoLayers(0)" align="left">
+								Live SVN Browser</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='links.htm';P7_autoLayers(0)" align="left">
+								Online Resources</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='reading.htm';P7_autoLayers(0)" align="left">
+								Recommended Reading</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='whitepapers.htm';P7_autoLayers(0)" align="left">
+								Whitepapers</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='articles.htm';P7_autoLayers(0)" align="left">
+								Technical Articles</td></tr>
+
+                         </table>
+
+                         </font>
+                    </td>
+               </tr>
+               <tr>
+                    <td bgcolor=#ffffff colspan=3 height=3 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td bgcolor="#999999" colspan=6 height=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+
+          </table>
+          </div>
+          
+          <div id="drop4" style="position:absolute; left:462px; top:100px; z-index:2; visibility: hidden">
+          <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=1 bgcolor="#999999" colspan=3></td>
+                    <td rowspan=4 bgcolor="#999999" width=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+
+               <tr>
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+                    <td height=3 bgcolor=#ffffff></td>
+                    <td rowspan=2 width=3 bgcolor=#ffffff onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td align=center>
+                         <font class="menu">
+                         <table border=0 cellpadding=3 cellspacing=0>
+
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='down_releases.htm';P7_autoLayers(0)" align="left">
+								Releases</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='testsuite.htm';P7_autoLayers(0)" align="left">
+								Test Suite</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='tools.htm';P7_autoLayers(0)" align="left">
+								3rd Party Tools</td></tr>
+                              <tr>
+								<td bgcolor="#ffffff" onMouseOver="this.bgColor='EDCA5D'" onMouseOut="this.bgColor='#ffffff'" onclick="window.location.href='down_pdf.htm';P7_autoLayers(0)" align="left">
+								Documentation PDFs</td></tr>
+                         </table>
+                         </font>
+                    </td>
+
+               </tr>
+               <tr>
+                    <td bgcolor=#ffffff colspan=3 height=3 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+               <tr>
+                    <td bgcolor="#999999" colspan=6 height=1 onMouseOver="P7_autoLayers(0)"></td>
+               </tr>
+          </table>
+          </div>
+    <!-- For non-visual user agents: -->
+      <div id="top"><a href="#main-copy" class="doNotDisplay doNotPrint">Skip to 
+		main content.</a></div>
+
+    <!-- ##### Header ##### -->
+
+    <div id="header">
+      <div class="superHeader">
+        <div class="left">
+          <span class="doNotDisplay">Related sites:</span>
+          <a href="./status.htm">Current Status</a> |
+          <a href="mailto:join@tinykrnl.org?subject=Joining the Project">Join Project</a>
+        </div>
+        <div class="right">
+          <span class="doNotDisplay">More related sites:</span>
+          <a href="javascript:alert('Sorry, releases are not yet available')">Current Release</a> |
+          <a href="http://svn.tinykrnl.org/tinykrnl/tinynightly.7z">Nightly Release</a> |
+          <a href="irc://freenode.net/tinykrnl">IRC Channel</a> |
+          <a href="mailto:devel-subscribe@tinykrnl.org">Mailing List</a> |
+          <a href="./index.htm">Site Map</a>
+        </div>
+      </div>
+
+      <div class="midHeader">
+        <h1 class="headerTitle">TinyKRNL Development - Coding Guidelines</h1>
+      </div>
+
+      <div class="subHeader">
+        <span class="doNotDisplay">Navigation:</span>
+        <a href="index.htm">Home</a> |
+        <a href="about_proj.htm" name="menuanchor1" onMouseOver="P7_autoLayers(0);P7_Snap('menuanchor1','drop1',0,8);P7_autoLayers(0,'drop1')">
+        	<img src="" name="menuanchor1" width="0%" height="0" border="0" >
+        	About
+        </a> |
+        <a href="dev_phase1.htm" class="highlight" name="menuanchor2" onMouseOver="P7_autoLayers(0);P7_Snap('menuanchor2','drop2',0,8);P7_autoLayers(0,'drop2')">
+        	<img src="" name="menuanchor2" width="0%" height="0" border="0" >
+        	Development
+        </a> |
+        <a href="docu_doxy.htm" name="menuanchor3" onMouseOver="P7_autoLayers(0);P7_Snap('menuanchor3','drop3',0,8);P7_autoLayers(0,'drop3')">
+			<img src="" name="menuanchor3" width="0%" height="0" border="0" >
+	        Documentation
+	    </a> |
+        <a href="down_releases.htm" name="menuanchor4" onMouseOver="P7_autoLayers(0);P7_Snap('menuanchor4','drop4',0,8);P7_autoLayers(0,'drop4')">
+        	<img src="" name="menuanchor4" width="0%" height="0" border="0" >
+	        Downloads
+	    </a>
+      </div>
+    </div>
+
+    <!-- ##### Side Bar ##### -->
+
+    <div id="side-bar">
+      <div>
+        <p class="sideBarTitle">Page Navigation</p>
+        <ul>
+          <li><a href="#introduction" title="Introduction">
+			&rsaquo; About the Guidelines</a></li>
+	  	  <li><a href="#phase1" title="Phase 1">
+			&rsaquo; Function Style</a></li>
+          <li><a href="#phase2" title="Phase 2">&rsaquo;
+			Code Style</a></li>
+          <li><a href="#phase3" title="Phase 3">&rsaquo; Header Style</a></li>
+          <li><a href="#phase3" title="Phase 3">&rsaquo; Generic Rules</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="sideBarTitle">Section Navigation</p>
+        <ul>
+          <li><a href="./dev_phase1.htm">&rsaquo; Phase 1 Development</a></li>
+          <li><a href="./dev_phase2.htm">&rsaquo; Phase 2 Development</a></li>
+          <li><a href="./dev_phase3.htm">&rsaquo; Phase 3 Development</a></li>
+			<li><a href="./dev_source.htm">&rsaquo; Source Code Access</a></li>
+			<li><a href="./dev_build.htm">&rsaquo; Build Environment</a></li>
+			<li><a href="./dev_test.htm">&rsaquo; Test Suite</a></li>
+			<li><span class="thisPage">&rsaquo; Coding Guidelines</span></li>
+          <li><a href="./index.htm">&raquo; Back</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ##### Main Copy ##### -->
+
+    <div id="main-copy">
+      <h1 id="introduction">About the Guidelines</h1>
+      <p>Although most open source projects do not enforce a coding style on its 
+		developers, the TinyKRNL project recognizes the importance of a rigid 
+		and commercial-like organization and structure which sets the project 
+		apart from most other typical FOSS environments. The project believes 
+		that by enforcing a limited amount of rules to aspects such as code 
+		style and quality, this will increase code readability, aid in bug 
+		hunting and documentation, as well as resolve many issues which other 
+		projects face. </p>
+		<p>The guidelines used by the project are standard C coding styles and 
+		should be familiar to most Windows developers. However, they may be 
+		surprising to UNIX-style developers, which use an entirely different set 
+		of rules. In any case, we have found these rules to be generally well 
+		liked by most people, and extremely readable for all involved.</p>
+
+      <a class="topOfPage" href="#top" title="Go to the top of this page">^ TOP</a>
+
+      <h1 id="phase1">Function Style</h1>
+		<p><i>Function style</i> is defined by two things: the actual function 
+		declaration, and, for TinyKRNL, the obligatory comment header describing 
+		the function.</p>
+		<ol>
+			<li>Function declaration: The generic template for any function is 
+			as follows:<br>
+			<br>
+			<font face="Courier New">RETURN_TYPE<br>
+			FunctionName(PARAMETER_ANNOTATIONS PARAMETER_TYPE ParameterName1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			PARAMETER_ANNOTATIONS PARAMETER_TYPE ParameterName2)<br>
+			{<br>
+&nbsp;&nbsp;&nbsp; &lt;function starts here&gt;;<br>
+			}<br>
+			<br>
+			</font>In Windows style coding, almost all types are in CAPS. 
+			Therefore, void is VOID and int is INT. TinyKRNL also enforces the 
+			use of CamelCase (sometimes called PascalCase) for function names, 
+			parameter names and local variable names. <i>Parameter annotations</i> 
+			refer to another Windows-centric style in which parameters are 
+			marked as IN and/or OUT and OPTIONAL, if necessary. These 
+			annotations are readable cues on wether this function uses the 
+			parameters for input or output, and wether or not they are optional. 
+			Here is a complete example for a function which returns the number 
+			of apples in a tree, and can optionally also return the number of 
+			branches in the tree.<br>
+			<font face="Courier New"><br>
+			ULONG<br>
+			CountApples(IN PTREE_OBJECT TreeWithApples,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OUT PULONG 
+			NumberOfBranches OPTIONAL)<br>
+			{<br>
+&nbsp;&nbsp;&nbsp; &lt;function starts here&gt;;<br>
+			}<br>
+			</font></li>
+			<li><font face="Verdana">Comment header: The comment header for the 
+			CountApples function would be as follows:<br>
+			<br>
+			</font><font face="Courier New">/*++<br>
+			* @name CountApples<br>
+			*<br>
+			* The CountApples routine counts the number of apples in a tree and, 
+			optionally,<br>
+			* returns the number of branches.<br>
+			*<br>
+			* @param TreeWithApples<br>
+			* Pointer to a tree object containing the apples.<br>
+			*<br>
+			* @param NumberOfBranches<br>
+			* Optional pointer to the value where to return the number of 
+			branches.<br>
+			*<br>
+			* @return The number of apples in this tree.<br>
+			*<br>
+			* @remarks To count the apples in an entire forest, use the 
+			CountApplesInForest<br>
+			* routine instead.<br>
+			*<br>
+			*--*/<br>
+			<br>
+			</font><font face="Verdana">If there are no parameters and/or return 
+			value and/or remarks, simply write &quot;None.&quot; </font></li>
+		</ol>
+
+      <a class="topOfPage" href="#top" title="Go to the top of this page">^ TOP</a>
+
+      <h1 id="phase2">Code Style</h1>
+		<p><i>Code style </i>refers to the ensemble of rules that must be 
+		respected when writing code inside TinyKRNL. Here is a generic overview:</p>
+		<ul>
+			<li>All lines must be indented with four spaces.</li>
+			<li>Lines must not be longer then 80 columns (characters). To avoid 
+			this, break up function calls so that each parameter is aligned 
+			below the next. If the line contains no breakable arguments, break 
+			it after any other component such as a comma, an operator, a period, 
+			etc.</li>
+			<li>Braces must always be on a new line, and not following or 
+			preceding a <i>for, if, else, </i>etc...</li>
+			<li>All local variables must be defined at the beginning of a 
+			function, and not in later constructs.</li>
+			<li>All local variables must be CamelCased.</li>
+			<li>Every line of code, or block of code achieving a combined 
+			operation (3 lines max) must be commented.</li>
+			<li>Comments are always in // blocks, with empty // lines before and 
+			after the comment, for a total size of at least 3 lines per comment.</li>
+			<li>During operations requiring the usage of boolean or logical 
+			comparisons, each comparison block should be enclosed in parens if 
+			more then one comparison is being done.</li>
+			<li>Do not put spaces between the parenthesis starting a function 
+			call and the first parameter, nor between the last parameter and the 
+			parenthesis closing the function call.</li>
+		</ul>
+         
+      <a class="topOfPage" href="#top" title="Go to the top of this page">^ TOP</a><h1 id="phase3">
+		Header Style</h1>
+		<p><i>Header style </i>refers to how function prototypes, type 
+		definitions and other information present in headers should be 
+		organized.</p>
+		<p>For prototypes or function types, the CountApples function would be 
+		defined as follows:<br>
+		<br>
+		<font face="Courier New">ULONG<br>
+		CountApples(<br>
+&nbsp;&nbsp;&nbsp; IN PTREE_OBJECT TreeWithApples,<br>
+&nbsp;&nbsp;&nbsp; OUT PULONG NumberOfBranches OPTIONAL<br>
+		);</font></p>
+		<p>The TREE_OBJECT type would be defined like this:</p>
+		<p><font face="Courier New">typedef struct _TREE_OBJECT<br>
+		{<br>
+&nbsp;&nbsp;&nbsp; ULONG Branches;<br>
+&nbsp;&nbsp;&nbsp; ULONG Apples;<br>
+		} TREE_OBJECT, *PTREE_OBJECT;</font></p>
+		<p>Additionally, the following rules apply:</p>
+		<ul>
+			<li>All type definitions should be grouped together. A short comment 
+			block describing the type is preferable. As well, a comment block 
+			marking the beginning of the type definition section should be 
+			present.</li>
+			<li>Likewise, all #defines should be together, as well as all 
+			prototypes. The former should be grouped together with a comment 
+			block above them if applicable. All defines in the same header 
+			should be aligned with their expansion. The same goes for macros.</li>
+			<li>Prototypes should be organized by the file in which the function 
+			is present. They should not be documented apart from a comment block 
+			separating each file section.</li>
+			<li>All types and prototypes in a component should be defined in a 
+			single header unless there is an overwhelming need to create one or 
+			more internal headers.</li>
+			<li>All components must have a precompiled header named precomp.h.</li>
+		</ul>
+		
+      <a class="topOfPage" href="#top" title="Go to the top of this page">^ TOP</a>
+      <h1 id="phase4">Generic Rules</h1>
+		<p>Finally, the following rules apply to TinyKRNL components in general:</p>
+		<ul>
+			<li>The file names, function names, and location inside the TinyKRNL 
+			tree must match those of the Windows 2003 Service Pack 1 Tree.</li>
+			<li>All files must have the following file header as a template:<br>
+			<br>
+			<font face="Courier New">/*++<br>
+			<br>
+			Copyright (c) Author Name. All rights reserved.<br>
+			<br>
+			THIS CODE AND INFORMATION IS PROVIDED UNDER &lt;LICENSE TYPE&gt;.<br>
+			PLEASE READ THE FILE &lt;LICENSE FILE&gt; IN THE TOP LEVEL DIRECTORY.<br>
+			<br>
+			Module Name:<br>
+			<br>
+			ModuleName.c<br>
+			<br>
+			Abstract:<br>
+			<br>
+			Description of either the component or this specific module.<br>
+			<br>
+			Environment:<br>
+			<br>
+			&lt;Kernel mode&gt; or &lt;User mode&gt;<br>
+			<br>
+			Revision History:<br>
+			<br>
+			SVN Committer - Summary of change(s) - DD-Mon-YY<br>
+			<br>
+			--*/<br>
+			#include &quot;precomp.h&quot;</font></li>
+		</ul>
+	</div>
+    
+    <!-- ##### Footer ##### -->
+
+    <div id="footer">
+      <div class="left">
+        E-mail:&nbsp;<a href="mailto:webmaster@tinykrnl.org" title="Email webmaster">webmaster@tinykrnl.org</a><br />
+        <a href="mailto:feedback@tinykrnl.org" class="doNotPrint">Contact Us</a>
+      </div>
+
+      <br class="doNotDisplay doNotPrint" />
+
+      <div class="right">
+        ©Copyright 2006 TinyKRNL Project. All Rights Reserved<br />
+        <a href="./index.htm" class="doNotPrint">Privacy Statement</a>
+      </div>
+    </div>
+  </body>
+</html>

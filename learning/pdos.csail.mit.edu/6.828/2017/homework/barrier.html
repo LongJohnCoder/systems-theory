@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Homework: Barriers</title>
+<link rel="stylesheet" href="homework.css" type="text/css" />
+</head>
+<body>
+
+<h1>Barriers</h1>
+
+<p>In this assignment we will explore how to implement a <a
+href="http://en.wikipedia.org/wiki/Barrier_(computer_science)">barrier</a> using condition
+variables provided by the pthread library.  A barrier is a point in an
+application at which all threads must wait until all other threads reach
+that point too. Condition variables are a sequence
+coordination technique similar to xv6's sleep and wakeup.  Submit your solutions
+before the beginning of the next lecture to <a
+ href="https://6828.scripts.mit.edu/2017/handin.py/">the submission web site</a>.
+
+<p>Download <a href="barrier.c">barrier.c</a> and compile it on your laptop or Athena machine:
+<pre>
+$ gcc -g -O2 -pthread barrier.c
+$ ./a.out 2
+Assertion failed: (i == t), function thread, file barrier.c, line 55.
+</pre>
+
+The 2 specifies the number of threads that synchronize on the barrier (
+<tt>nthread</tt> in <tt>barrier.c</tt>).  Each thread sits in a tight loop. In
+each loop iteration a thread calls <tt>barrier()</tt> and then sleeps for some
+random number of microseconds. The assert triggers, because one thread leaves the
+barrier before the other thread has reached the barrier.  The desired behavior is
+that all threads should block until <tt>nthread</tt>s have called
+<tt>barrier</tt>.
+
+<p>Your goal is to achieve the desired behavior. In addition to the <a
+  href="lock.html">lock primitives</a> that you have seen before, you will need
+ the following new pthread primitives (see man pthreads for more detail):
+
+<pre>
+pthread_cond_wait(&cond, &mutex);  // go to sleep on cond, releasing lock mutex
+pthread_cond_broadcast(&cond);     // wake up every thread sleeping on cond
+</pre>
+
+<tt>pthread_cond_wait</tt> releases the <tt>mutex</tt> when called,
+and re-acquires the <tt>mutex</tt> before returning.
+
+<p>We have given you <tt>barrier_init()</tt>. Your job is to implement
+<tt>barrier()</tt> so that the panic won't occur.
+We've defined <tt>struct barrier</tt> for you; its fields are for
+your use.
+
+<p>There are two issues that complicate your task:
+
+<ul>
+  
+<li> You have to deal with a succession of barrier calls,
+each of which we'll call a round.
+  <tt>bstate.round</tt> records the current round.  You
+  should increase <tt>bstate.round</tt> when each round starts.
+
+<li> You have to handle the case in which one thread races around the loop before
+the others have exited the barrier. In particular, you are re-using
+<tt>bstate.nthread</tt> from one round to the next.  Make sure that a thread that
+leaves the barrier and races around the loop doesn't increase <tt>bstate.nthread</tt>
+while a previous round is still using it.
+
+</ul>
+
+<p>Test your code with one, two, and more than two threads.
+
+<div class="question">
+<p><b>Submit</b>: your modified barrier.c
+</div>
+
+</body>
+</html>

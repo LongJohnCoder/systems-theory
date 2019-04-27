@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>PCI Support Library</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hardware Interfaces"
+HREF="c9951.html"><LINK
+REL="PREVIOUS"
+TITLE="mtrr_del"
+HREF="r10130.html"><LINK
+REL="NEXT"
+TITLE="pci_bus_max_busnr"
+HREF="r10173.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r10130.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 10. Hardware Interfaces</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r10173.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN10171"
+>10.3. PCI Support Library</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r10173.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_bus_max_busnr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   returns maximum PCI bus number of given bus' children
+ </DT
+><DT
+><A
+HREF="r10199.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_max_busnr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      returns maximum PCI bus number
+ </DT
+><DT
+><A
+HREF="r10226.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_find_capability</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      query for devices' capabilities 
+ </DT
+><DT
+><A
+HREF="r10274.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_bus_find_capability</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      query for devices' capabilities 
+ </DT
+><DT
+><A
+HREF="r10315.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_find_parent_resource</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      return resource region of parent bus of given region
+ </DT
+><DT
+><A
+HREF="r10348.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_set_power_state</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set the power state of a PCI device
+ </DT
+><DT
+><A
+HREF="r10384.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_save_state</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      save the PCI configuration space of a device before suspending
+ </DT
+><DT
+><A
+HREF="r10418.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_restore_state</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Restore the saved state of a PCI device
+ </DT
+><DT
+><A
+HREF="r10448.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_enable_device_bars</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Initialize some of a device for use
+ </DT
+><DT
+><A
+HREF="r10481.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_enable_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Initialize device before it's used by a driver.
+ </DT
+><DT
+><A
+HREF="r10507.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_disable_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Disable PCI device after use
+ </DT
+><DT
+><A
+HREF="r10533.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_enable_wake</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enable device to generate PME# when suspended
+ </DT
+><DT
+><A
+HREF="r10574.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_release_region</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Release a PCI bar
+ </DT
+><DT
+><A
+HREF="r10607.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_request_region</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Reserved PCI I/O and memory resource
+ </DT
+><DT
+><A
+HREF="r10652.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_release_regions</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Release reserved PCI I/O and memory resources
+ </DT
+><DT
+><A
+HREF="r10678.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_request_regions</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Reserved PCI I/O and memory resources
+ </DT
+><DT
+><A
+HREF="r10715.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_set_master</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enables bus-mastering for device dev
+ </DT
+><DT
+><A
+HREF="r10742.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_set_mwi</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enables memory-write-invalidate PCI transaction
+ </DT
+><DT
+><A
+HREF="r10773.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_clear_mwi</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      disables Memory-Write-Invalidate for device dev
+ </DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r10130.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r10173.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mtrr_del</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c9951.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_bus_max_busnr</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

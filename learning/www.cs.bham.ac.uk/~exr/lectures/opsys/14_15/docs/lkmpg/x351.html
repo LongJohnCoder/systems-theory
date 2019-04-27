@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Modules Spanning Multiple Files</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hello World"
+HREF="c119.html"><LINK
+REL="PREVIOUS"
+TITLE="Passing Command Line Arguments to a Module"
+HREF="x323.html"><LINK
+REL="NEXT"
+TITLE="Building modules for a precompiled kernel"
+HREF="x380.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x323.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Hello World</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x380.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN351"
+></A
+>2.7. Modules Spanning Multiple Files</H1
+><P
+>Sometimes it makes sense to divide a kernel module between several source files.</P
+><P
+>Here's an example of such a kernel module.</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN361"
+></A
+><P
+><B
+>Example 2-8. start.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*
+ *  start.c - Illustration of multi filed modules
+ */
+
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/module.h&#62;	/* Specifically, a module */
+
+int init_module(void)
+{
+	printk(KERN_INFO "Hello, world - this is the kernel speaking\n");
+	return 0;
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>The next file:</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN369"
+></A
+><P
+><B
+>Example 2-9. stop.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*
+ *  stop.c - Illustration of multi filed modules
+ */
+
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/module.h&#62;	/* Specifically, a module  */
+
+void cleanup_module()
+{
+	printk(KERN_INFO "Short is the life of a kernel module\n");
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>And finally, the makefile:</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN374"
+></A
+><P
+><B
+>Example 2-10. Makefile</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>obj-m += hello-1.o
+obj-m += hello-2.o
+obj-m += hello-3.o
+obj-m += hello-4.o
+obj-m += hello-5.o
+obj-m += startstop.o
+startstop-objs := start.o stop.o
+
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>This is the complete makefile for all the examples we've seen so far. The first five lines are nothing special,
+	but for the last example we'll need two lines. First we invent an object name for our combined module, second we tell
+	<B
+CLASS="COMMAND"
+> make </B
+> what object files are part of that module. </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x323.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x380.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Passing Command Line Arguments to a Module</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c119.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Building modules for a precompiled kernel</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

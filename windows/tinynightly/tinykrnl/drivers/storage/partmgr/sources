@@ -1,0 +1,33 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=partmgr
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib \
+        $(DDK_LIB_PATH)\wmilib.lib
+
+INCLUDES=\
+         ..\..\..\base\ntos\inc; \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\ddk\inc; \
+         ..\..\..\public\internal\base\inc; \
+         ..\..\..\public\internal\drivers\inc
+
+SOURCES=\
+        partmgr.c        \
+        pmwmicnt.c       \
+        pmwmireg.c       \
+        partmgr.rc    
+
+PRECOMPILED_INCLUDE=precomp.h
+

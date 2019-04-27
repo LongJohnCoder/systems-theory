@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Replacing printk</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Replacing Printks"
+HREF="c1159.html"><LINK
+REL="PREVIOUS"
+TITLE="Replacing Printks"
+HREF="c1159.html"><LINK
+REL="NEXT"
+TITLE="Flashing keyboard LEDs"
+HREF="x1194.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c1159.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 10. Replacing Printks</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x1194.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN1161"
+></A
+>10.1. Replacing <TT
+CLASS="FUNCTION"
+>printk</TT
+></H1
+><P
+>In <A
+HREF="x44.html#USINGX"
+>Section 1.2.1.2</A
+>, I said that X and kernel module programming don't mix.  That's true for developing kernel
+	modules, but in actual use, you want to be able to send messages to whichever
+	tty<A
+NAME="AEN1169"
+HREF="#FTN.AEN1169"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+> the command to load the
+	module came from.</P
+><P
+>The way this is done is by using <TT
+CLASS="VARNAME"
+>current</TT
+>, a pointer to the currently running task, to get the current
+	task's <SPAN
+CLASS="STRUCTNAME"
+>tty</SPAN
+> structure.  Then, we look inside that <SPAN
+CLASS="STRUCTNAME"
+>tty</SPAN
+> structure to find a
+	pointer to a string write function, which we use to write a string to the tty.</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1190"
+></A
+><P
+><B
+>Example 10-1. print_string.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/* 
+ *  print_string.c - Send output to the tty we're running on, regardless if it's
+ *  through X11, telnet, etc.  We do this by printing the string to the tty
+ *  associated with the current task.
+ */
+#include &#60;linux/kernel.h&#62;
+#include &#60;linux/module.h&#62;
+#include &#60;linux/init.h&#62;
+#include &#60;linux/sched.h&#62;	/* For current */
+#include &#60;linux/tty.h&#62;		/* For the tty declarations */
+#include &#60;linux/version.h&#62;	/* For LINUX_VERSION_CODE */
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Peter Jay Salzman");
+
+static void print_string(char *str)
+{
+	struct tty_struct *my_tty;
+
+	/* 
+	 * tty struct went into signal struct in 2.6.6 
+	 */
+#if ( LINUX_VERSION_CODE &#60;= KERNEL_VERSION(2,6,5) )
+	/* 
+	 * The tty for the current task 
+	 */
+	my_tty = current-&#62;tty;
+#else
+	/* 
+	 * The tty for the current task, for 2.6.6+ kernels 
+	 */
+	my_tty = current-&#62;signal-&#62;tty;
+#endif
+
+	/* 
+	 * If my_tty is NULL, the current task has no tty you can print to 
+	 * (ie, if it's a daemon).  If so, there's nothing we can do.
+	 */
+	if (my_tty != NULL) {
+
+		/* 
+		 * my_tty-&#62;driver is a struct which holds the tty's functions,
+		 * one of which (write) is used to write strings to the tty. 
+		 * It can be used to take a string either from the user's or 
+		 * kernel's memory segment.
+		 *
+		 * The function's 1st parameter is the tty to write to,
+		 * because the same function would normally be used for all 
+		 * tty's of a certain type.  The 2nd parameter controls 
+		 * whether the function receives a string from kernel
+		 * memory (false, 0) or from user memory (true, non zero). 
+		 * BTW: this param has been removed in Kernels &#62; 2.6.9
+		 * The (2nd) 3rd parameter is a pointer to a string.
+		 * The (3rd) 4th parameter is the length of the string.
+		 *
+		 * As you will see below, sometimes it's necessary to use
+		 * preprocessor stuff to create code that works for different
+		 * kernel versions. The (naive) approach we've taken here 
+		 * does not scale well. The right way to deal with this 
+		 * is described in section 2 of 
+		 * linux/Documentation/SubmittingPatches
+		 */
+		((my_tty-&#62;driver)-&#62;write) (my_tty,	/* The tty itself */
+#if ( LINUX_VERSION_CODE &#60;= KERNEL_VERSION(2,6,9) )		
+					   0,	/* Don't take the string 
+						   from user space        */
+#endif
+					   str,	/* String                 */
+					   strlen(str));	/* Length */
+
+		/* 
+		 * ttys were originally hardware devices, which (usually) 
+		 * strictly followed the ASCII standard.  In ASCII, to move to
+		 * a new line you need two characters, a carriage return and a
+		 * line feed.  On Unix, the ASCII line feed is used for both 
+		 * purposes - so we can't just use \n, because it wouldn't have
+		 * a carriage return and the next line will start at the
+		 * column right after the line feed.
+		 *
+		 * This is why text files are different between Unix and 
+		 * MS Windows.  In CP/M and derivatives, like MS-DOS and 
+		 * MS Windows, the ASCII standard was strictly adhered to,
+		 * and therefore a newline requirs both a LF and a CR.
+		 */
+
+#if ( LINUX_VERSION_CODE &#60;= KERNEL_VERSION(2,6,9) )		
+		((my_tty-&#62;driver)-&#62;write) (my_tty, 0, "\015\012", 2);
+#else
+		((my_tty-&#62;driver)-&#62;write) (my_tty, "\015\012", 2);
+#endif
+	}
+}
+
+static int __init print_string_init(void)
+{
+	print_string("The module has been inserted.  Hello world!");
+	return 0;
+}
+
+static void __exit print_string_exit(void)
+{
+	print_string("The module has been removed.  Farewell world!");
+}
+
+module_init(print_string_init);
+module_exit(print_string_exit);</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1169"
+HREF="x1161.html#AEN1169"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+><EM
+>T</EM
+>ele<EM
+>ty</EM
+>pe, originally a combination keyboard-printer used to
+	communicate with a Unix system, and today an abstraction for the text stream used for a Unix program, whether it's a physical
+	terminal, an xterm on an X display, a network connection used with telnet, etc.</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c1159.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x1194.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Replacing Printks</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c1159.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Flashing keyboard LEDs</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Hello World (part 2)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hello World"
+HREF="c119.html"><LINK
+REL="PREVIOUS"
+TITLE="Compiling Kernel Modules"
+HREF="x181.html"><LINK
+REL="NEXT"
+TITLE="Hello World (part 3): The __init and __exit Macros"
+HREF="x245.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x181.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Hello World</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x245.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="HELLO2"
+></A
+>2.3. Hello World (part 2)</H1
+><P
+>As of Linux 2.4, you can rename the init and cleanup functions of your modules; they no longer have to be called
+	<TT
+CLASS="FUNCTION"
+>init_module()</TT
+> and <TT
+CLASS="FUNCTION"
+>cleanup_module()</TT
+> respectively.  This is done with the
+	<TT
+CLASS="FUNCTION"
+>module_init()</TT
+> and <TT
+CLASS="FUNCTION"
+>module_exit()</TT
+> macros.  These macros are defined in <TT
+CLASS="FILENAME"
+>linux/init.h</TT
+>.  The only caveat is that your init and cleanup functions must be defined before 
+	calling	the macros, otherwise you'll get compilation errors. Here's an example of this technique:</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN232"
+></A
+><P
+><B
+>Example 2-3. hello-2.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*  
+ *  hello-2.c - Demonstrating the module_init() and module_exit() macros.
+ *  This is preferred over using init_module() and cleanup_module().
+ */
+#include &#60;linux/module.h&#62;	/* Needed by all modules */
+#include &#60;linux/kernel.h&#62;	/* Needed for KERN_INFO */
+#include &#60;linux/init.h&#62;		/* Needed for the macros */
+
+static int __init hello_2_init(void)
+{
+	printk(KERN_INFO "Hello, world 2\n");
+	return 0;
+}
+
+static void __exit hello_2_exit(void)
+{
+	printk(KERN_INFO "Goodbye, world 2\n");
+}
+
+module_init(hello_2_init);
+module_exit(hello_2_exit);</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>So now we have two real kernel modules under our belt. Adding another module is as simple as this: </P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN237"
+></A
+><P
+><B
+>Example 2-4. Makefile for both our modules</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>obj-m += hello-1.o
+obj-m += hello-2.o
+
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>Now have a look at <TT
+CLASS="FILENAME"
+>linux/drivers/char/Makefile</TT
+> for a real world example. As you can see, some things
+	get hardwired into the kernel (obj-y) but where are all those obj-m gone?  Those familiar with shell scripts will easily be
+	able to spot them. For those not, the obj-$(CONFIG_FOO) entries you see everywhere expand into obj-y or obj-m, depending on 
+	whether the CONFIG_FOO variable has been set to y or m. While we are at it, those were exactly the kind of variables
+	that you have set in the <TT
+CLASS="FILENAME"
+>linux/.config</TT
+> file, the last time when you said <B
+CLASS="COMMAND"
+>make menuconfig</B
+>
+	or something like that.
+	</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x181.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x245.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Compiling Kernel Modules</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c119.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Hello World (part 3): The <TT
+CLASS="LITERAL"
+>__init</TT
+> and <TT
+CLASS="LITERAL"
+>__exit</TT
+> Macros</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Homework: Hardware/Software Virtualization</title>
+<link rel="stylesheet" href="homework.css" type="text/css" />
+</head>
+<body>
+
+<h1>Homework: Hardware/Software Virtualization</h1>
+
+<p>Submit two items to the <a href="https://6828.scripts.mit.edu/2017/handin.py/">the submission web
+    site</a>:
+  <ul>
+    
+    <li>Submit your own question about the paper (e.g., what you find most
+confusing about the paper or the paper's general context/problem) before 11:59pm
+the night before. You cannot use the question below. To the extent possible,
+      during lecture we will try to answer questions submitted the evening before.
+      
+    <li>Submit your answer for the question below before the beginning of the lecture
+
+  </ul>
+<p>
+
+
+<div class="question"> <p><b>Answer the following question</b>:
+
+The translated version of <tt>isPrime</tt> shown towards the end of 
+Section 3.2 of the Adams/Agesen paper
+does not end with a <tt>ret</tt> instruction;
+instead, it ends with a <tt>jmp</tt> through <tt>%gs</tt>.
+What return instruction pointer is on the stack when
+<tt>isPrime</tt> starts, and why
+can't the translated <tt>isPrime</tt> return directly to that address?
+
+
+</p> </div>
+
+</body>
+</html>

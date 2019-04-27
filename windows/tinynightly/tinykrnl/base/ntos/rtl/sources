@@ -1,0 +1,78 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=rtl
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=
+
+INCLUDES=\
+        .\..\inc; \
+        .\..\..\..\public\ddk\inc; \
+        $(DDK_INC_PATH)
+
+SOURCES=\
+        acledit.c       \
+        atom.c          \
+        avltable.c      \
+        bitmap.c        \
+        bootstatus.c    \
+        checksum.c      \
+        cnvint.c        \
+        compress.c      \
+        debug.c         \
+        environ.c       \
+        excptdbg.c      \
+        gen8dot3.c      \
+        gentable.c      \
+        guid.c          \
+        heap.c          \
+        heapdbg.c       \
+        heapdll.c       \
+        heappage.c      \
+        imagedir.c      \
+        ldrreloc.c      \
+        ldrrsrc.c       \
+        lookasid.c      \
+        lznt1.c         \
+        message.c       \
+        nls.c           \
+        nlsxlat.c       \
+        prefix.c        \
+        prodtype.c      \
+        random.c        \
+        range.c         \
+        regutil.c       \
+        rtlassig.c      \
+        rtldowncaseunicodechar.c \
+        rtlexec.c       \
+        rtlimagentheader.c \
+        rtlvalidateunicodestring.c \
+        rxact.c         \
+        sertl.c         \
+        string.c        \
+        threads.c       \
+        timer.c         \
+        tracedb.c       \
+        version.c       \
+        wait.c          \
+        worker.c        \
+        i386\context.c  \
+        i386\debug2.c   \
+        i386\debug3.c   \
+        i386\exdsptch.c \
+        i386\getcalr.c  \
+        i386\interlck.asm \
+        i386\raise.c    \
+        i386\stktrace.c \
+        i386\vectxcpt.c \
+        i386\xcptmisc.c
+
+PRECOMPILED_INCLUDE=precomp.h

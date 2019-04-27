@@ -1,0 +1,6 @@
+LIBRARY WMILIB.SYS
+
+EXPORTS
+		WmiCompleteRequest @1
+		WmiFireEvent @2
+		WmiSystemControl @3

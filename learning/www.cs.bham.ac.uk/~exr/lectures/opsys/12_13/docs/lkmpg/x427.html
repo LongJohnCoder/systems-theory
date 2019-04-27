@@ -1,0 +1,695 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Modules vs Programs</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Preliminaries"
+HREF="c425.html"><LINK
+REL="PREVIOUS"
+TITLE="Preliminaries"
+HREF="c425.html"><LINK
+REL="NEXT"
+TITLE="Character Device Files"
+HREF="c567.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c425.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Preliminaries</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c567.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN427"
+></A
+>3.1. Modules vs Programs</H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN429"
+></A
+>3.1.1. How modules begin and end</H2
+><P
+>A program usually begins with a <TT
+CLASS="FUNCTION"
+>main()</TT
+> function, executes a bunch of instructions and
+			terminates upon completion of those instructions.  Kernel modules work a bit differently.  A module always begin with
+			either the <TT
+CLASS="FUNCTION"
+>init_module</TT
+> or the function you specify with <TT
+CLASS="FUNCTION"
+>module_init</TT
+> call.  This
+			is the entry function for modules; it tells the kernel what functionality the module provides and sets up the kernel to
+			run the module's functions when they're needed.  Once it does this, entry function returns and the module does nothing
+			until the kernel wants to do something with the code that the module provides.</P
+><P
+>All modules end by calling either <TT
+CLASS="FUNCTION"
+>cleanup_module</TT
+> or the function you specify with the
+			<TT
+CLASS="FUNCTION"
+>module_exit</TT
+> call.  This is the exit function for modules; it undoes whatever entry function did.  It
+			unregisters the functionality that the entry function registered.</P
+><P
+>Every module must have an entry function and an exit function.  Since there's more than one way to specify entry and
+			exit functions, I'll try my best to use the terms `entry function' and `exit function', but if I slip and simply refer to
+			them as <TT
+CLASS="FUNCTION"
+>init_module</TT
+> and <TT
+CLASS="FUNCTION"
+>cleanup_module</TT
+>, I think you'll know what I mean.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN441"
+></A
+>3.1.2. Functions available to modules</H2
+><P
+>Programmers use functions they don't define all the time.  A prime example of this is
+				<TT
+CLASS="FUNCTION"
+>printf()</TT
+>.  You use these library functions which are provided by the standard C library, libc.  The
+				definitions for these functions don't actually enter your program until the linking stage, which insures that the code
+				(for <TT
+CLASS="FUNCTION"
+>printf()</TT
+> for example) is available, and fixes the call instruction to point to that
+				code.</P
+><P
+>Kernel modules are different here, too.  In the hello world example, you might have noticed that we used a
+				function, <TT
+CLASS="FUNCTION"
+>printk()</TT
+> but didn't include a standard I/O library.  That's because modules are object
+				files whose symbols get resolved upon insmod'ing.  The definition for the symbols comes from the kernel itself; the only
+				external functions you can use are the ones provided by the kernel.  If you're curious about what symbols have been
+				exported by your kernel, take a look at <TT
+CLASS="FILENAME"
+>/proc/kallsyms</TT
+>.</P
+><P
+>One point to keep in mind is the difference between library functions and system calls.  Library functions are
+				higher level, run completely in user space and provide a more convenient interface for the programmer to the functions
+				that do the real work---system calls.  System calls run in kernel mode on the user's behalf and are provided by the
+				kernel itself.  The library function <TT
+CLASS="FUNCTION"
+>printf()</TT
+> may look like a very general printing function, but
+				all it really does is format the data into strings and write the string data using the low-level system call
+				<TT
+CLASS="FUNCTION"
+>write()</TT
+>, which then sends the data to standard output.</P
+><P
+> Would you like to see what system calls are made by <TT
+CLASS="FUNCTION"
+>printf()</TT
+>?  It's easy!  Compile the
+				following program: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#include &#60;stdio.h&#62;
+int main(void)
+{ printf("hello"); return 0; }
+				</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>with <B
+CLASS="COMMAND"
+>gcc -Wall -o hello hello.c</B
+>.  Run the exectable with
+<B
+CLASS="COMMAND"
+>strace ./hello</B
+>.  Are
+				you impressed?  Every line you see corresponds to a system call.  strace<A
+NAME="AEN467"
+HREF="#FTN.AEN467"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+> is a handy program that gives you details about what system calls
+				a program is making, including which call is made, what its arguments are what it returns.  It's an invaluable tool for
+				figuring out things like what files a program is trying to access.  Towards the end, you'll see a line which looks like
+				<TT
+CLASS="FUNCTION"
+>write(1, "hello", 5hello)</TT
+>.  There it is.  The face behind the <TT
+CLASS="FUNCTION"
+>printf()</TT
+> mask.
+				You may not be familiar with write, since most people use library functions for file I/O (like fopen, fputs, fclose).
+				If that's the case, try looking at <B
+CLASS="COMMAND"
+>man 2 write</B
+>.  The 2nd man section is devoted to system calls (like
+				<TT
+CLASS="FUNCTION"
+>kill()</TT
+> and <TT
+CLASS="FUNCTION"
+>read()</TT
+>.  The 3rd man section is devoted to library calls, which you
+				would probably be more familiar with (like <TT
+CLASS="FUNCTION"
+>cosh()</TT
+> and <TT
+CLASS="FUNCTION"
+>random()</TT
+>).</P
+><P
+>You can even write modules to replace the kernel's system calls, which we'll do shortly.  Crackers often make use
+				of this sort of thing for backdoors or trojans, but you can write your own modules to do more benign things, like have
+				the kernel write <EM
+>Tee hee, that tickles!</EM
+> everytime someone tries to delete a file on your
+				system.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN478"
+></A
+>3.1.3. User Space vs Kernel Space</H2
+><P
+>A kernel is all about access to resources, whether the resource in question happens to be a video card, a hard drive
+			or even memory.  Programs often compete for the same resource.  As I just saved this document, updatedb started updating
+			the locate database.  My vim session and updatedb are both using the hard drive concurrently.  The kernel needs to keep
+			things orderly, and not give users access to resources whenever they feel like it.  To this end, a <SPAN
+CLASS="ACRONYM"
+>CPU</SPAN
+>
+			can run in different modes.  Each mode gives a different level of freedom to do what you want on the system.  The Intel
+			80386 architecture has 4 of these modes, which are called rings.  Unix uses only two rings; the highest ring (ring 0, also
+			known as `supervisor mode' where everything is allowed to happen) and the lowest ring, which is called `user mode'.</P
+><P
+>Recall the discussion about library functions vs system calls.  Typically, you use a library function in user mode.
+			The library function calls one or more system calls, and these system calls execute on the library function's behalf, but
+			do so in supervisor mode since they are part of the kernel itself.  Once the system call completes its task, it returns
+			and execution gets transfered back to user mode.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN483"
+></A
+>3.1.4. Name Space</H2
+><P
+>When you write a small C program, you use variables which are convenient and make sense to the reader.  If, on the
+				other hand, you're writing routines which will be part of a bigger problem, any global variables you have are part of a
+				community of other peoples' global variables; some of the variable names can clash.  When a program has lots of global
+				variables which aren't meaningful enough to be distinguished, you get <EM
+>namespace pollution</EM
+>.  In
+				large projects, effort must be made to remember reserved names, and to find ways to develop a scheme for naming unique
+				variable names and symbols.</P
+><P
+>When writing kernel code, even the smallest module will be linked against the entire kernel, so this is definitely
+				an issue.  The best way to deal with this is to declare all your variables as <SPAN
+CLASS="TYPE"
+>static</SPAN
+> and to use a
+				well-defined prefix for your symbols.  By convention, all kernel prefixes are lowercase.  If you don't want to declare
+				everything as <SPAN
+CLASS="TYPE"
+>static</SPAN
+>, another option is to declare a <TT
+CLASS="VARNAME"
+>symbol table</TT
+> and register it with a
+				kernel.  We'll get to this later.</P
+><P
+>The file <TT
+CLASS="FILENAME"
+>/proc/kallsyms</TT
+> holds all the symbols that the kernel knows about and which are
+				therefore accessible to your modules since they share the kernel's codespace.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN500"
+></A
+>3.1.5. Code space</H2
+><P
+>Memory management is a very complicated subject---the majority of O'Reilly's `Understanding The Linux Kernel' is
+			just on memory management!  We're not setting out to be experts on memory managements, but we do need to know a couple of
+			facts to even begin worrying about writing real modules.</P
+><P
+>If you haven't thought about what a segfault really means, you may be surprised to hear that pointers don't actually
+			point to memory locations.  Not real ones, anyway.  When a process is created, the kernel sets aside a portion of real
+			physical memory and hands it to the process to use for its executing code, variables, stack, heap and other things which a
+			computer scientist would know about<A
+NAME="AEN514"
+HREF="#FTN.AEN514"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+>.
+			This memory begins with 0x00000000 and extends up to whatever it needs to be.  Since the memory space for any two processes don't
+			overlap, every process that can access a memory address, say <TT
+CLASS="LITERAL"
+>0xbffff978</TT
+>, would be accessing a different
+			location in real physical memory!  The processes would be accessing an index named <TT
+CLASS="LITERAL"
+>0xbffff978</TT
+> which
+			points to some kind of offset into the region of memory set aside for that particular process.  For the most part, a
+			process like our Hello, World program can't access the space of another process, although there are ways which we'll talk
+			about later.</P
+><P
+>The kernel has its own space of memory as well.  Since a module is code which can be dynamically inserted and
+			removed in the kernel (as opposed to a semi-autonomous object), it shares the kernel's codespace rather than having its
+			own.  Therefore, if your module segfaults, the kernel segfaults.  And if you start writing over data because of an
+			off-by-one error, then you're trampling on kernel data (or code). This is even worse than it sounds, so try your best to be
+			careful.</P
+><P
+>By the way, I would like to point out that the above discussion is true for any operating system which uses a
+			monolithic kernel<A
+NAME="AEN520"
+HREF="#FTN.AEN520"
+><SPAN
+CLASS="footnote"
+>[3]</SPAN
+></A
+>.  There are things called microkernels which have modules which get their own
+			codespace.  The GNU Hurd and QNX Neutrino are two examples of a microkernel.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN522"
+></A
+>3.1.6. Device Drivers</H2
+><P
+>One class of module is the device driver, which provides functionality for hardware like a TV card or a serial port.
+			On unix, each piece of hardware is represented by a file located in <TT
+CLASS="FILENAME"
+>/dev</TT
+> named a
+			<TT
+CLASS="FILENAME"
+>device file</TT
+> which provides the means to communicate with the hardware.  The device driver provides
+			the communication on behalf of a user program.  So the <TT
+CLASS="FILENAME"
+>es1370.o</TT
+> sound card device driver might
+			connect the <TT
+CLASS="FILENAME"
+>/dev/sound</TT
+> device file to the Ensoniq IS1370 sound card.  A userspace
+			program like mp3blaster can use <TT
+CLASS="FILENAME"
+>/dev/sound</TT
+> without ever knowing what kind of sound
+			card is installed.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN530"
+></A
+>3.1.6.1. Major and Minor Numbers</H3
+><P
+>Let's look at some device files.  Here are device files which represent the first three partitions on the
+					primary master IDE hard drive:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+># ls -l /dev/hda[1-3]
+brw-rw----  1 root  disk  3, 1 Jul  5  2000 /dev/hda1
+brw-rw----  1 root  disk  3, 2 Jul  5  2000 /dev/hda2
+brw-rw----  1 root  disk  3, 3 Jul  5  2000 /dev/hda3
+					</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Notice the column of numbers separated by a comma?  The first number is called the device's major number.  The
+					second number is the minor number.  The major number tells you which driver is used to access the hardware.  Each
+					driver is assigned a unique major number; all device files with the same major number are controlled by the same
+					driver.  All the above major numbers are 3, because they're all controlled by the same driver.</P
+><P
+>The minor number is used by the driver to distinguish between the various hardware it controls.  Returning to
+					the example above, although all three devices are handled by the same driver they have unique minor numbers because
+					the driver sees them as being different pieces of hardware.</P
+><P
+> Devices are divided into two types: character devices and block devices.  The difference is that block devices
+					have a buffer for requests, so they can choose the best order in which to respond to the requests.  This is important
+					in the case of storage devices, where it's faster to read or write sectors which are close to each other, rather than
+					those which are further apart.  Another difference is that block devices can only accept input and return output in
+					blocks (whose size can vary according to the device), whereas character devices are allowed to use as many or as few
+					bytes as they like.  Most devices in the world are character, because they don't need this type of buffering, and they
+					don't operate with a fixed block size.  You can tell whether a device file is for a block device or a character device
+					by looking at the first character in the output of <B
+CLASS="COMMAND"
+>ls -l</B
+>.  If it's `b' then it's a block device,
+					and if it's `c' then it's a character device.  The devices you see above are block devices.  Here are some character
+					devices (the serial ports):</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>crw-rw----  1 root  dial 4, 64 Feb 18 23:34 /dev/ttyS0
+crw-r-----  1 root  dial 4, 65 Nov 17 10:26 /dev/ttyS1
+crw-rw----  1 root  dial 4, 66 Jul  5  2000 /dev/ttyS2
+crw-rw----  1 root  dial 4, 67 Jul  5  2000 /dev/ttyS3
+					</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+> If you want to see which major numbers have been assigned, you can look at
+					<TT
+CLASS="FILENAME"
+>/usr/src/linux/Documentation/devices.txt</TT
+>.  </P
+><P
+>When the system was installed, all of those device files were created by the <B
+CLASS="COMMAND"
+>mknod</B
+> command.
+					To create a new char device named `coffee' with major/minor number <TT
+CLASS="LITERAL"
+>12</TT
+> and <TT
+CLASS="LITERAL"
+>2</TT
+>,
+					simply do <B
+CLASS="COMMAND"
+>mknod /dev/coffee c 12 2</B
+>.  You don't <EM
+>have</EM
+> to put your device files
+					into <TT
+CLASS="FILENAME"
+>/dev</TT
+>, but it's done by convention.  Linus put his device files in
+					<TT
+CLASS="FILENAME"
+> /dev</TT
+>, and so should you.  However, when creating a device file for testing purposes, it's
+					probably OK to place it in your working directory where you compile the kernel module.  Just be sure to put it in the
+					right place when you're done writing the device driver.</P
+><P
+>I would like to make a few last points which are implicit from the above discussion, but I'd like to make them
+					explicit just in case.  When a device file is accessed, the kernel uses the major number of the file to determine
+					which driver should be used to handle the access.  This means that the kernel doesn't really need to use or even know
+					about the minor number.  The driver itself is the only thing that cares about the minor number.  It uses the minor
+					number to distinguish between different pieces of hardware.</P
+><P
+>By the way, when I say `hardware', I mean something a bit more abstract than a PCI card that you can hold in
+					your hand.   Look at these two device files:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls -l /dev/fd0 /dev/fd0u1680
+brwxrwxrwx   1 root  floppy   2,  0 Jul  5  2000 /dev/fd0
+brw-rw----   1 root  floppy   2, 44 Jul  5  2000 /dev/fd0u1680
+					</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>By now you can look at these two device files and know instantly that they are block devices and are handled by
+					same driver (block major <TT
+CLASS="LITERAL"
+>2</TT
+>).  You might even be aware that these both represent your floppy drive,
+					even if you only have one floppy drive.  Why two files?  One represents the floppy drive with <TT
+CLASS="LITERAL"
+>1.44</TT
+>
+					<SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+> of storage.  The other is the <EM
+>same</EM
+> floppy drive with
+					<TT
+CLASS="LITERAL"
+>1.68</TT
+> <SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+> of storage, and corresponds to what some people call a `superformatted'
+					disk.  One that holds more data than a standard formatted floppy.  So here's a case where two device files with
+					different minor number actually represent the same piece of physical hardware.  So just be aware that the word
+					`hardware' in our discussion can mean something very abstract.</P
+></DIV
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN467"
+HREF="x427.html#AEN467"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>It's an invaluable tool for
+				figuring out things like what files a program is trying to access.  Ever have a program bail silently because it
+				couldn't find a file?  It's a PITA!</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN514"
+HREF="x427.html#AEN514"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>I'm a physicist, not a computer scientist, Jim!</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN520"
+HREF="x427.html#AEN520"
+><SPAN
+CLASS="footnote"
+>[3]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>This isn't quite the same thing as `building all your modules into the kernel', although
+			the idea is the same.</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c425.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c567.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Preliminaries</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c425.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Character Device Files</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

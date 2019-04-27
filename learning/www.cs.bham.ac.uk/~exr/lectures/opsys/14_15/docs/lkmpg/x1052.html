@@ -1,0 +1,830 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Blocking Processes</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Blocking Processes"
+HREF="c1050.html"><LINK
+REL="PREVIOUS"
+TITLE="Blocking Processes"
+HREF="c1050.html"><LINK
+REL="NEXT"
+TITLE="Replacing Printks"
+HREF="c1159.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c1050.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 9. Blocking Processes</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c1159.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN1052"
+></A
+>9.1. Blocking Processes</H1
+><P
+>What do you do when somebody asks you for something you can't do right away?  If you're a human being and you're
+			bothered by a human being, the only thing you can say is: <SPAN
+CLASS="QUOTE"
+>"Not right now, I'm busy.  <EM
+>Go
+			away!</EM
+>"</SPAN
+>. But if you're a kernel module and you're bothered by a process, you have another possibility.
+			You can put the process to sleep until you can service it.  After all, processes are being put to sleep by the kernel and
+			woken up all the time (that's the way multiple processes appear to run on the same time on a single CPU).</P
+><P
+>This kernel module is an example of this. The file (called <TT
+CLASS="FILENAME"
+>/proc/sleep</TT
+>) can only be opened by a
+			single process at a time.  If the file is already open, the kernel module calls
+			<TT
+CLASS="FUNCTION"
+>wait_event_interruptible</TT
+><A
+NAME="AEN1089"
+HREF="#FTN.AEN1089"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+>. This function changes the status of the task (a task is the kernel data
+			structure which holds information about a process and the system call it's in, if any) to
+			<TT
+CLASS="PARAMETER"
+><I
+>TASK_INTERRUPTIBLE</I
+></TT
+>, which means that the task will not run until it is woken up somehow, and adds
+			it to <SPAN
+CLASS="STRUCTNAME"
+>WaitQ</SPAN
+>, the queue of tasks waiting to access the file.  Then, the function calls the
+			scheduler to context switch to a different process, one which has some use for the CPU.</P
+><P
+>When a process is done with the file, it closes it, and <TT
+CLASS="FUNCTION"
+>module_close</TT
+> is called.  That function
+			wakes up all the processes in the queue (there's no mechanism to only wake up one of them).  It then returns and the
+			process which just closed the file can continue to run.  In time, the scheduler decides that that process has had enough
+			and gives control of the CPU to another process.  Eventually, one of the processes which was in the queue will be given
+			control of the CPU by the scheduler.  It starts at the point right after the call to
+			<TT
+CLASS="FUNCTION"
+>module_interruptible_sleep_on</TT
+><A
+NAME="AEN1097"
+HREF="#FTN.AEN1097"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+>.  It can then proceed to set a global variable to tell all the other
+			processes that the file is still open and go on with its life.  When the other processes get a piece of the CPU, they'll
+			see that global variable and go back to sleep.</P
+><P
+> So we'll use <B
+CLASS="COMMAND"
+> tail -f </B
+> to keep the file open in the background, while
+			trying to access it with another process (again in the background, so that we need not switch to
+			a different vt). As soon as the first background process is killed with <B
+CLASS="COMMAND"
+> kill %1 </B
+>,
+			the second is woken up, is able to access the file and finally terminates. </P
+><P
+>To make our life more interesting, <TT
+CLASS="FUNCTION"
+>module_close</TT
+> doesn't have a monopoly on waking up the
+			processes which wait to access the file.  A signal, such as <B
+CLASS="KEYCAP"
+>Ctrl</B
+>+<B
+CLASS="KEYCAP"
+>c</B
+> (<TT
+CLASS="PARAMETER"
+><I
+>SIGINT</I
+></TT
+>) can also wake up a
+			process.  <A
+NAME="AEN1121"
+HREF="#FTN.AEN1121"
+><SPAN
+CLASS="footnote"
+>[3]</SPAN
+></A
+> In that case, we want
+			to return with <TT
+CLASS="PARAMETER"
+><I
+>-EINTR</I
+></TT
+>  immediately.  This is
+			important so users can, for example, kill the process before it receives the file.</P
+><P
+>There is one more point to remember.  Some times processes don't want to sleep, they want either to get what they
+			want immediately, or to be told it cannot be done.  Such processes use the <TT
+CLASS="PARAMETER"
+><I
+>O_NONBLOCK</I
+></TT
+> flag when
+			opening the file.  The kernel is supposed to respond by returning with the error code <TT
+CLASS="PARAMETER"
+><I
+>-EAGAIN</I
+></TT
+> from
+			operations which would otherwise block, such as opening the file in this example.  The program
+			<B
+CLASS="COMMAND"
+>cat_noblock</B
+>, available in the source directory for this chapter, can be used to open a file with
+			<TT
+CLASS="PARAMETER"
+><I
+>O_NONBLOCK</I
+></TT
+>.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hostname:~/lkmpg-examples/09-BlockingProcesses# insmod sleep.ko
+hostname:~/lkmpg-examples/09-BlockingProcesses# cat_noblock /proc/sleep
+Last input:
+hostname:~/lkmpg-examples/09-BlockingProcesses# tail -f /proc/sleep &#38;
+Last input:
+Last input:
+Last input:
+Last input:
+Last input:
+Last input:
+Last input:
+tail: /proc/sleep: file truncated
+[1] 6540
+hostname:~/lkmpg-examples/09-BlockingProcesses# cat_noblock /proc/sleep
+Open would block
+hostname:~/lkmpg-examples/09-BlockingProcesses# kill %1
+[1]+  Terminated              tail -f /proc/sleep
+hostname:~/lkmpg-examples/09-BlockingProcesses# cat_noblock /proc/sleep
+Last input:
+hostname:~/lkmpg-examples/09-BlockingProcesses#</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1151"
+></A
+><P
+><B
+>Example 9-1. sleep.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*
+ *  sleep.c - create a /proc file, and if several processes try to open it at
+ *  the same time, put all but one to sleep
+ */
+
+#include &#60;linux/kernel.h&#62;	/* We're doing kernel work */
+#include &#60;linux/module.h&#62;	/* Specifically, a module */
+#include &#60;linux/proc_fs.h&#62;	/* Necessary because we use proc fs */
+#include &#60;linux/sched.h&#62;	/* For putting processes to sleep and 
+				   waking them up */
+#include &#60;asm/uaccess.h&#62;	/* for get_user and put_user */
+
+/* 
+ * The module's file functions 
+ */
+
+/* 
+ * Here we keep the last message received, to prove that we can process our
+ * input
+ */
+#define MESSAGE_LENGTH 80
+static char Message[MESSAGE_LENGTH];
+
+static struct proc_dir_entry *Our_Proc_File;
+#define PROC_ENTRY_FILENAME "sleep"
+
+/* 
+ * Since we use the file operations struct, we can't use the special proc
+ * output provisions - we have to use a standard read function, which is this
+ * function
+ */
+static ssize_t module_output(struct file *file,	/* see include/linux/fs.h   */
+			     char *buf,	/* The buffer to put data to 
+					   (in the user segment)    */
+			     size_t len,	/* The length of the buffer */
+			     loff_t * offset)
+{
+	static int finished = 0;
+	int i;
+	char message[MESSAGE_LENGTH + 30];
+
+	/* 
+	 * Return 0 to signify end of file - that we have nothing 
+	 * more to say at this point.
+	 */
+	if (finished) {
+		finished = 0;
+		return 0;
+	}
+
+	/* 
+	 * If you don't understand this by now, you're hopeless as a kernel
+	 * programmer.
+	 */
+	sprintf(message, "Last input:%s\n", Message);
+	for (i = 0; i &#60; len &#38;&#38; message[i]; i++)
+		put_user(message[i], buf + i);
+
+	finished = 1;
+	return i;		/* Return the number of bytes "read" */
+}
+
+/* 
+ * This function receives input from the user when the user writes to the /proc
+ * file.
+ */
+static ssize_t module_input(struct file *file,	/* The file itself */
+			    const char *buf,	/* The buffer with input */
+			    size_t length,	/* The buffer's length */
+			    loff_t * offset)
+{				/* offset to file - ignore */
+	int i;
+
+	/* 
+	 * Put the input into Message, where module_output will later be 
+	 * able to use it
+	 */
+	for (i = 0; i &#60; MESSAGE_LENGTH - 1 &#38;&#38; i &#60; length; i++)
+		get_user(Message[i], buf + i);
+	/* 
+	 * we want a standard, zero terminated string 
+	 */
+	Message[i] = '\0';
+
+	/* 
+	 * We need to return the number of input characters used 
+	 */
+	return i;
+}
+
+/* 
+ * 1 if the file is currently open by somebody 
+ */
+int Already_Open = 0;
+
+/* 
+ * Queue of processes who want our file 
+ */
+DECLARE_WAIT_QUEUE_HEAD(WaitQ);
+/* 
+ * Called when the /proc file is opened 
+ */
+static int module_open(struct inode *inode, struct file *file)
+{
+	/* 
+	 * If the file's flags include O_NONBLOCK, it means the process doesn't
+	 * want to wait for the file.  In this case, if the file is already 
+	 * open, we should fail with -EAGAIN, meaning "you'll have to try 
+	 * again", instead of blocking a process which would rather stay awake.
+	 */
+	if ((file-&#62;f_flags &#38; O_NONBLOCK) &#38;&#38; Already_Open)
+		return -EAGAIN;
+
+	/* 
+	 * This is the correct place for try_module_get(THIS_MODULE) because 
+	 * if a process is in the loop, which is within the kernel module,
+	 * the kernel module must not be removed.
+	 */
+	try_module_get(THIS_MODULE);
+
+	/* 
+	 * If the file is already open, wait until it isn't 
+	 */
+
+	while (Already_Open) {
+		int i, is_sig = 0;
+
+		/* 
+		 * This function puts the current process, including any system
+		 * calls, such as us, to sleep.  Execution will be resumed right
+		 * after the function call, either because somebody called 
+		 * wake_up(&#38;WaitQ) (only module_close does that, when the file 
+		 * is closed) or when a signal, such as Ctrl-C, is sent 
+		 * to the process
+		 */
+		wait_event_interruptible(WaitQ, !Already_Open);
+
+		/* 
+		 * If we woke up because we got a signal we're not blocking, 
+		 * return -EINTR (fail the system call).  This allows processes
+		 * to be killed or stopped.
+		 */
+
+/*
+ * Emmanuel Papirakis:
+ *
+ * This is a little update to work with 2.2.*.  Signals now are contained in
+ * two words (64 bits) and are stored in a structure that contains an array of
+ * two unsigned longs.  We now have to make 2 checks in our if.
+ *
+ * Ori Pomerantz:
+ *
+ * Nobody promised me they'll never use more than 64 bits, or that this book
+ * won't be used for a version of Linux with a word size of 16 bits.  This code
+ * would work in any case.
+ */
+		for (i = 0; i &#60; _NSIG_WORDS &#38;&#38; !is_sig; i++)
+			is_sig =
+			    current-&#62;pending.signal.sig[i] &#38; ~current-&#62;
+			    blocked.sig[i];
+
+		if (is_sig) {
+			/* 
+			 * It's important to put module_put(THIS_MODULE) here,
+			 * because for processes where the open is interrupted
+			 * there will never be a corresponding close. If we 
+			 * don't decrement the usage count here, we will be 
+			 * left with a positive usage count which we'll have no
+			 * way to bring down to zero, giving us an immortal 
+			 * module, which can only be killed by rebooting 
+			 * the machine.
+			 */
+			module_put(THIS_MODULE);
+			return -EINTR;
+		}
+	}
+
+	/* 
+	 * If we got here, Already_Open must be zero 
+	 */
+
+	/* 
+	 * Open the file 
+	 */
+	Already_Open = 1;
+	return 0;		/* Allow the access */
+}
+
+/* 
+ * Called when the /proc file is closed 
+ */
+int module_close(struct inode *inode, struct file *file)
+{
+	/* 
+	 * Set Already_Open to zero, so one of the processes in the WaitQ will
+	 * be able to set Already_Open back to one and to open the file. All 
+	 * the other processes will be called when Already_Open is back to one,
+	 * so they'll go back to sleep.
+	 */
+	Already_Open = 0;
+
+	/* 
+	 * Wake up all the processes in WaitQ, so if anybody is waiting for the
+	 * file, they can have it.
+	 */
+	wake_up(&#38;WaitQ);
+
+	module_put(THIS_MODULE);
+
+	return 0;		/* success */
+}
+
+/*
+ * This function decides whether to allow an operation (return zero) or not
+ * allow it (return a non-zero which indicates why it is not allowed).
+ *
+ * The operation can be one of the following values:
+ * 0 - Execute (run the "file" - meaningless in our case)
+ * 2 - Write (input to the kernel module)
+ * 4 - Read (output from the kernel module)
+ *
+ * This is the real function that checks file permissions. The permissions
+ * returned by ls -l are for reference only, and can be overridden here.
+ */
+static int module_permission(struct inode *inode, int op, struct nameidata *nd)
+{
+	/* 
+	 * We allow everybody to read from our module, but only root (uid 0)
+	 * may write to it
+	 */
+	if (op == 4 || (op == 2 &#38;&#38; current-&#62;euid == 0))
+		return 0;
+
+	/* 
+	 * If it's anything else, access is denied 
+	 */
+	return -EACCES;
+}
+
+/* 
+ * Structures to register as the /proc file, with pointers to all the relevant
+ * functions.
+ */
+
+/* 
+ * File operations for our proc file. This is where we place pointers to all
+ * the functions called when somebody tries to do something to our file. NULL
+ * means we don't want to deal with something.
+ */
+static struct file_operations File_Ops_4_Our_Proc_File = {
+	.read = module_output,	/* "read" from the file */
+	.write = module_input,	/* "write" to the file */
+	.open = module_open,	/* called when the /proc file is opened */
+	.release = module_close,	/* called when it's closed */
+};
+
+/* 
+ * Inode operations for our proc file.  We need it so we'll have somewhere to
+ * specify the file operations structure we want to use, and the function we
+ * use for permissions. It's also possible to specify functions to be called
+ * for anything else which could be done to an inode (although we don't bother,
+ * we just put NULL).
+ */
+
+static struct inode_operations Inode_Ops_4_Our_Proc_File = {
+	.permission = module_permission,	/* check for permissions */
+};
+
+/* 
+ * Module initialization and cleanup 
+ */
+
+/* 
+ * Initialize the module - register the proc file 
+ */
+
+int init_module()
+{
+
+	Our_Proc_File = create_proc_entry(PROC_ENTRY_FILENAME, 0644, NULL);
+	
+	if (Our_Proc_File == NULL) {
+		remove_proc_entry(PROC_ENTRY_FILENAME, &#38;proc_root);
+		printk(KERN_ALERT "Error: Could not initialize /proc/test\n");
+		return -ENOMEM;
+	}
+	
+	Our_Proc_File-&#62;owner = THIS_MODULE;
+	Our_Proc_File-&#62;proc_iops = &#38;Inode_Ops_4_Our_Proc_File;
+	Our_Proc_File-&#62;proc_fops = &#38;File_Ops_4_Our_Proc_File;
+	Our_Proc_File-&#62;mode = S_IFREG | S_IRUGO | S_IWUSR;
+	Our_Proc_File-&#62;uid = 0;
+	Our_Proc_File-&#62;gid = 0;
+	Our_Proc_File-&#62;size = 80;
+	
+	printk(KERN_INFO "/proc/test created\n");
+	
+	return 0;
+}
+
+/* 
+ * Cleanup - unregister our file from /proc.  This could get dangerous if
+ * there are still processes waiting in WaitQ, because they are inside our
+ * open function, which will get unloaded. I'll explain how to avoid removal
+ * of a kernel module in such a case in chapter 10.
+ */
+void cleanup_module()
+{
+	remove_proc_entry(PROC_ENTRY_FILENAME, &#38;proc_root);
+	
+	printk(KERN_INFO "/proc/test removed\n");
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1155"
+></A
+><P
+><B
+>Example 9-2. cat_noblock.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/* cat_noblock.c - open a file and display its contents, but exit rather than
+ * wait for input */
+
+
+/* Copyright (C) 1998 by Ori Pomerantz */
+
+
+
+#include &#60;stdio.h&#62;    /* standard I/O */
+#include &#60;fcntl.h&#62;    /* for open */
+#include &#60;unistd.h&#62;   /* for read */ 
+#include &#60;stdlib.h&#62;   /* for exit */
+#include &#60;errno.h&#62;    /* for errno */
+
+#define MAX_BYTES 1024*4
+
+
+main(int argc, char *argv[])
+{
+  int    fd;  /* The file descriptor for the file to read */
+  size_t bytes; /* The number of bytes read */
+  char   buffer[MAX_BYTES]; /* The buffer for the bytes */  
+
+
+  /* Usage */
+  if (argc != 2) {
+    printf("Usage: %s &#60;filename&#62;\n", argv[0]);
+    puts("Reads the content of a file, but doesn't wait for input");
+    exit(-1);
+  }
+
+  /* Open the file for reading in non blocking mode */ 
+  fd = open(argv[1], O_RDONLY | O_NONBLOCK);
+
+  /* If open failed */
+  if (fd == -1) {
+    if (errno = EAGAIN)
+      puts("Open would block");
+    else
+      puts("Open failed");
+    exit(-1);
+  }
+
+  /* Read the file and output its contents */
+  do {
+    int i;
+
+    /* Read characters from the file */
+    bytes = read(fd, buffer, MAX_BYTES);
+
+    /* If there's an error, report it and die */
+    if (bytes == -1) {
+      if (errno = EAGAIN)
+	puts("Normally I'd block, but you told me not to");
+      else
+	puts("Another read error");
+      exit(-1);
+    }
+
+    /* Print the characters */
+    if (bytes &#62; 0) {
+      for(i=0; i&#60;bytes; i++)
+	putchar(buffer[i]);
+    }
+
+    /* While there are no errors and the file isn't over */
+  } while (bytes &#62; 0);
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1089"
+HREF="x1052.html#AEN1089"
+><SPAN
+CLASS="footnote"
+>[1]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>The easiest way to keep a file open is to open it with
+			<B
+CLASS="COMMAND"
+>tail -f</B
+>.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1097"
+HREF="x1052.html#AEN1097"
+><SPAN
+CLASS="footnote"
+>[2]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>This means that the process is still in kernel mode --
+			as far as the process is concerned, it issued the <TT
+CLASS="FUNCTION"
+>open</TT
+> system call and the system call hasn't
+			returned yet.  The process doesn't know somebody else used the CPU for most of the time between the moment it issued the
+			call and the moment it returned.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN1121"
+HREF="x1052.html#AEN1121"
+><SPAN
+CLASS="footnote"
+>[3]</SPAN
+></A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+> This is because we used <TT
+CLASS="FUNCTION"
+>module_interruptible_sleep_on</TT
+>.  We could have
+			used <TT
+CLASS="FUNCTION"
+>module_sleep_on</TT
+> instead, but that would have resulted is extremely angry users whose <B
+CLASS="KEYCAP"
+>Ctrl</B
+>+<B
+CLASS="KEYCAP"
+>c</B
+>s are ignored.  </P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c1050.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c1159.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Blocking Processes</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c1050.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Replacing Printks</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

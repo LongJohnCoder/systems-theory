@@ -1,0 +1,11 @@
+#
+# Code structure for multiple source file example.
+#
+
+Makefile          # For building the app
+user_interface.h  # User interaction interface
+user_interface.c  # User interaction code
+linked_list.h     # Linked list interface
+linked_list.c     # Linked list code.
+todo_list.c       # Main app file - must have 'main' method
+

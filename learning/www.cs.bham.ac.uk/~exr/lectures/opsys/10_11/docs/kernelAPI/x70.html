@@ -1,0 +1,303 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Atomic and pointer manipulation</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Driver Basics"
+HREF="c10.html"><LINK
+REL="PREVIOUS"
+TITLE="Driver Basics"
+HREF="c10.html"><LINK
+REL="NEXT"
+TITLE="atomic_read"
+HREF="r72.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c10.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 1. Driver Basics</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r72.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN70"
+>1.2. Atomic and pointer manipulation</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r72.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_read</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   read atomic variable
+ </DT
+><DT
+><A
+HREF="r99.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_set</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set atomic variable
+ </DT
+><DT
+><A
+HREF="r134.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add integer to atomic variable
+ </DT
+><DT
+><A
+HREF="r169.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_sub</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      subtract the atomic variable
+ </DT
+><DT
+><A
+HREF="r204.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_sub_and_test</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      subtract value from variable and test result
+ </DT
+><DT
+><A
+HREF="r239.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_inc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      increment atomic variable
+ </DT
+><DT
+><A
+HREF="r266.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_dec</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      decrement atomic variable
+ </DT
+><DT
+><A
+HREF="r293.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_dec_and_test</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      decrement and test
+ </DT
+><DT
+><A
+HREF="r320.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_inc_and_test</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      increment and test 
+ </DT
+><DT
+><A
+HREF="r347.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_add_negative</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add and test if negative
+ </DT
+><DT
+><A
+HREF="r382.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_unaligned</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   get value from possibly mis-aligned location
+ </DT
+><DT
+><A
+HREF="r409.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>put_unaligned</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      put value to a possibly mis-aligned location
+ </DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c10.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r72.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Driver Basics</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c10.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_read</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

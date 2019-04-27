@@ -1,0 +1,11 @@
+http://www.tinykrnl.org/status.htm
+http://www.tinykrnl.org/index.htm
+http://www.tinykrnl.org/dev_test.htm
+http://www.tinykrnl.org/dev_source.htm
+http://www.tinykrnl.org/dev_phase3.htm
+http://www.tinykrnl.org/dev_phase2.htm
+http://www.tinykrnl.org/dev_phase1.htm
+http://www.tinykrnl.org/dev_build.htm
+http://www.tinykrnl.org/about_proj.htm
+http://www.tinykrnl.org/about_faq.htm
+http://www.tinykrnl.org/about_devs.htm

@@ -1,0 +1,29 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=native
+TARGETTYPE=PROGRAM
+UMTYPE=nt
+TARGET_DESTINATION=system32
+
+INCLUDES=\
+         $(DDK_INC_PATH); \
+         ..\..\public\sdk\inc; \
+         ..\..\public\ddk\inc
+
+SOURCES=display.c  \
+        file.c     \
+        hardware.c \
+        input.c    \
+        main.c     \
+        sysinfo.c  \
+        urtl.rc
+
+PRECOMPILED_INCLUDE=precomp.h

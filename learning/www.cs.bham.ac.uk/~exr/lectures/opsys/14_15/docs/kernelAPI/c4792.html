@@ -1,0 +1,430 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>The Linux VFS</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="proc_dointvec_jiffies"
+HREF="r4736.html"><LINK
+REL="NEXT"
+TITLE="d_invalidate"
+HREF="r4796.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r4736.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r4796.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="VFS"
+></A
+>Chapter 6. The Linux VFS</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN4794"
+>6.1. The Directory Cache</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="r4796.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_invalidate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   invalidate a dentry
+ </DT
+><DT
+><A
+HREF="r4823.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_find_alias</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      grab a hashed alias of inode
+ </DT
+><DT
+><A
+HREF="r4850.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>shrink_dcache_sb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      shrink dcache for a superblock
+ </DT
+><DT
+><A
+HREF="r4876.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>have_submounts</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check for mounts over a dentry
+ </DT
+><DT
+><A
+HREF="r4902.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>shrink_dcache_parent</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      prune dcache
+ </DT
+><DT
+><A
+HREF="r4928.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>shrink_dcache_anon</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      further prune the cache
+ </DT
+><DT
+><A
+HREF="r4956.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_alloc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	allocate a dcache entry
+ </DT
+><DT
+><A
+HREF="r4990.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_instantiate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      fill in inode information for a dentry
+ </DT
+><DT
+><A
+HREF="r5025.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_alloc_root</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate root dentry
+ </DT
+><DT
+><A
+HREF="r5054.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_alloc_anon</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate an anonymous dentry
+ </DT
+><DT
+><A
+HREF="r5083.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_splice_alias</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      splice a disconnected dentry into the tree if one exists
+ </DT
+><DT
+><A
+HREF="r5118.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_lookup</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      search for a dentry
+ </DT
+><DT
+><A
+HREF="r5161.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_validate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      verify dentry provided from insecure source
+ </DT
+><DT
+><A
+HREF="r5196.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_delete</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete a dentry
+ </DT
+><DT
+><A
+HREF="r5222.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_rehash</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add an entry back to the hash
+ </DT
+><DT
+><A
+HREF="r5248.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_move</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      move a dentry
+ </DT
+><DT
+><A
+HREF="r5281.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>is_subdir</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is new dentry a subdirectory of old_dentry
+ </DT
+><DT
+><A
+HREF="r5314.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_inode_number</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check for dentry with name
+ </DT
+><DT
+><A
+HREF="r5349.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__d_drop</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   drop a dentry
+ </DT
+><DT
+><A
+HREF="r5378.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add dentry to hash queues
+ </DT
+><DT
+><A
+HREF="r5413.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dget</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	get a reference to a dentry
+ </DT
+><DT
+><A
+HREF="r5443.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_unhashed</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	is dentry hashed
+ </DT
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r4736.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r4796.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dointvec_jiffies</SPAN
+></SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_invalidate</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

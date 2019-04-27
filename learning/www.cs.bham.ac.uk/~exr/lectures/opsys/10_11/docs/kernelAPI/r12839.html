@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>video_register_device</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Video4Linux"
+HREF="c12837.html"><LINK
+REL="PREVIOUS"
+TITLE="Video4Linux"
+HREF="c12837.html"><LINK
+REL="NEXT"
+TITLE="video_unregister_device"
+HREF="r12890.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c12837.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r12890.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN12839"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>video_register_device</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN12843"
+></A
+><H2
+>Name</H2
+>video_register_device&nbsp;--&nbsp;   register video4linux devices
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN12846"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN12848"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>int video_register_device </CODE
+>(struct video_device * vfd, int type, int nr);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN12858"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>vfd</VAR
+></DT
+><DD
+><P
+>       video device structure we want to register
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>type</VAR
+></DT
+><DD
+><P
+>      type of device to register
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>nr</VAR
+></DT
+><DD
+><P
+>        which device number (0 == /dev/video0, 1 == /dev/video1, ...
+     -1 == first free)
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN12876"
+></A
+><H2
+>Description</H2
+><P
+>   The registration code assigns minor numbers based on the type
+   requested. -ENFILE is returned in all the device slots for this
+   category are full. If not then the minor field is set and the
+   driver initialize function is called (if non <CODE
+CLASS="CONSTANT"
+>NULL</CODE
+>).
+   </P
+><P
+>&#13;   Zero is returned on success.
+   </P
+><P
+>&#13;   Valid types are
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>VFL_TYPE_GRABBER</CODE
+> - A frame grabber
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>VFL_TYPE_VTX</CODE
+> - A teletext device
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>VFL_TYPE_VBI</CODE
+> - Vertical blank data (undecoded)
+   </P
+><P
+>&#13;   <CODE
+CLASS="CONSTANT"
+>VFL_TYPE_RADIO</CODE
+> - A radio card	
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c12837.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r12890.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Video4Linux</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c12837.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>video_unregister_device</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,5667 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>The Linux Kernel API</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="NEXT"
+TITLE="Driver Basics"
+HREF="c10.html"></HEAD
+><BODY
+CLASS="BOOK"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="BOOK"
+><A
+NAME="LINUXKERNELAPI"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>The Linux Kernel API</A
+></H1
+><DIV
+CLASS="LEGALNOTICE"
+><P
+></P
+><A
+NAME="AEN4"
+></A
+><P
+>     This documentation is free software; you can redistribute
+     it and/or modify it under the terms of the GNU General Public
+     License as published by the Free Software Foundation; either
+     version 2 of the License, or (at your option) any later
+     version.
+   </P
+><P
+>     This program is distributed in the hope that it will be
+     useful, but WITHOUT ANY WARRANTY; without even the implied
+     warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     See the GNU General Public License for more details.
+   </P
+><P
+>     You should have received a copy of the GNU General Public
+     License along with this program; if not, write to the Free
+     Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+     MA 02111-1307 USA
+   </P
+><P
+>     For more details see the file COPYING in the source
+     distribution of Linux.
+   </P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="c10.html"
+>Driver Basics</A
+></DT
+><DD
+><DL
+><DT
+>1.1. <A
+HREF="c10.html#AEN12"
+>Driver Entry and Exit points</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r14.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>module_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   driver initialization entry point
+ </DT
+><DT
+><A
+HREF="r41.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>module_exit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      driver exit entry point
+ </DT
+></DL
+></DD
+><DT
+>1.2. <A
+HREF="x70.html"
+>Atomic and pointer manipulation</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r72.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_read</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   read atomic variable
+ </DT
+><DT
+><A
+HREF="r99.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_set</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set atomic variable
+ </DT
+><DT
+><A
+HREF="r134.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add integer to atomic variable
+ </DT
+><DT
+><A
+HREF="r169.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_sub</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      subtract the atomic variable
+ </DT
+><DT
+><A
+HREF="r204.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_sub_and_test</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      subtract value from variable and test result
+ </DT
+><DT
+><A
+HREF="r239.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_inc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      increment atomic variable
+ </DT
+><DT
+><A
+HREF="r266.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_dec</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      decrement atomic variable
+ </DT
+><DT
+><A
+HREF="r293.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_dec_and_test</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      decrement and test
+ </DT
+><DT
+><A
+HREF="r320.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_inc_and_test</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      increment and test 
+ </DT
+><DT
+><A
+HREF="r347.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>atomic_add_negative</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add and test if negative
+ </DT
+><DT
+><A
+HREF="r382.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_unaligned</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   get value from possibly mis-aligned location
+ </DT
+><DT
+><A
+HREF="r409.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>put_unaligned</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      put value to a possibly mis-aligned location
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>2. <A
+HREF="c443.html"
+>Data Types</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="c443.html#AEN445"
+>Doubly Linked Lists</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r447.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   add a new entry
+ </DT
+><DT
+><A
+HREF="r480.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add a new entry
+ </DT
+><DT
+><A
+HREF="r513.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add a new entry to rcu-protected list
+ </DT
+><DT
+><A
+HREF="r546.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_add_tail_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add a new entry to rcu-protected list
+ </DT
+><DT
+><A
+HREF="r579.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_del</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from list.
+ </DT
+><DT
+><A
+HREF="r605.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_del_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from list without re-initialization
+ </DT
+><DT
+><A
+HREF="r632.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_del_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from list and reinitialize it.
+ </DT
+><DT
+><A
+HREF="r655.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_move</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete from one list and add as another's head
+ </DT
+><DT
+><A
+HREF="r685.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_move_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete from one list and add as another's tail
+ </DT
+><DT
+><A
+HREF="r715.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_empty</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      tests whether a list is empty
+ </DT
+><DT
+><A
+HREF="r738.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_splice</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      join two lists
+ </DT
+><DT
+><A
+HREF="r768.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_splice_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      join two lists and reinitialise the emptied list.
+ </DT
+><DT
+><A
+HREF="r802.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_entry</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get the struct for this entry
+ </DT
+><DT
+><A
+HREF="r839.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list
+ </DT
+><DT
+><A
+HREF="r869.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__list_for_each</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list
+ </DT
+><DT
+><A
+HREF="r903.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_prev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list backwards
+ </DT
+><DT
+><A
+HREF="r933.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_safe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over a list safe against removal of list entry
+ </DT
+><DT
+><A
+HREF="r970.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over list of given type
+ </DT
+><DT
+><A
+HREF="r1007.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry_reverse</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate backwards over list of given type.
+ </DT
+><DT
+><A
+HREF="r1044.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry_safe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over list of given type safe against removal of list entry
+ </DT
+><DT
+><A
+HREF="r1088.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over an rcu-protected list
+ </DT
+><DT
+><A
+HREF="r1118.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_safe_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over an rcu-protected list safe
+ </DT
+><DT
+><A
+HREF="r1158.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_entry_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over rcu list of given type
+ </DT
+><DT
+><A
+HREF="r1195.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>list_for_each_continue_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	iterate over an rcu-protected list 
+ </DT
+><DT
+><A
+HREF="r1228.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_del_rcu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deletes entry from hash list without re-initialization
+ </DT
+><DT
+><A
+HREF="r1256.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over list of given type
+ </DT
+><DT
+><A
+HREF="r1300.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_continue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over a hlist continuing after existing point
+ </DT
+><DT
+><A
+HREF="r1337.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_from</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over a hlist continuing from existing point
+ </DT
+><DT
+><A
+HREF="r1374.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hlist_for_each_entry_safe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      iterate over list of given type safe against removal of list entry
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>3. <A
+HREF="c1425.html"
+>Basic C Library Functions</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="c1425.html#AEN1428"
+>String Conversions</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r1430.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoll</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   convert a string to a signed long long
+ </DT
+><DT
+><A
+HREF="r1467.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoul</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   convert a string to an unsigned long
+ </DT
+><DT
+><A
+HREF="r1504.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtol</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      convert a string to a signed long
+ </DT
+><DT
+><A
+HREF="r1541.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>simple_strtoull</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      convert a string to an unsigned long long
+ </DT
+><DT
+><A
+HREF="r1578.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>vsnprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1625.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>snprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1669.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>vsprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1709.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sprintf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Format a string and place it in a buffer
+ </DT
+><DT
+><A
+HREF="r1746.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>vsscanf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Unformat a buffer into a list of arguments
+ </DT
+><DT
+><A
+HREF="r1783.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sscanf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Unformat a buffer into a list of arguments
+ </DT
+></DL
+></DD
+><DT
+>3.2. <A
+HREF="x1820.html"
+>String Manipulation</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r1822.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Copy a <CODE
+CLASS="CONSTANT"
+>NUL</CODE
+> terminated string
+ </DT
+><DT
+><A
+HREF="r1853.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a length-limited, <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string
+ </DT
+><DT
+><A
+HREF="r1896.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcat</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Append one <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string to another
+ </DT
+><DT
+><A
+HREF="r1927.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncat</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Append a length-limited, <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string to another
+ </DT
+><DT
+><A
+HREF="r1968.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Compare two strings
+ </DT
+><DT
+><A
+HREF="r1998.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Compare two length-limited strings
+ </DT
+><DT
+><A
+HREF="r2035.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strchr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the first occurrence of a character in a string
+ </DT
+><DT
+><A
+HREF="r2065.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strrchr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the last occurrence of a character in a string
+ </DT
+><DT
+><A
+HREF="r2095.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlen</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the length of a string
+ </DT
+><DT
+><A
+HREF="r2118.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strnlen</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the length of a length-limited string
+ </DT
+><DT
+><A
+HREF="r2148.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strcspn</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Calculate the length of the initial substring of <VAR
+CLASS="PARAMETER"
+>s</VAR
+> which does
+ </DT
+><DT
+><A
+HREF="r2183.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strpbrk</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the first occurrence of a set of characters
+ </DT
+><DT
+><A
+HREF="r2213.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memset</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Fill a region of memory with the given value
+ </DT
+><DT
+><A
+HREF="r2255.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>bcopy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy one area of memory to another
+ </DT
+><DT
+><A
+HREF="r2301.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memcpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy one area of memory to another
+ </DT
+><DT
+><A
+HREF="r2343.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memmove</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy one area of memory to another
+ </DT
+><DT
+><A
+HREF="r2385.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memcmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Compare two areas of memory
+ </DT
+><DT
+><A
+HREF="r2422.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memscan</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find a character in an area of memory.
+ </DT
+><DT
+><A
+HREF="r2464.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strstr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find the first substring in a <CODE
+CLASS="CONSTANT"
+>NUL</CODE
+> terminated string
+ </DT
+><DT
+><A
+HREF="r2495.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>memchr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Find a character in an area of memory.
+ </DT
+><DT
+><A
+HREF="r2538.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strnicmp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Case insensitive, length-limited string comparison
+ </DT
+><DT
+><A
+HREF="r2575.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlcpy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a <CODE
+CLASS="CONSTANT"
+>NUL</CODE
+> terminated string into a sized buffer
+ </DT
+><DT
+><A
+HREF="r2617.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlcat</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Append a length-limited, <CODE
+CLASS="CONSTANT"
+>NUL-terminated</CODE
+> string to another
+ </DT
+><DT
+><A
+HREF="r2655.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strspn</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Calculate the length of the initial substring of <VAR
+CLASS="PARAMETER"
+>s</VAR
+> which only
+ </DT
+><DT
+><A
+HREF="r2690.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strsep</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Split a string into tokens
+ </DT
+></DL
+></DD
+><DT
+>3.3. <A
+HREF="x2726.html"
+>Bit Operations</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r2728.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Atomically set a bit in memory
+ </DT
+><DT
+><A
+HREF="r2763.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set a bit in memory
+ </DT
+><DT
+><A
+HREF="r2797.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>clear_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Clears a bit in memory
+ </DT
+><DT
+><A
+HREF="r2833.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__change_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Toggle a bit in memory
+ </DT
+><DT
+><A
+HREF="r2867.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>change_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Toggle a bit in memory
+ </DT
+><DT
+><A
+HREF="r2902.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_and_set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r2935.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__test_and_set_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r2968.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_and_clear_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Clear a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r3001.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__test_and_clear_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Clear a bit and return its old value
+ </DT
+><DT
+><A
+HREF="r3034.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_and_change_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Change a bit and return its new value
+ </DT
+><DT
+><A
+HREF="r3067.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>test_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Determine whether a bit is set
+ </DT
+><DT
+><A
+HREF="r3097.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_first_zero_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first zero bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3130.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_first_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first set bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3163.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_next_zero_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first zero bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3200.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_next_bit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find the first set bit in a memory region
+ </DT
+><DT
+><A
+HREF="r3237.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ffz</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find first zero in word.
+ </DT
+><DT
+><A
+HREF="r3263.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__ffs</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find first bit in word.
+ </DT
+><DT
+><A
+HREF="r3289.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ffs</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find first bit set
+ </DT
+><DT
+><A
+HREF="r3315.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>hweight32</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      returns the hamming weight of a N-bit word
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>4. <A
+HREF="c3341.html"
+>Memory Management in Linux</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="c3341.html#AEN3343"
+>The Slab Cache</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r3345.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kmem_cache_create</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Create a cache.
+ </DT
+><DT
+><A
+HREF="r3421.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kmem_cache_shrink</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Shrink a cache.
+ </DT
+><DT
+><A
+HREF="r3447.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kmem_cache_destroy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete a cache
+ </DT
+><DT
+><A
+HREF="r3477.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kmem_cache_alloc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Allocate an object
+ </DT
+><DT
+><A
+HREF="r3511.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__kmalloc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate memory
+ </DT
+><DT
+><A
+HREF="r3554.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__alloc_percpu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate one copy of the object for every present
+ </DT
+><DT
+><A
+HREF="r3587.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kmem_cache_free</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Deallocate an object
+ </DT
+><DT
+><A
+HREF="r3620.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kfree</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      free previously allocated memory
+ </DT
+><DT
+><A
+HREF="r3647.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>free_percpu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      free previously allocated percpu memory
+ </DT
+></DL
+></DD
+><DT
+>4.2. <A
+HREF="x3674.html"
+>User Space Memory Access</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r3676.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>access_ok</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Checks if a user space pointer is valid
+ </DT
+><DT
+><A
+HREF="r3725.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>verify_area</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Obsolete, use <CODE
+CLASS="FUNCTION"
+>access_ok</CODE
+>
+ </DT
+><DT
+><A
+HREF="r3776.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Get a simple variable from user space.
+ </DT
+><DT
+><A
+HREF="r3818.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>put_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Write a simple value into user space.
+ </DT
+><DT
+><A
+HREF="r3859.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__get_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Get a simple variable from user space, with less checking.
+ </DT
+><DT
+><A
+HREF="r3903.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__put_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Write a simple value into user space, with less checking.
+ </DT
+><DT
+><A
+HREF="r3946.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__copy_to_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a block of data into user space, with less checking.
+ </DT
+><DT
+><A
+HREF="r3991.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__copy_from_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a block of data from user space, with less checking.
+ </DT
+><DT
+><A
+HREF="r4037.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>copy_to_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a block of data into user space.
+ </DT
+><DT
+><A
+HREF="r4081.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>copy_from_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a block of data from user space.
+ </DT
+><DT
+><A
+HREF="r4126.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strlen_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Get the size of a string in user space.
+ </DT
+><DT
+><A
+HREF="r4158.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__strncpy_from_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Copy a NUL terminated string from userspace, with less checking.
+ </DT
+><DT
+><A
+HREF="r4206.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strncpy_from_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Copy a NUL terminated string from userspace.
+ </DT
+><DT
+><A
+HREF="r4253.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>clear_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Zero a block of memory in user space.
+ </DT
+><DT
+><A
+HREF="r4287.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__clear_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Zero a block of memory in user space, with less checking.
+ </DT
+><DT
+><A
+HREF="r4322.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>strnlen_user</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Get the size of a string in user space.
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>5. <A
+HREF="c4357.html"
+>The proc filesystem</A
+></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="c4357.html#AEN4359"
+>sysctl interface</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r4361.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sysctl_table</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   register a sysctl hierarchy
+ </DT
+><DT
+><A
+HREF="r4426.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sysctl_table</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a sysctl table hierarchy
+ </DT
+><DT
+><A
+HREF="r4452.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dostring</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      read a string sysctl
+ </DT
+><DT
+><A
+HREF="r4509.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dointvec</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      read a vector of integers
+ </DT
+><DT
+><A
+HREF="r4565.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dointvec_minmax</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      read a vector of integers with min/max values
+ </DT
+><DT
+><A
+HREF="r4622.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_doulongvec_minmax</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      read a vector of long integers with min/max values
+ </DT
+><DT
+><A
+HREF="r4679.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_doulongvec_ms_jiffies_minmax</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      read a vector of millisecond values with min/max values
+ </DT
+><DT
+><A
+HREF="r4736.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>proc_dointvec_jiffies</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      read a vector of integers as seconds
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>6. <A
+HREF="c4792.html"
+>The Linux VFS</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="c4792.html#AEN4794"
+>The Directory Cache</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r4796.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_invalidate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   invalidate a dentry
+ </DT
+><DT
+><A
+HREF="r4823.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_find_alias</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      grab a hashed alias of inode
+ </DT
+><DT
+><A
+HREF="r4850.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>shrink_dcache_sb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      shrink dcache for a superblock
+ </DT
+><DT
+><A
+HREF="r4876.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>have_submounts</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check for mounts over a dentry
+ </DT
+><DT
+><A
+HREF="r4902.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>shrink_dcache_parent</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      prune dcache
+ </DT
+><DT
+><A
+HREF="r4928.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>shrink_dcache_anon</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      further prune the cache
+ </DT
+><DT
+><A
+HREF="r4956.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_alloc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	allocate a dcache entry
+ </DT
+><DT
+><A
+HREF="r4990.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_instantiate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      fill in inode information for a dentry
+ </DT
+><DT
+><A
+HREF="r5025.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_alloc_root</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate root dentry
+ </DT
+><DT
+><A
+HREF="r5054.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_alloc_anon</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate an anonymous dentry
+ </DT
+><DT
+><A
+HREF="r5083.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_splice_alias</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      splice a disconnected dentry into the tree if one exists
+ </DT
+><DT
+><A
+HREF="r5118.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_lookup</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      search for a dentry
+ </DT
+><DT
+><A
+HREF="r5161.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_validate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      verify dentry provided from insecure source
+ </DT
+><DT
+><A
+HREF="r5196.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_delete</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete a dentry
+ </DT
+><DT
+><A
+HREF="r5222.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_rehash</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add an entry back to the hash
+ </DT
+><DT
+><A
+HREF="r5248.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_move</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      move a dentry
+ </DT
+><DT
+><A
+HREF="r5281.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>is_subdir</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is new dentry a subdirectory of old_dentry
+ </DT
+><DT
+><A
+HREF="r5314.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>find_inode_number</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check for dentry with name
+ </DT
+><DT
+><A
+HREF="r5349.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__d_drop</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   drop a dentry
+ </DT
+><DT
+><A
+HREF="r5378.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add dentry to hash queues
+ </DT
+><DT
+><A
+HREF="r5413.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dget</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	get a reference to a dentry
+ </DT
+><DT
+><A
+HREF="r5443.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>d_unhashed</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	is dentry hashed
+ </DT
+></DL
+></DD
+><DT
+>6.2. <A
+HREF="x5469.html"
+>Inode Handling</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r5471.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>clear_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   clear an inode
+ </DT
+><DT
+><A
+HREF="r5497.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>invalidate_inodes</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      discard the inodes on a device
+ </DT
+><DT
+><A
+HREF="r5523.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>new_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      obtain an inode
+ </DT
+><DT
+><A
+HREF="r5549.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iunique</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get a unique inode number
+ </DT
+><DT
+><A
+HREF="r5585.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ilookup5</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      search for an inode in the inode cache
+ </DT
+><DT
+><A
+HREF="r5643.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ilookup</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      search for an inode in the inode cache
+ </DT
+><DT
+><A
+HREF="r5681.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iget5_locked</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      obtain an inode from a mounted file system
+ </DT
+><DT
+><A
+HREF="r5754.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iget_locked</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      obtain an inode from a mounted file system
+ </DT
+><DT
+><A
+HREF="r5797.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__insert_inode_hash</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      hash an inode
+ </DT
+><DT
+><A
+HREF="r5830.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>remove_inode_hash</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove an inode from the hash
+ </DT
+><DT
+><A
+HREF="r5856.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>iput</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      put an inode 
+ </DT
+><DT
+><A
+HREF="r5882.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>bmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a block number in a file
+ </DT
+><DT
+><A
+HREF="r5915.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>update_atime</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	update the access time
+ </DT
+><DT
+><A
+HREF="r5943.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>inode_update_time</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	update mtime and ctime time
+ </DT
+><DT
+><A
+HREF="r5976.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>make_bad_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   mark an inode bad due to an I/O error
+ </DT
+><DT
+><A
+HREF="r6003.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>is_bad_inode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is an inode errored
+ </DT
+></DL
+></DD
+><DT
+>6.3. <A
+HREF="x6029.html"
+>Registration and Superblocks</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r6031.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>deactivate_super</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;  	drop an active reference to superblock
+ </DT
+><DT
+><A
+HREF="r6057.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>generic_shutdown_super</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	common helper for -&#62;<CODE
+CLASS="FUNCTION"
+>kill_sb</CODE
+>
+ </DT
+><DT
+><A
+HREF="r6087.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sget</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	find or create a superblock
+ </DT
+><DT
+><A
+HREF="r6133.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_super</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	get the superblock of a device
+ </DT
+></DL
+></DD
+><DT
+>6.4. <A
+HREF="x6160.html"
+>File Locks</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r6162.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_lock_file</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Apply a POSIX-style lock to a file
+ </DT
+><DT
+><A
+HREF="r6195.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>locks_mandatory_area</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Check for a conflicting lock
+ </DT
+><DT
+><A
+HREF="r6253.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__break_lease</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	revoke all outstanding leases on file
+ </DT
+><DT
+><A
+HREF="r6290.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>lease_get_mtime</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r6323.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_block_lock</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      blocks waiting for a file lock
+ </DT
+><DT
+><A
+HREF="r6356.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>posix_unblock_lock</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      stop waiting for a file lock
+ </DT
+><DT
+><A
+HREF="r6389.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>lock_may_read</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      checks that the region is free of locks
+ </DT
+><DT
+><A
+HREF="r6430.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>lock_may_write</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      checks that the region is free of locks
+ </DT
+><DT
+><A
+HREF="r6471.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>locks_mandatory_locked</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Check for an active lock
+ </DT
+><DT
+><A
+HREF="r6498.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fcntl_getlease</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Enquire what lease is currently active
+ </DT
+><DT
+><A
+HREF="r6538.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fcntl_setlease</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	sets a lease on an open file
+ </DT
+><DT
+><A
+HREF="r6579.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sys_flock</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      <CODE
+CLASS="FUNCTION"
+>flock</CODE
+> system call.
+ </DT
+><DT
+><A
+HREF="r6627.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>get_locks_status</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	reports lock usage in /proc/locks
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>7. <A
+HREF="c6671.html"
+>Linux Networking</A
+></DT
+><DD
+><DL
+><DT
+>7.1. <A
+HREF="c6671.html#AEN6673"
+>Socket Buffer Functions</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r6675.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>struct sk_buff</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   socket buffer
+ </DT
+><DT
+><A
+HREF="r6724.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_empty</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check if a queue is empty
+ </DT
+><DT
+><A
+HREF="r6750.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_get</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      reference buffer
+ </DT
+><DT
+><A
+HREF="r6776.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>kfree_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      free an sk_buff
+ </DT
+><DT
+><A
+HREF="r6802.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_cloned</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is the buffer a clone
+ </DT
+><DT
+><A
+HREF="r6829.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_shared</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      is the buffer shared
+ </DT
+><DT
+><A
+HREF="r6855.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_share_check</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check if buffer is shared and if so clone it
+ </DT
+><DT
+><A
+HREF="r6889.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_unshare</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      make a copy of a shared buffer
+ </DT
+><DT
+><A
+HREF="r6926.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_peek</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r6954.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_peek_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r6982.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_len</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get queue length
+ </DT
+><DT
+><A
+HREF="r7008.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_queue_head</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list head
+ </DT
+><DT
+><A
+HREF="r7042.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_head</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list head
+ </DT
+><DT
+><A
+HREF="r7076.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_queue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list tail
+ </DT
+><DT
+><A
+HREF="r7110.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      queue a buffer at the list tail
+ </DT
+><DT
+><A
+HREF="r7144.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_dequeue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the head of the queue
+ </DT
+><DT
+><A
+HREF="r7171.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_dequeue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the head of the queue
+ </DT
+><DT
+><A
+HREF="r7198.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_insert</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	insert a buffer
+ </DT
+><DT
+><A
+HREF="r7231.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_append</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	append a buffer
+ </DT
+><DT
+><A
+HREF="r7264.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_unlink</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	remove a buffer from a list
+ </DT
+><DT
+><A
+HREF="r7291.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_dequeue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the tail of the queue
+ </DT
+><DT
+><A
+HREF="r7318.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_dequeue_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove from the head of the queue
+ </DT
+><DT
+><A
+HREF="r7345.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_put</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add data to a buffer
+ </DT
+><DT
+><A
+HREF="r7378.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_push</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      add data to the start of a buffer
+ </DT
+><DT
+><A
+HREF="r7411.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_pull</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove data from the start of a buffer
+ </DT
+><DT
+><A
+HREF="r7444.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_headroom</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      bytes at buffer head
+ </DT
+><DT
+><A
+HREF="r7470.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_tailroom</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      bytes at buffer end
+ </DT
+><DT
+><A
+HREF="r7496.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_reserve</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      adjust headroom
+ </DT
+><DT
+><A
+HREF="r7529.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_trim</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove end from a buffer
+ </DT
+><DT
+><A
+HREF="r7562.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_orphan</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      orphan a buffer
+ </DT
+><DT
+><A
+HREF="r7589.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_queue_purge</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      empty a list
+ </DT
+><DT
+><A
+HREF="r7615.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__skb_queue_purge</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      empty a list
+ </DT
+><DT
+><A
+HREF="r7641.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_alloc_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate an skbuff for sending
+ </DT
+><DT
+><A
+HREF="r7676.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_alloc_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate an skbuff for sending
+ </DT
+><DT
+><A
+HREF="r7704.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_cow</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      copy header of skb when it is required
+ </DT
+><DT
+><A
+HREF="r7739.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_padto</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      pad an skbuff up to a minimal size
+ </DT
+><DT
+><A
+HREF="r7772.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_over_panic</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   	private function
+ </DT
+><DT
+><A
+HREF="r7813.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_under_panic</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      	private function
+ </DT
+><DT
+><A
+HREF="r7854.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	allocate a network buffer
+ </DT
+><DT
+><A
+HREF="r7891.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__kfree_skb</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      private function
+ </DT
+><DT
+><A
+HREF="r7917.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_clone</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	duplicate an sk_buff
+ </DT
+><DT
+><A
+HREF="r7954.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_copy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	create private copy of an sk_buff
+ </DT
+><DT
+><A
+HREF="r7990.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_copy</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	create copy of an sk_buff with private head.
+ </DT
+><DT
+><A
+HREF="r8024.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pskb_expand_head</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      reallocate header of <CODE
+CLASS="STRUCTNAME"
+>sk_buff</CODE
+>
+ </DT
+><DT
+><A
+HREF="r8073.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_copy_expand</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	copy and expand sk_buff
+ </DT
+><DT
+><A
+HREF="r8127.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>skb_pad</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	zero pad the tail of an skb
+ </DT
+><DT
+><A
+HREF="r8161.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__pskb_pull_tail</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      advance tail of skb header
+ </DT
+></DL
+></DD
+><DT
+>7.2. <A
+HREF="x8198.html"
+>Socket Filter</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r8200.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sk_run_filter</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   	run a filter on a socket
+ </DT
+><DT
+><A
+HREF="r8240.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sk_chk_filter</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      verify socket filter code
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>8. <A
+HREF="c8274.html"
+>Network device support</A
+></DT
+><DD
+><DL
+><DT
+>8.1. <A
+HREF="c8274.html#AEN8276"
+>Driver Support</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r8278.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>init_etherdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Register ethernet device
+ </DT
+><DT
+><A
+HREF="r8315.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_etherdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Allocates and sets up an ethernet device
+ </DT
+><DT
+><A
+HREF="r8343.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_fddidev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register FDDI device
+ </DT
+><DT
+><A
+HREF="r8371.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_hippi_dev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register HIPPI device
+ </DT
+><DT
+><A
+HREF="r8399.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_trdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register token ring device
+ </DT
+><DT
+><A
+HREF="r8427.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_fcdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Register fibre channel device
+ </DT
+><DT
+><A
+HREF="r8455.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_add_pack</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   add packet handler
+ </DT
+><DT
+><A
+HREF="r8482.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_remove_pack</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove packet handler
+ </DT
+><DT
+><A
+HREF="r8510.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_remove_pack</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove packet handler
+ </DT
+><DT
+><A
+HREF="r8538.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netdev_boot_setup_check</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      check boot time settings
+ </DT
+><DT
+><A
+HREF="r8564.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get_by_name</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its name
+ </DT
+><DT
+><A
+HREF="r8592.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_get_by_name</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its name
+ </DT
+><DT
+><A
+HREF="r8620.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	test if a device exists
+ </DT
+><DT
+><A
+HREF="r8647.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get_by_index</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its ifindex
+ </DT
+><DT
+><A
+HREF="r8675.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_get_by_index</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its ifindex
+ </DT
+><DT
+><A
+HREF="r8701.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_getbyhwaddr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device by its hardware address
+ </DT
+><DT
+><A
+HREF="r8737.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_get_by_flags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find any device with given flags
+ </DT
+><DT
+><A
+HREF="r8770.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__dev_get_by_flags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find any device with given flags
+ </DT
+><DT
+><A
+HREF="r8804.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_alloc_name</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate a name for a device
+ </DT
+><DT
+><A
+HREF="r8839.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_alloc</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allocate a network device and name
+ </DT
+><DT
+><A
+HREF="r8879.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netdev_state_change</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      device changes state
+ </DT
+><DT
+><A
+HREF="r8905.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_load</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      load a network module
+ </DT
+><DT
+><A
+HREF="r8931.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      prepare an interface for use.
+ </DT
+><DT
+><A
+HREF="r8959.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      shutdown an interface.
+ </DT
+><DT
+><A
+HREF="r8987.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_netdevice_notifier</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a network notifier block
+ </DT
+><DT
+><A
+HREF="r9013.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_netdevice_notifier</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a network notifier block
+ </DT
+><DT
+><A
+HREF="r9040.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>call_netdevice_notifiers</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      call all network notifier blocks
+ </DT
+><DT
+><A
+HREF="r9075.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_queue_xmit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      transmit a buffer
+ </DT
+><DT
+><A
+HREF="r9102.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netif_rx</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	post buffer to the network code
+ </DT
+><DT
+><A
+HREF="r9131.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_gifconf</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	register a SIOCGIF handler
+ </DT
+><DT
+><A
+HREF="r9164.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>netdev_set_master</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	set up master/slave pair
+ </DT
+><DT
+><A
+HREF="r9199.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_set_promiscuity</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      update promiscuity count on a device
+ </DT
+><DT
+><A
+HREF="r9232.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_set_allmulti</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      update allmulti count on a device
+ </DT
+><DT
+><A
+HREF="r9266.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_ioctl</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	network device ioctl
+ </DT
+><DT
+><A
+HREF="r9299.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>dev_new_index</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	allocate an ifindex
+ </DT
+><DT
+><A
+HREF="r9326.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_netdevice</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a network device
+ </DT
+><DT
+><A
+HREF="r9358.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>free_netdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      free network device
+ </DT
+><DT
+><A
+HREF="r9384.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_netdevice</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove device from the kernel
+ </DT
+></DL
+></DD
+><DT
+>8.2. <A
+HREF="x9412.html"
+>8390 Based Network Cards</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r9414.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ei_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Open/initialize the board.
+ </DT
+><DT
+><A
+HREF="r9440.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ei_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      shut down network device
+ </DT
+><DT
+><A
+HREF="r9468.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ei_tx_timeout</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      handle transmit time out condition
+ </DT
+><DT
+><A
+HREF="r9494.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ei_interrupt</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      handle the interrupts from an 8390
+ </DT
+><DT
+><A
+HREF="r9534.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>ethdev_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      init rest of 8390 device struct
+ </DT
+><DT
+><A
+HREF="r9560.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>alloc_ei_netdev</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      alloc_etherdev counterpart for 8390
+ </DT
+><DT
+><A
+HREF="r9587.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>NS8390_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      initialize 8390 hardware
+ </DT
+></DL
+></DD
+><DT
+>8.3. <A
+HREF="x9620.html"
+>Synchronous PPP</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r9622.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_input</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;  	receive and process a WAN PPP frame
+ </DT
+><DT
+><A
+HREF="r9657.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      close down a synchronous PPP or Cisco HDLC link
+ </DT
+><DT
+><A
+HREF="r9683.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      open a synchronous PPP or Cisco HDLC link
+ </DT
+><DT
+><A
+HREF="r9709.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_reopen</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      notify of physical link loss
+ </DT
+><DT
+><A
+HREF="r9737.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_change_mtu</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Change the link MTU
+ </DT
+><DT
+><A
+HREF="r9770.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_do_ioctl</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Ioctl handler for ppp/hdlc
+ </DT
+><DT
+><A
+HREF="r9810.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_attach</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      attach synchronous PPP/HDLC to a device
+ </DT
+><DT
+><A
+HREF="r9836.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>sppp_detach</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      release PPP resources from a device
+ </DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>9. <A
+HREF="c9862.html"
+>Module Support</A
+></DT
+><DD
+><DL
+><DT
+>9.1. <A
+HREF="c9862.html#AEN9864"
+>Module Loading</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r9866.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>request_module</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   try to load a kernel module
+ </DT
+><DT
+><A
+HREF="r9900.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>call_usermodehelper</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      start a usermode application
+ </DT
+></DL
+></DD
+><DT
+>9.2. <A
+HREF="x9948.html"
+>Inter Module support</A
+></DT
+></DL
+></DD
+><DT
+>10. <A
+HREF="c9951.html"
+>Hardware Interfaces</A
+></DT
+><DD
+><DL
+><DT
+>10.1. <A
+HREF="c9951.html#AEN9953"
+>Interrupt Handling</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r9955.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>disable_irq_nosync</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   disable an irq without waiting
+ </DT
+><DT
+><A
+HREF="r9983.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>disable_irq</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      disable an irq and wait for completion
+ </DT
+><DT
+><A
+HREF="r10010.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>enable_irq</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enable handling of an irq
+ </DT
+><DT
+><A
+HREF="r10038.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>probe_irq_mask</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      scan a bitmap of interrupt lines
+ </DT
+></DL
+></DD
+><DT
+>10.2. <A
+HREF="x10067.html"
+>MTRR Handling</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r10069.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mtrr_add</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Add a memory type region
+ </DT
+><DT
+><A
+HREF="r10130.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mtrr_del</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      delete a memory type region
+ </DT
+></DL
+></DD
+><DT
+>10.3. <A
+HREF="x10171.html"
+>PCI Support Library</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r10173.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_bus_max_busnr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   returns maximum PCI bus number of given bus' children
+ </DT
+><DT
+><A
+HREF="r10199.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_max_busnr</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      returns maximum PCI bus number
+ </DT
+><DT
+><A
+HREF="r10226.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_find_capability</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      query for devices' capabilities 
+ </DT
+><DT
+><A
+HREF="r10274.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_bus_find_capability</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      query for devices' capabilities 
+ </DT
+><DT
+><A
+HREF="r10315.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_find_parent_resource</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      return resource region of parent bus of given region
+ </DT
+><DT
+><A
+HREF="r10348.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_set_power_state</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Set the power state of a PCI device
+ </DT
+><DT
+><A
+HREF="r10384.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_save_state</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      save the PCI configuration space of a device before suspending
+ </DT
+><DT
+><A
+HREF="r10418.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_restore_state</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Restore the saved state of a PCI device
+ </DT
+><DT
+><A
+HREF="r10448.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_enable_device_bars</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Initialize some of a device for use
+ </DT
+><DT
+><A
+HREF="r10481.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_enable_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Initialize device before it's used by a driver.
+ </DT
+><DT
+><A
+HREF="r10507.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_disable_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Disable PCI device after use
+ </DT
+><DT
+><A
+HREF="r10533.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_enable_wake</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enable device to generate PME# when suspended
+ </DT
+><DT
+><A
+HREF="r10574.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_release_region</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Release a PCI bar
+ </DT
+><DT
+><A
+HREF="r10607.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_request_region</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Reserved PCI I/O and memory resource
+ </DT
+><DT
+><A
+HREF="r10652.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_release_regions</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Release reserved PCI I/O and memory resources
+ </DT
+><DT
+><A
+HREF="r10678.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_request_regions</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Reserved PCI I/O and memory resources
+ </DT
+><DT
+><A
+HREF="r10715.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_set_master</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enables bus-mastering for device dev
+ </DT
+><DT
+><A
+HREF="r10742.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_set_mwi</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      enables memory-write-invalidate PCI transaction
+ </DT
+><DT
+><A
+HREF="r10773.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_clear_mwi</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      disables Memory-Write-Invalidate for device dev
+ </DT
+></DL
+></DD
+><DT
+>10.4. <A
+HREF="x10799.html"
+>PCI Hotplug Support Library</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r10801.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_hp_register</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   register a hotplug_slot with the PCI hotplug subsystem
+ </DT
+><DT
+><A
+HREF="r10828.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_hp_deregister</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deregister a hotplug_slot with the PCI hotplug subsystem
+ </DT
+><DT
+><A
+HREF="r10857.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pci_hp_change_slot_info</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      changes the slot's information structure in the core
+ </DT
+></DL
+></DD
+><DT
+>10.5. <A
+HREF="x10893.html"
+>MCA Architecture</A
+></DT
+><DD
+><DL
+><DT
+>10.5.1. <A
+HREF="x10893.html#AEN10895"
+>MCA Device Functions</A
+></DT
+><DT
+>10.5.2. <A
+HREF="x10893.html#AEN10898"
+>MCA Bus DMA</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>11. <A
+HREF="c11147.html"
+>The Device File System</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r11149.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>devfs_put</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Put (release) a reference to a devfs entry.
+ </DT
+><DT
+><A
+HREF="r11172.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>devfs_mk_symlink</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r11205.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>devfs_mk_dir</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Create a directory in the devfs namespace.
+ </DT
+></DL
+></DD
+><DT
+>12. <A
+HREF="c11245.html"
+>Security Framework</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r11247.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_security</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   registers a security framework with the kernel
+ </DT
+><DT
+><A
+HREF="r11276.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_security</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregisters a security framework with the kernel
+ </DT
+><DT
+><A
+HREF="r11306.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mod_reg_security</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allows security modules to be <SPAN
+CLASS="QUOTE"
+>"stacked"</SPAN
+>
+ </DT
+><DT
+><A
+HREF="r11343.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mod_unreg_security</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      allows a security module registered with <CODE
+CLASS="FUNCTION"
+>mod_reg_security</CODE
+> to be unloaded
+ </DT
+><DT
+><A
+HREF="r11382.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>capable</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      calls the currently loaded security module's <CODE
+CLASS="FUNCTION"
+>capable</CODE
+> function with the specified capability
+ </DT
+></DL
+></DD
+><DT
+>13. <A
+HREF="c11412.html"
+>Power Management</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r11414.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pm_register</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   register a device with power management
+ </DT
+><DT
+><A
+HREF="r11456.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pm_unregister</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;       unregister a device with power management
+ </DT
+><DT
+><A
+HREF="r11482.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pm_unregister_all</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister all devices with matching callback
+ </DT
+><DT
+><A
+HREF="r11508.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pm_send</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      send request to a single device
+ </DT
+><DT
+><A
+HREF="r11556.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pm_send_all</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      send request to all managed devices
+ </DT
+><DT
+><A
+HREF="r11597.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>pm_find</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a device
+ </DT
+></DL
+></DD
+><DT
+>14. <A
+HREF="c11635.html"
+>Block Devices</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r11637.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_prep_rq</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   set a prepare_request function for queue
+ </DT
+><DT
+><A
+HREF="r11670.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_merge_bvec</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set a merge_bvec function for queue
+ </DT
+><DT
+><A
+HREF="r11703.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_make_request</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      define an alternate make_request function for a device
+ </DT
+><DT
+><A
+HREF="r11743.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_bounce_limit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set bounce buffer limit for queue
+ </DT
+><DT
+><A
+HREF="r11778.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_max_sectors</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set max sectors for a request for this queue
+ </DT
+><DT
+><A
+HREF="r11811.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_max_phys_segments</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set max phys segments for a request for this queue
+ </DT
+><DT
+><A
+HREF="r11844.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_max_hw_segments</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set max hw segments for a request for this queue
+ </DT
+><DT
+><A
+HREF="r11877.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_max_segment_size</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set max segment size for blk_rq_map_sg
+ </DT
+><DT
+><A
+HREF="r11910.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_hardsect_size</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set hardware sector size for the queue
+ </DT
+><DT
+><A
+HREF="r11943.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_stack_limits</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      inherit underlying queue limits for stacked drivers
+ </DT
+><DT
+><A
+HREF="r11973.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_segment_boundary</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set boundary rules for segment merging
+ </DT
+><DT
+><A
+HREF="r12003.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_dma_alignment</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set dma length and memory alignment
+ </DT
+><DT
+><A
+HREF="r12036.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_find_tag</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a request by its tag and queue
+ </DT
+><DT
+><A
+HREF="r12073.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_free_tags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      release tag maintenance info
+ </DT
+><DT
+><A
+HREF="r12100.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_init_tags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      initialize the queue tag info
+ </DT
+><DT
+><A
+HREF="r12137.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_end_tag</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      end tag operations for a request
+ </DT
+><DT
+><A
+HREF="r12175.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_start_tag</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a free tag and assign it
+ </DT
+><DT
+><A
+HREF="r12211.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_queue_invalidate_tags</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      invalidate all pending tags
+ </DT
+><DT
+><A
+HREF="r12240.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>generic_unplug_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      fire a request queue
+ </DT
+><DT
+><A
+HREF="r12267.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_start_queue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      restart a previously stopped queue
+ </DT
+><DT
+><A
+HREF="r12295.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_stop_queue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      stop a queue
+ </DT
+><DT
+><A
+HREF="r12322.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_run_queue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      run a single device queue
+ </DT
+><DT
+><A
+HREF="r12349.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_cleanup_queue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      release a <CODE
+CLASS="STRUCTNAME"
+>request_queue_t</CODE
+> when it is no longer needed
+ </DT
+><DT
+><A
+HREF="r12381.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_init_queue</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      prepare a request queue for use with a block device
+ </DT
+><DT
+><A
+HREF="r12426.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_requeue_request</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      put a request back on queue
+ </DT
+><DT
+><A
+HREF="r12459.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_insert_request</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      insert a special request in to a request queue
+ </DT
+><DT
+><A
+HREF="r12514.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_congestion_wait</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      wait for a queue to become uncongested
+ </DT
+><DT
+><A
+HREF="r12548.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>blk_attempt_remerge</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      attempt to remerge active head with next request
+ </DT
+><DT
+><A
+HREF="r12581.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>generic_make_request</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r12612.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>submit_bio</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r12651.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>process_that_request_first</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;     	process partial request submission
+ </DT
+><DT
+><A
+HREF="r12688.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>end_that_request_first</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      end I/O on a request
+ </DT
+><DT
+><A
+HREF="r12733.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>end_that_request_chunk</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      end I/O on a request
+ </DT
+></DL
+></DD
+><DT
+>15. <A
+HREF="c12779.html"
+>Miscellaneous Devices</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r12781.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>misc_register</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;  	register a miscellaneous device
+ </DT
+><DT
+><A
+HREF="r12810.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>misc_deregister</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a miscellaneous device
+ </DT
+></DL
+></DD
+><DT
+>16. <A
+HREF="c12837.html"
+>Video4Linux</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r12839.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>video_register_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   register video4linux devices
+ </DT
+><DT
+><A
+HREF="r12890.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>video_unregister_device</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a video4linux device
+ </DT
+></DL
+></DD
+><DT
+>17. <A
+HREF="c12916.html"
+>Sound Devices</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r12918.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sound_special</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   register a special sound node
+ </DT
+><DT
+><A
+HREF="r12951.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sound_mixer</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a mixer device
+ </DT
+><DT
+><A
+HREF="r12984.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sound_midi</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a midi device
+ </DT
+><DT
+><A
+HREF="r13017.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sound_dsp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a DSP device
+ </DT
+><DT
+><A
+HREF="r13051.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sound_synth</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a synth device
+ </DT
+><DT
+><A
+HREF="r13084.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sound_special</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a special sound device
+ </DT
+><DT
+><A
+HREF="r13111.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sound_mixer</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a mixer
+ </DT
+><DT
+><A
+HREF="r13138.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sound_midi</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a midi device
+ </DT
+><DT
+><A
+HREF="r13165.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sound_dsp</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a DSP device
+ </DT
+><DT
+><A
+HREF="r13193.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sound_synth</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      unregister a synth device
+ </DT
+></DL
+></DD
+><DT
+>18. <A
+HREF="c13220.html"
+>16x50 UART Driver</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r13222.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_update_timeout</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   update per-port FIFO timeout.
+ </DT
+><DT
+><A
+HREF="r13263.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_get_baud_rate</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      return baud rate for a particular port
+ </DT
+><DT
+><A
+HREF="r13321.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_get_divisor</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      return uart clock divisor
+ </DT
+><DT
+><A
+HREF="r13354.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_register_driver</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      register a driver with the uart core layer
+ </DT
+><DT
+><A
+HREF="r13382.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_unregister_driver</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove a driver from the uart core layer
+ </DT
+><DT
+><A
+HREF="r13410.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_add_one_port</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      attach a driver-defined port structure
+ </DT
+><DT
+><A
+HREF="r13443.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_remove_one_port</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      detach a driver defined port structure
+ </DT
+><DT
+><A
+HREF="r13476.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_register_port</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   </DT
+><DT
+><A
+HREF="r13511.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>uart_unregister_port</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      de-allocate a port
+ </DT
+><DT
+><A
+HREF="r13545.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_serial</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   configure a 16x50 serial port at runtime
+ </DT
+><DT
+><A
+HREF="r13573.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_serial</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      remove a 16x50 serial port at runtime
+ </DT
+><DT
+><A
+HREF="r13599.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>serial8250_suspend_port</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      suspend one serial port
+ </DT
+><DT
+><A
+HREF="r13625.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>serial8250_resume_port</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      resume one serial port
+ </DT
+></DL
+></DD
+><DT
+>19. <A
+HREF="c13651.html"
+>Z85230 Support Library</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r13653.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_interrupt</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   Handle an interrupt from a Z8530
+ </DT
+><DT
+><A
+HREF="r13694.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_sync_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Open a Z8530 channel for PIO
+ </DT
+><DT
+><A
+HREF="r13727.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_sync_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Close a PIO Z8530 channel
+ </DT
+><DT
+><A
+HREF="r13760.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_sync_dma_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Open a Z8530 for DMA I/O
+ </DT
+><DT
+><A
+HREF="r13793.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_sync_dma_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Close down DMA I/O
+ </DT
+><DT
+><A
+HREF="r13826.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_sync_txdma_open</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Open a Z8530 for TX driven DMA
+ </DT
+><DT
+><A
+HREF="r13859.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_sync_txdma_close</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Close down a TX driven DMA channel
+ </DT
+><DT
+><A
+HREF="r13892.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_describe</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Uniformly describe a Z8530 port
+ </DT
+><DT
+><A
+HREF="r13934.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_init</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Initialise a Z8530 device
+ </DT
+><DT
+><A
+HREF="r13962.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_shutdown</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Shutdown a Z8530 device
+ </DT
+><DT
+><A
+HREF="r13989.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_channel_load</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Load channel data
+ </DT
+><DT
+><A
+HREF="r14024.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_null_rx</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Discard a packet
+ </DT
+><DT
+><A
+HREF="r14057.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_queue_xmit</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Queue a packet
+ </DT
+><DT
+><A
+HREF="r14091.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>z8530_get_stats</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Get network statistics
+ </DT
+></DL
+></DD
+><DT
+>20. <A
+HREF="c14118.html"
+>Frame Buffer Library</A
+></DT
+><DD
+><DL
+><DT
+>20.1. <A
+HREF="c14118.html#AEN14125"
+>Frame Buffer Memory</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r14127.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_framebuffer</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   registers a frame buffer device
+ </DT
+><DT
+><A
+HREF="r14155.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_framebuffer</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      releases a frame buffer device
+ </DT
+></DL
+></DD
+><DT
+>20.2. <A
+HREF="x14183.html"
+>Frame Buffer Console</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r14185.html"
+>drivers/video/console/fbcon.c</A
+>&nbsp;--&nbsp;   Document generation inconsistency
+  </DT
+></DL
+></DD
+><DT
+>20.3. <A
+HREF="x14194.html"
+>Frame Buffer Colormap</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r14196.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_alloc_cmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   allocate a colormap
+ </DT
+><DT
+><A
+HREF="r14240.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_dealloc_cmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      deallocate a colormap
+ </DT
+><DT
+><A
+HREF="r14267.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_copy_cmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      copy a colormap
+ </DT
+><DT
+><A
+HREF="r14320.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_set_cmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      set the colormap
+ </DT
+><DT
+><A
+HREF="r14364.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_default_cmap</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      get default colormap
+ </DT
+><DT
+><A
+HREF="r14392.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_invert_cmaps</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      invert all defaults colormaps
+ </DT
+></DL
+></DD
+><DT
+>20.4. <A
+HREF="x14419.html"
+>Frame Buffer Video Mode Database</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r14421.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>fb_find_mode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   finds a valid video mode
+ </DT
+><DT
+><A
+HREF="r14504.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>__fb_try_mode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   test a video mode
+ </DT
+></DL
+></DD
+><DT
+>20.5. <A
+HREF="x14553.html"
+>Frame Buffer Macintosh Video Mode Database</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="r14555.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mac_vmode_to_var</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;   converts vmode/cmode pair to var structure
+ </DT
+><DT
+><A
+HREF="r14596.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mac_var_to_vmode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      convert var structure to MacOS vmode/cmode pair
+ </DT
+><DT
+><A
+HREF="r14637.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mac_map_monitor_sense</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      Convert monitor sense to vmode
+ </DT
+><DT
+><A
+HREF="r14664.html"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>mac_find_mode</SPAN
+></SPAN
+></A
+>&nbsp;--&nbsp;      find a video mode
+ </DT
+></DL
+></DD
+><DT
+>20.6. <A
+HREF="x14716.html"
+>Frame Buffer Fonts</A
+></DT
+></DL
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c10.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Driver Basics</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

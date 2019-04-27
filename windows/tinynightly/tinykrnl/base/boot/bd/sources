@@ -1,0 +1,34 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=bd
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=
+
+INCLUDES=\
+        .\..\inc; \
+        .\..\..\..\public\internal\base\inc; \
+        $(DDK_INC_PATH)
+
+SOURCES=\
+        break.c     \
+        check.c     \
+        comio.c     \
+        cpuapi.c    \
+        dbgio.c     \
+        init.c      \
+        message.c   \
+        move.c      \
+        poll.c      \
+        port.c      \
+        reboot.c    \
+        state.c     \
+        xxapi.c

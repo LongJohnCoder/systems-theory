@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Hello, World (part 1): The Simplest Module</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel Module Programming Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hello World"
+HREF="c119.html"><LINK
+REL="PREVIOUS"
+TITLE="Hello World"
+HREF="c119.html"><LINK
+REL="NEXT"
+TITLE="Compiling Kernel Modules"
+HREF="x181.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel Module Programming Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c119.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Hello World</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x181.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN121"
+></A
+>2.1. Hello, World (part 1): The Simplest Module</H1
+><P
+>When the first caveman programmer chiseled the first program on the walls of the first cave computer, it was a program
+	to paint the string `Hello, world' in Antelope pictures.  Roman programming textbooks began with the `Salut, Mundi' program.
+	I don't know what happens to people who break with this tradition, but I think it's safer not to find out.  We'll start with a
+	series of hello world programs that demonstrate the different aspects of the basics of writing a kernel module.</P
+><P
+>Here's the simplest module possible.  Don't compile it yet; we'll cover module compilation in the next section.</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN128"
+></A
+><P
+><B
+>Example 2-1. hello-1.c</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="PROGRAMLISTING"
+>/*  
+ *  hello-1.c - The simplest kernel module.
+ */
+#include &#60;linux/module.h&#62;	/* Needed by all modules */
+#include &#60;linux/kernel.h&#62;	/* Needed for KERN_INFO */
+
+int init_module(void)
+{
+	printk(KERN_INFO "Hello world 1.\n");
+
+	/* 
+	 * A non 0 return means init_module failed; module can't be loaded. 
+	 */
+	return 0;
+}
+
+void cleanup_module(void)
+{
+	printk(KERN_INFO "Goodbye world 1.\n");
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>Kernel modules must have at least two functions: a "start" (initialization) function called
+	<TT
+CLASS="FUNCTION"
+>init_module()</TT
+> which is called when the module is insmoded into the kernel, and an "end" (cleanup)
+	function called <TT
+CLASS="FUNCTION"
+>cleanup_module()</TT
+> which is called just before it is rmmoded.  Actually, things have
+	changed starting with kernel 2.3.13.  You can now use whatever name you like for the start and end functions of a module, and
+	you'll learn how to do this in <A
+HREF="hello2.html"
+>Section 2.3</A
+>.  In fact, the new method is the preferred method.  However, many
+	people still use <TT
+CLASS="FUNCTION"
+>init_module()</TT
+> and <TT
+CLASS="FUNCTION"
+>cleanup_module()</TT
+> for their start and end
+	functions.</P
+><P
+>Typically, <TT
+CLASS="FUNCTION"
+>init_module()</TT
+> either registers a handler for something with the kernel, or it replaces
+	one of the kernel functions with its own code (usually code to do something and then call the original function).  The
+	<TT
+CLASS="FUNCTION"
+>cleanup_module()</TT
+> function is supposed to undo whatever <TT
+CLASS="FUNCTION"
+>init_module()</TT
+> did, so the
+	module can be unloaded safely.</P
+><P
+>Lastly, every kernel module needs to include <TT
+CLASS="FILENAME"
+>linux/module.h</TT
+>.  We needed to
+	include <TT
+CLASS="FILENAME"
+>linux/kernel.h</TT
+> only for the macro expansion for the
+	<TT
+CLASS="FUNCTION"
+>printk()</TT
+> log level, <TT
+CLASS="VARNAME"
+>KERN_ALERT</TT
+>, which you'll learn about in <A
+HREF="x121.html#INTRODUCINGPRINTK"
+>Section 2.1.1</A
+>.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="INTRODUCINGPRINTK"
+></A
+>2.1.1. Introducing <TT
+CLASS="FUNCTION"
+>printk()</TT
+></H2
+><P
+>Despite what you might think, <TT
+CLASS="FUNCTION"
+>printk()</TT
+> was not meant to communicate information to the user,
+			even though we used it for exactly this purpose in <SPAN
+CLASS="APPLICATION"
+>hello-1</SPAN
+>!  It happens to be a logging
+			mechanism for the kernel, and is used to log information or give warnings.  Therefore, each <TT
+CLASS="FUNCTION"
+>printk()</TT
+>
+			statement comes with a priority, which is the <TT
+CLASS="VARNAME"
+>&#60;1&#62;</TT
+> and <TT
+CLASS="VARNAME"
+>KERN_ALERT</TT
+> you see.
+			There are 8 priorities and the kernel has macros for them, so you don't have to use cryptic numbers, and you can view them
+			(and their meanings) in <TT
+CLASS="FILENAME"
+>linux/kernel.h</TT
+>.  If you don't specify a priority level, the
+			default priority, <TT
+CLASS="LITERAL"
+>DEFAULT_MESSAGE_LOGLEVEL</TT
+>, will be used.</P
+><P
+>Take time to read through the priority macros.  The header file also describes what each priority means.  In
+			practise, don't use number, like <TT
+CLASS="LITERAL"
+>&#60;4&#62;</TT
+>.  Always use the macro, like
+			<TT
+CLASS="LITERAL"
+>KERN_WARNING</TT
+>.</P
+><P
+>If the priority is less than <TT
+CLASS="VARNAME"
+>int console_loglevel</TT
+>, the message is printed on your current
+			terminal.  If both <B
+CLASS="COMMAND"
+>syslogd</B
+> and <SPAN
+CLASS="APPLICATION"
+>klogd</SPAN
+> are running, then the message will also
+			get appended to <TT
+CLASS="FILENAME"
+>/var/log/messages</TT
+>, whether it got printed to the console or not.  We use a high
+			priority, like <TT
+CLASS="LITERAL"
+>KERN_ALERT</TT
+>, to make sure the <TT
+CLASS="FUNCTION"
+>printk()</TT
+> messages get printed to your
+			console rather than just logged to your logfile.  When you write real modules, you'll want to use priorities that are
+			meaningful for the situation at hand.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c119.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x181.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Hello World</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c119.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Compiling Kernel Modules</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

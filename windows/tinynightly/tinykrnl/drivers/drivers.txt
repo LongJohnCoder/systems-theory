@@ -1,0 +1,45 @@
+                                      ======= PHASE 1a - Support =======
+
+[NAME]       [DEV(s)]  [LOCATION]                          [SOURCE] [NEED FOR]                       [STATUS]
+pci.sys      FIREBALL  \base\busdrv\pci                    REV+ROS  PCI Bus Support                  3%
+pciidex.sys  DURKKA    \drivers\storage\ide\pciidex        REV+ROS  PCI IDE Drive Support            21%
+disk.sys     DRALNIX   \drivers\storage\disk               DDK      Generic Disk Support             64%  - BOOTS|F?
+classpnp.sys ENCOD+DRX \drivers\storage\classpnp           DDK      Class Driver Support             54%  - BOOTS|F?
+fastfat.sys  ENCODED   \base\fs\fastfat                    DDK      Mounting VFAT Disks              8%
+bootvid.dll  ION       \base\boot\bootvid\                 FILP+REV Displaying Logo + BSODs          100% - BOOTS|F
+kdcom.dll    ION       \base\boot\kdcom                    REV      KD H/W Extension DLL for COM     100% - BOOTS|F
+intelide.sys ION       \drivers\storage\ide\miniport\intel REV+DDK  Intel IDE Controller Support     90%  - BOOTS|F?
+mountmgr.sys ION       \drivers\filters\mountmgr           REV      DOS Drive Letter Support         40%  - BOOTS|F?
+partmgr.sys  ION       \drivers\storage\partmgr            REV      Access to partitions and bootup  94%  - BOOTS|F?
+wmilib.sys   FIREBALL  \drivers\wmilib                     REV      Other boot drivers to start      100% - BOOTS|F?
+isapnp.sys   FBALL+ION \base\busdrv\isapnp                 REV+LINX Keyboard Support on QEMU         32%  - BOOTS|F?
+i8042prt.sys UNKNOWN   \drivers\input\pnpi8042             DDK      Keyboard/Mouse Support           0%
+kbdclass.sys DIATOR    \drivers\input\kbdclass             DDK      Keyboard Support                 0%
+atapi.sys    MSUICHE   \drivers\storage\ide\atapi          REV      ATA Disk Support                 0%
+ftdisk.sys   ION       \drivers\storage\newft              REV      Fault Tolerance Disk Driver      18%  - BOOTS|F?
+vgaoem.fon   ION       \windows\core\ntgdi\fonts           MSKB     NTLDR not to complain. UNUSED    100% - BOOTS|F
+c_1252.nls   ION       \base\win32\winnls\data             ROS      ANSI Codepage Translation Table  100% - BOOTS|F
+c_437.nls    ION       \base\win32\winnls\data             ROS      OEM Codespace Translation Table  100% - BOOTS|F
+l_intl.nls   ION       \base\win32\winnls\data             ROS      Language Table                   100% - BOOTS|F
+ntdll.dll    ION+MYRIA \base\ntdll                         ROS+REV  User-Mode Support                38%
+
+                                      ======= PHASE 1b - Kernel ========
+halacpi.dll  FBALL+ION \base\hals\hals\halacpi             REV+ROS  Driver and Kernel ACPI HW Access 37%
+ntoskrnl.exe EVERYONE  \base\ntos\                         REV+ROS  Kernel Itself                    0%
+
+                                                                            /--------------------------------------\
+                                                                            |  LEGEND                              |
+                                                                            |                                      |
+                                                                            |DDK   = DDK Sample Source Code        |
+                                                                            |REV   = Reverse Engineering           |
+                                                                            |ROS   = ReactOS                       |
+                                                                            |MSKB  = Microsoft Knowledge Base      |
+                                                                            |BOOTS = MiniNT Boots with this driver |
+                                                                            |F     = The driver is also functional |
+                                                                            |HF    = The driver is half functional |
+                                                                            |NF    = The driver is not functional  |
+                                                                            |F?    = The driver is functional in   |
+                                                                            |        MiniNT but untested in NT     |
+                                                                            \_____________________________________/
+
+

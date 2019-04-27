@@ -1,0 +1,267 @@
+
+<HTML>
+<HEAD>
+<TITLE>
+6.828 / Fall 2017
+</TITLE>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/labs.css" type="text/css" />
+
+</HEAD>
+
+<BODY BGCOLOR=#ffffff TEXT=#000000>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">6.828: Operating System Engineering</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+	    <li><a href="schedule.html">Schedule</a></li>
+	    <li class="dropdown">
+              <a href="general.html#" class="dropdown-toggle" data-toggle="dropdown">Class<span class="caret"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+                <li><a href="overview.html">Overview</a></li>
+                <li><a href="general.html">Administrivia</a></li>
+		<li><a href="classes.html">Related classes</a></li>
+		<li><a href="http://pdos.csail.mit.edu/6.828/2016">6.828 2016</a></li>
+	      </ul>
+	    </li>
+            <li class="dropdown">
+              <a href="general.html#" class="dropdown-toggle" data-toggle="dropdown">Labs<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+		<li><a href="tools.html">Tools</a></li>
+		<li><a href="labguide.html">Lab guide</a></li>
+                <li><a href="labs/lab1">Lab 1</a></li>
+                <li><a href="labs/lab2">Lab 2</a></li>
+                <li><a href="labs/lab3">Lab 3</a></li>
+		<li><a href="labs/lab4">Lab 4</a></li>
+		<li><a href="labs/lab5">Lab 5</a></li>
+		<li><a href="labs/lab6">Lab 6</a></li>
+		<li><a href="labs/lab7">Lab 7</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="general.html#" class="dropdown-toggle" data-toggle="dropdown">xv6<span class="caret"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+		<li><a href="xv6.html">xv6</a></li>
+		<li><a href="xv6/xv6-rev10.pdf">xv6 printout</a></li>
+		<li><a href="xv6/book-rev10.pdf">xv6 book</a></li>
+	      </ul>
+	    </li>
+	    <li><a href="reference.html">References</a></li>
+	    <li><a href="https://piazza.com/mit/fall2017/6828">Piazza</a></li>
+          </ul>
+	  <ul class="nav navbar-nav navbar-right">
+	    <p class="navbar-text">2017</p>
+	  </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="container">
+
+
+
+
+
+
+<H1>
+General Information
+</H1>
+<p>
+<b><a href="general.html#catalog">Catalog description</a></b> //
+<b><a href="general.html#audience">Who should take 6.828</a></b> //
+<b><a href="general.html#communication">Communication</a></b> //
+<b><a href="general.html#grading">Grading</a></b> //
+<b><a href="general.html#labs">Labs</a></b> //
+<b><a href="general.html#textbook">Text books</a></b> //
+<b><a href="general.html#homework">Homework</a></b> //
+<b><a href="general.html#collaboration">Collaboration</a></b> //
+<b><a href="general.html#meetings">Class meetings</a></b> //
+<b><a href="general.html#staff">Staff</a></b> //
+<b><a href="general.html#officehours">TA office hours</a></b>
+</p>
+
+<p><a name="catalog"></a>
+<h2>MIT catalog description</h2>
+
+<p>Prereq.: C, 6.033, 6.005, and 6.004
+<br> G (H)
+<br> 3-6-3
+<br> 6 EDP
+
+<p> 6.828 studies fundamental design and implementation ideas in the
+engineering of operating systems. Lectures are based on a study of
+UNIX and research papers. Topics include virtual memory, threads, context
+switches, kernels, interrupts, system calls, interprocess
+communication, coordination, and the interaction between software and
+hardware. Individual laboratory assignments involve implementation
+of a small operating system in C, with some
+x86 assembly.
+
+<p>Students can use 6.828 to fulfill the engineering concentration
+requirements for Computer Systems.
+
+<p><a name="audience"></a>
+<h2>Who should take 6.828?</h2>
+
+<p>
+6.828 is primarily intended for seniors and M.Eng students who want to
+learn about operating systems in detail. PhD students are also welcome,
+but note that 6.828 is <i>not</i> a "core" subject for the TQE.
+
+<p><a name="communication"></a>
+<h2>Communication</h2>
+
+<p>We will distribute assignments on the <a href="http://pdos.csail.mit.edu/6.828/">course web site</a>, and make all announcements through piazza. The course web site has the schedule for the term.
+
+<p><a name="grading"></a>
+<h2>Grading policy</h2>
+
+<p>Grades in 6.828 will be based on the results of two quizzes (one during the
+term and one in finals week) (35%); labs 1 through 5 (40%); home-work
+assignments, paper questions and class/piazza participation (together 10%);
+and lab challenge problems and final project lab (together 15%).  You must
+submit all labs in order to pass the class.  Historically students do well in
+6.828 with many students receiving an A (e.g., in 2016 a majority of students
+received an A).
+
+<p><a name="labs"></a>
+<h2>Labs</h2>
+
+<p>To turn in each lab, run <tt>make handin</tt> in your lab directory. The
+handin must be received by 11:59pm on the day that the lab is due. You can
+turn in as many times as you like before the deadline. The <a
+href="https://6828.scripts.mit.edu/2017/handin.py/">handin website</a> grades
+your final lab submission and shows your final lab grade.</p>
+
+<p> You have a total of 72 late hours for the semester. Each hour late in
+excess of 72 hours will penalize your total lab grade by 1&#37;. We calculate
+your final lab grade using the configuration of late hours and lab submissions
+which results in the highest grade.  These late hours are intended for cases
+where you fall behind due to illness, job interviews, MIT athletic events,
+deadlines in other classes, etc. For extensions under extenuating circumstances
+(e.g., you are sick for a week), we require a letter from one of the student
+deans.</p>
+
+<!-- That is, the lab component of the overall grade drops by
+       ceil((cumulative late - 72 hours)/1 day)
+     letter grades. -->
+
+<h2 id="homework">Homework</h2>
+
+<p>The homeworks are intended to make you think about the lecture topic and/or
+get your hands dirty. Programming homework is due before the start of lecture
+(i.e., 1pm) on the specified due dates; paper questions are due at midnight before
+the lecture. We do not grade your answers for correctness,
+but merely check-off that you put reasonable effort into them.</p>
+
+<h2 id="textbook">Textbooks</h2>
+
+<p>6.828 relies on the following two books:
+<ul>
+  <li><a href="xv6/book-rev10.pdf">xv6: A simple, Unix-like teaching operating
+  system</a> by R. Cox, F. Kaashoek, and R. Morris.
+  
+  <li><i>The C programming language (second edition)</i> by Kernighan
+and Ritchie. Prentice Hall, Inc., 1988. ISBN 0-13-110362-8, 1998.
+  
+</ul>
+
+<p>In addition, the class relies on tons of reference material on x86
+instructions, PC hardware specs, etc. All that material is available on the <a href="reference.html">reference page</a>.
+
+
+<p><a name="collaboration"></a>
+<h2>Collaboration</h2>
+
+<p>You may not collaborate on quizzes.  You are welcome to discuss the homework
+and labs with other students, but all of your written work and code must be your
+own and must carefully acknowledge all contributions of ideas by others, whether
+from classmates or from sources you have read. Please don't look at anyone
+else's code for the labs or homework.
+Please feel free to ask and answer questions on Piazza, about labs, homework,
+readings, and lectures.
+</p>
+
+<p>
+Do not post your lab or homework solutions on publicly accessible web
+sites (such as GitHub) or file spaces (such as your Athena Public
+directory).
+</p>
+
+<p><a name="meetings"></a>
+<h2>Class meetings</h2>
+
+<p>Lectures will be held on Monday and Wednesday from 1:00pm to 2:30pm
+in 32-123.
+
+<p><a name="staff"></a>
+<h2>Staff</h2>
+
+<p><b>Lecturer</b><br>
+Adam Belay<br>
+<a href="http://pdos.csail.mit.edu/~rtm/">Robert Morris</a>
+
+<p><b>Teaching assistants</b><br>
+<a href="http://people.csail.mit.edu/ccutler/">Cody Cutler</a><br>
+Lara Araujo<br>
+Atalay Ileri<br>
+
+<p><b>Staff mailing list</b><br>
+<i>6.828-staff@pdos.csail.mit.edu</i>, but we would prefer that you
+use Piazza.
+
+<!-- RULE: officehours -->
+<p><a name="officehours"></a>
+
+<h2>TA office hours</h2>
+All OH are in the 32-G9 lounge.<br>
+<br>
+Lara: Mondays, 4-6pm<br>
+Cody: Tuesdays, 1-3pm<br>
+Atalay: Wednesdays, 3-5pm<br>
+
+<br>
+Appointments with the TAs outside of the listed office hours can be setup via
+email.<br>
+
+<!-- End Page Content -->
+
+<hr>
+
+<font style="font-size: 12px;">
+<p>Questions or comments regarding 6.828?  Send e-mail to the TAs at
+<A
+HREF="mailto:6828-staff@lists.csail.mit.edu"><I>6828-staff@lists.csail.mit.edu</I></A>.
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/"><img
+alt="Creative Commons License" style="border-width:0"
+src="http://i.creativecommons.org/l/by/3.0/us/88x31.png" ></a> <B><A HREF="general.html#top">Top</A></B> //
+<B><A HREF="index.html">6.828 home</A></B> // 
+<i>Last updated Thursday, 08-Mar-2018 13:18:08 EST</i>
+</font>
+
+</div>
+
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</BODY>
+</HTML>
+

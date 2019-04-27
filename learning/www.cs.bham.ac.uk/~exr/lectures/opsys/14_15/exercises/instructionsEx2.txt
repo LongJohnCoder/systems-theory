@@ -1,0 +1,51 @@
+To aid the testing and marking process, we need to ask you to submit
+your work in a particular format.
+
+You should submit precisely ONE file via Canvas, in TAR format,
+containing a top-level directory "assignment2" in which should appear
+all the files comprising your submission. Do NOT use a complex directory
+structure below this.
+
+The end result of invoking your makefile with the "all" option should be
+precisely ONE kernel module called "firewallExtension.ko" and ONE
+userspace program called "client" to load/output the rules, as detailed
+in the assignment. To achieve this, take the Makefile for the kernel
+modules as a starting point and add the commands for compiling the
+userspace program. The two output files MUST be in the top-level
+directory after your makefile completes; if they are not, your work
+cannot be tested.
+
+Your submission will be tested as follows:
+
+1) your makefile will be invoked.
+2) the kernel module will be loaded using "insmod firewallExtension.ko";
+your kernel module should record being loaded in /var/log/kern.log.
+3) your user space program will be invoked to load the rules using the
+command "client W <filename>.
+4) your user space program will be invoked to output the rules to
+/var/log/kern.log using the command "client L".
+5) tests will be carried out to check that the firewall extension is
+correctly implementing the rules.
+6) your user space program will be invoked to load another set of rules
+using the command "client W <filename2>.
+7) your user space program will be invoked to output the rules to
+/var/log/kern.log using the command "client L". I will check that the
+first set of rules have been REPLACED by the second set.
+8) tests will be carried out to check that the firewall extension is
+correctly implementing the rules.
+9) the kernel module will be unloaded using "rmmod firewallExtension";
+your kernel module should record being unloaded in /var/log/kern.log.
+
+Clearly, the kernel should not crash at any time.
+
+The rules files I will use will look something like this:
+
+5000<space>/tmp/testproc1
+5000<space>/tmp/testproc2
+5001<space>/tmp/testproc1
+5002<space>/tmp/testproc1
+5003<space>/tmp/testproc3
+
+etc
+
+

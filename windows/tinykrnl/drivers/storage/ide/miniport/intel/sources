@@ -1,0 +1,29 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=intelide
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib \
+        $(DDK_LIB_PATH)\pciidex.lib
+
+INCLUDES=\
+         ..\..\..\..\..\public\sdk\inc; \
+         $(PROJECT_ROOT)\storage\inc
+
+SOURCES=\
+        init.c            \
+        timing.c       \
+        intelide.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+

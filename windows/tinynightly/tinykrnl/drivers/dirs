@@ -1,0 +1,5 @@
+DIRS= \
+     input \
+     storage \
+     filters \
+     wmilib

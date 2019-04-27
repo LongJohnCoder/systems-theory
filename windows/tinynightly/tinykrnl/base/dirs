@@ -1,0 +1,9 @@
+DIRS= \
+     busdrv \
+     fs \
+     hals \
+     ntos \
+     ntdll \
+     boot \
+     win32 \
+     urtl

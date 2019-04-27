@@ -1,0 +1,36 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=ftdisk
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+INCLUDES=..\inc;                  \
+         ..\..\..\public\sdk\inc; \
+         ..\..\..\public\internal\drivers\inc
+
+SOURCES=composit.cxx   \
+        ftdisk.cxx     \
+        ftvol.cxx      \
+        ftwmireg.cxx   \
+        mirror.cxx     \
+        ondisk.cxx     \
+        overlap.cxx    \
+        parity.cxx     \
+        partitio.cxx   \
+        redist.cxx     \
+        stripe.cxx     \
+        stripewp.cxx   \
+        volset.cxx     \
+        ftdisk.rc
+
+PRECOMPILED_INCLUDE=precomp.hxx
+
+

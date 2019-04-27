@@ -1,0 +1,9 @@
+[submodule "learning/minimal"]
+	path = learning/minimal
+	url = https://github.com/ivandavidov/minimal.git
+[submodule "learning/www.cs.bham.ac.uk/os-tutorial"]
+	path = learning/www.cs.bham.ac.uk/os-tutorial
+	url = https://github.com/cfenollosa/os-tutorial.git
+[submodule "freebsd"]
+	path = freebsd
+	url = https://github.com/freebsd/freebsd.git

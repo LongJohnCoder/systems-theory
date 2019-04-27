@@ -1,0 +1,22 @@
+//+-------------------------------------------------------------------------
+//
+//  TinyKRNL
+//
+//  Copyright (C) TinyKRNL, 2006
+//
+//  File:       osloader.rc
+//
+//--------------------------------------------------------------------------
+
+#include <winver.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Boot Loader"
+#define VER_INTERNALNAME_STR        "osloader.exe"
+#define VER_ORIGINALFILENAME_STR    "osloader.exe"
+#define VER_LANGNEUTRAL
+
+#include "common.ver"
+#include "bldrlog.rc"

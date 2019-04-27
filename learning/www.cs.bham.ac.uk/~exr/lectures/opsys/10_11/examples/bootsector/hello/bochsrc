@@ -1,0 +1,24 @@
+# You many now use double quotes around pathnames, in case
+# your pathname includes spaces.
+
+megs: 32
+
+floppya: 1_44=boot_sect.bin, status=inserted
+#floppya: 1_44=bootsect.bin, status=inserted
+boot: a
+
+#log: bochsout.txt
+panic: action=ask
+error: action=report
+info: action=report
+debug: action=ignore
+
+vga_update_interval: 300000
+keyboard_serial_delay: 250
+keyboard_paste_delay: 100000
+ips: 1000000
+mouse: enabled=0
+private_colormap: enabled=0
+fullscreen: enabled=0
+screenmode: name="sample"
+keyboard_mapping: enabled=0, map=

@@ -1,0 +1,24 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=wmilib
+TARGETTYPE=EXPORT_DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib
+
+INCLUDES=..\..\public\sdk\inc
+
+SOURCES=\
+        wmilib.c \
+        wmilib.rc    
+
+

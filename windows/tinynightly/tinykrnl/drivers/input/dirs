@@ -1,0 +1,3 @@
+DIRS= \
+     pnpi8042 \
+     kbdclass

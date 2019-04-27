@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Homework: OS Organization</title>
+<link rel="stylesheet" href="homework.css" type="text/css" />
+</head>
+<body>
+
+<h1>Homework: OS Organization</h1>
+
+
+<p>Submit two items to the <a href="https://6828.scripts.mit.edu/2017/handin.py/">the submission web
+    site</a>:
+  <ul>
+    
+    <li>Submit your own question about the paper (e.g., what you find most
+confusing about the paper or the paper's general context/problem) before 11:59pm
+the night before. You cannot use the question below. To the extent possible,
+      during lecture we will try to answer questions submitted the evening before.
+      
+    <li>Submit your answer for the question below before the beginning of the lecture
+
+  </ul>
+<p>
+
+<p>This lecture will provide an introduction to operating system organizations,
+monolythic, microkernel, etc.  Please read the assigned paper, which describes the exokernel
+organization.  The JOS operating system you are building in the labs is
+organized like an exokernel.
+
+<div class="question">
+<p><b>Answer the following question</b>: In lab 4 you completed building the core of an
+exokernel-based operating system.  In class you studied xv6, a
+monolithic operating systems.  Both are intend to support the UNIX
+API, but their internal organizations are different.  A good example
+is the virtual memory implementation: JOS implements many
+virtual-memory-related functions (such as <tt>fork</tt>) in its
+library operating system, while xv6 implements them in the kernel.
+Give an concrete example of what a user program could do in JOS that a
+user-level program on xv6 is unable to do and why it is useful.
+</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=pciidex
+TARGETTYPE=EXPORT_DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=\
+        $(DDK_LIB_PATH)\ntoskrnl.lib \
+        ..\share\obj$(BUILD_ALT_DIR)\*\ideshare.lib
+
+INCLUDES=\
+         ..\..\..\..\public\sdk\inc; \
+         ..\..\..\..\public\internal\base\inc; \
+         $(PROJECT_ROOT)\storage\inc;
+
+SOURCES=\
+        bm.c            \
+        chanpdo.c       \
+        ctlrfdo.c       \
+        pciidex.c       \
+        power.c         \
+        sync.c          \
+        pciidex.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+
+

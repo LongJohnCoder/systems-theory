@@ -1,0 +1,5 @@
+DIRS= \
+     atapi \
+     pciidex \
+     miniport \
+     share

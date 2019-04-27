@@ -1,0 +1,32 @@
+!IF 0
+
+Copyright (C) TinyKRNL, 2006
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=disk
+TARGETTYPE=DRIVER
+TARGET_DESTINATION=system32\drivers
+
+TARGETLIBS=$(DDK_LIB_PATH)\classpnp.lib
+
+INCLUDES=..\inc;                            \
+         ..\..\..\public\sdk\inc;           \
+         ..\..\..\public\internal\base\inc; \
+         ..\..\..\base\ntos\inc
+
+SOURCES=data.c      \
+        disk.c      \
+        diskwmi.c   \
+        disk.rc     \
+        enum.c      \
+        geometry.c  \
+        part.c      \
+        pnp.c
+
+PRECOMPILED_INCLUDE=precomp.h
+

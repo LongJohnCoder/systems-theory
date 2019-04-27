@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>register_sysctl_table</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The Linux Kernel API"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="sysctl interface"
+HREF="c4357.html#AEN4359"><LINK
+REL="PREVIOUS"
+TITLE="The proc filesystem"
+HREF="c4357.html"><LINK
+REL="NEXT"
+TITLE="unregister_sysctl_table"
+HREF="r4426.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The Linux Kernel API</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c4357.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r4426.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="AEN4361"
+></A
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>register_sysctl_table</SPAN
+></SPAN
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN4365"
+></A
+><H2
+>Name</H2
+>register_sysctl_table&nbsp;--&nbsp;   register a sysctl hierarchy
+ </DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN4368"
+></A
+><H2
+>Synopsis</H2
+><DIV
+CLASS="FUNCSYNOPSIS"
+><P
+></P
+><A
+NAME="AEN4370"
+></A
+><P
+><CODE
+><CODE
+CLASS="FUNCDEF"
+>struct ctl_table_header * register_sysctl_table </CODE
+>(ctl_table * table, int insert_at_head);</CODE
+></P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN4378"
+></A
+><H2
+>Arguments</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><VAR
+CLASS="PARAMETER"
+>table</VAR
+></DT
+><DD
+><P
+>      the top-level table structure
+    </P
+></DD
+><DT
+><VAR
+CLASS="PARAMETER"
+>insert_at_head</VAR
+></DT
+><DD
+><P
+>      whether the entry should be inserted in front or at the end
+    </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN4391"
+></A
+><H2
+>Description</H2
+><P
+>   Register a sysctl table hierarchy. <VAR
+CLASS="PARAMETER"
+>table</VAR
+> should be a filled in ctl_table
+   array. An entry with a ctl_name of 0 terminates the table. 
+   </P
+><P
+>&#13;   The members of the &amp;ctl_table structure are used as follows:
+   </P
+><P
+>&#13;   ctl_name - This is the numeric sysctl value used by sysctl(2). The number
+   must be unique within that level of sysctl
+   </P
+><P
+>&#13;   procname - the name of the sysctl file under /proc/sys. Set to <CODE
+CLASS="CONSTANT"
+>NULL</CODE
+> to not
+   enter a sysctl file
+   </P
+><P
+>&#13;   data - a pointer to data for use by proc_handler
+   </P
+><P
+>&#13;   maxlen - the maximum size in bytes of the data
+   </P
+><P
+>&#13;   mode - the file permissions for the /proc/sys file, and for sysctl(2)
+   </P
+><P
+>&#13;   child - a pointer to the child sysctl table if this entry is a directory, or
+   <CODE
+CLASS="CONSTANT"
+>NULL</CODE
+>.
+   </P
+><P
+>&#13;   proc_handler - the text handler routine (described below)
+   </P
+><P
+>&#13;   strategy - the strategy routine (described below)
+   </P
+><P
+>&#13;   de - for internal use by the sysctl routines
+   </P
+><P
+>&#13;   extra1, extra2 - extra pointers usable by the proc handler routines
+   </P
+><P
+>&#13;   Leaf nodes in the sysctl tree will be represented by a single file
+   under /proc; non-leaf nodes will be represented by directories.
+   </P
+><P
+>&#13;   sysctl(2) can automatically manage read and write requests through
+   the sysctl table.  The data and maxlen fields of the ctl_table
+   struct enable minimal validation of the values being written to be
+   performed, and the mode field allows minimal authentication.
+   </P
+><P
+>&#13;   More sophisticated management can be enabled by the provision of a
+   strategy routine with the table entry.  This will be called before
+   any automatic read or write of the data is performed.
+   </P
+><P
+>&#13;   The strategy routine may return
+   </P
+><P
+>&#13;   &lt; 0 - Error occurred (error is passed to user process)
+   </P
+><P
+>&#13;   0   - OK - proceed with automatic read or write.
+   </P
+><P
+>&#13;   &gt; 0 - OK - read or write has been done by the strategy routine, so
+   return immediately.
+   </P
+><P
+>&#13;   There must be a proc_handler routine for any terminal nodes
+   mirrored under /proc/sys (non-terminals are handled by a built-in
+   directory handler).  Several default handlers are available to
+   cover common cases -
+   </P
+><P
+>&#13;   <CODE
+CLASS="FUNCTION"
+>proc_dostring</CODE
+>, <CODE
+CLASS="FUNCTION"
+>proc_dointvec</CODE
+>, <CODE
+CLASS="FUNCTION"
+>proc_dointvec_jiffies</CODE
+>,
+   <CODE
+CLASS="FUNCTION"
+>proc_dointvec_minmax</CODE
+>, <CODE
+CLASS="FUNCTION"
+>proc_doulongvec_ms_jiffies_minmax</CODE
+>,
+   <CODE
+CLASS="FUNCTION"
+>proc_doulongvec_minmax</CODE
+>
+   </P
+><P
+>&#13;   It is the handler's job to read the input buffer from user memory
+   and process it. The handler should return 0 on success.
+   </P
+><P
+>&#13;   This routine returns <CODE
+CLASS="CONSTANT"
+>NULL</CODE
+> on a failure to register, and a pointer
+   to the table header on success.
+ </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c4357.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r4426.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The proc filesystem</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c4357.html#AEN4359"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="phrase"
+><SPAN
+CLASS="PHRASE"
+>unregister_sysctl_table</SPAN
+></SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

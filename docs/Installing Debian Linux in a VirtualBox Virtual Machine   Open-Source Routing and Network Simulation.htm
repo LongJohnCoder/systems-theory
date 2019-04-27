@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html id="ie8" lang="en-US"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html style="height: 100%;" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">	
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="profile" href="http://gmpg.org/xfn/11">
+		<link rel="pingback" href="http://www.brianlinkletter.com/xmlrpc.php">
+		<title>Installing Debian Linux in a VirtualBox Virtual Machine | Open-Source Routing and Network Simulation</title>
+							<link rel="shortcut icon" href="http://www.brianlinkletter.com/wp-content/uploads/2014/09/favicon-144.png">
+			<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://www.brianlinkletter.com/wp-content/uploads/2014/09/favicon-144.png">
+																	<div class="fit-vids-style">­<style>               .fluid-width-video-wrapper {                 width: 100%;                              position: relative;                       padding: 0;                            }                                                                                   .fluid-width-video-wrapper iframe,        .fluid-width-video-wrapper object,        .fluid-width-video-wrapper embed {           position: absolute;                       top: 0;                                   left: 0;                                  width: 100%;                              height: 100%;                          }                                       </style></div><script id="twitter-wjs" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widgets.js"></script><script type="text/javascript" async="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/ga.js"></script><script type="text/javascript">
+					var _gaq = _gaq || [];
+					_gaq.push(['_setAccount', 'UA-34996602-1']);
+					_gaq.push(['_trackPageview']);
+		
+					(function() {
+						var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+						ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+					})();
+				</script>
+							<link rel="dns-prefetch" href="http://s0.wp.com/">
+<link rel="dns-prefetch" href="http://secure.gravatar.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Open-Source Routing and Network Simulation » Feed" href="http://www.brianlinkletter.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Open-Source Routing and Network Simulation » Comments Feed" href="http://www.brianlinkletter.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Open-Source Routing and Network Simulation » Installing Debian Linux in a VirtualBox Virtual Machine Comments Feed" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.brianlinkletter.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56692,8205,9792,65039],[55357,56692,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="yarppWidgetCss-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_006.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/bootstrap.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-responsive-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/bootstrap-responsive.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack-widget-social-icons-styles-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/social-icons.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-activity-tabs-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="gcse-widget-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_003.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-ad-468x60-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_005.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-personal-image-widget-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_008.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-influence-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_007.css" type="text/css" media="all">
+<link rel="stylesheet" id="social-logos-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/social-logos.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/jetpack.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-ad-300x250-widget-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-ad-125x125-widget-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_004.css" type="text/css" media="all">
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/jquery_002.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/bootstrap.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/jquery.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/md5.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/theme_002.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/theme.js"></script>
+<link rel="https://api.w.org/" href="http://www.brianlinkletter.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.brianlinkletter.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.brianlinkletter.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Why use a Virtual Machine?" href="http://www.brianlinkletter.com/why-use-a-virtual-machine/">
+<link rel="next" title="One million virtual machines on the march" href="http://www.brianlinkletter.com/one-million-virtual-machines-on-the-march/">
+<link rel="canonical" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/">
+<link rel="shortlink" href="https://wp.me/p2G84K-52">
+<link rel="alternate" type="application/json+oembed" href="http://www.brianlinkletter.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.brianlinkletter.com%2Finstalling-debian-linux-in-a-virtualbox-virtual-machine%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://www.brianlinkletter.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.brianlinkletter.com%2Finstalling-debian-linux-in-a-virtualbox-virtual-machine%2F&amp;format=xml">
+
+<link rel="dns-prefetch" href="http://v0.wordpress.com/">
+<link rel="dns-prefetch" href="http://i0.wp.com/">
+<link rel="dns-prefetch" href="http://i1.wp.com/">
+<link rel="dns-prefetch" href="http://i2.wp.com/">
+<meta name="description" content="A full tutorial describing how to install Debian Linux in a VirtualBox virtual machine with many screen captures for illustration.">			<style type="text/css">
+									#site-title a,
+					#site-description {
+						color: #332d26;
+					}
+						
+			</style>
+		
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Installing Debian Linux in a VirtualBox Virtual Machine">
+<meta property="og:url" content="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/">
+<meta property="og:description" content="In this article, we will review the procedures required to install Debian Linux in a virtual machine managed by the VirtualBox application. A summary of the procedures is listed below: Download the…">
+<meta property="article:published_time" content="2012-10-06T12:38:50+00:00">
+<meta property="article:modified_time" content="2016-08-18T16:06:54+00:00">
+<meta property="og:site_name" content="Open-Source Routing and Network Simulation">
+<meta property="og:image" content="http://www.brianlinkletter.com/wp-content/uploads/2015/12/OVB-VDI-b.png">
+<meta property="og:image:width" content="772">
+<meta property="og:image:height" content="644">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:site" content="@BELinkletter">
+<meta name="twitter:text:title" content="Installing Debian Linux in a VirtualBox Virtual Machine">
+<meta name="twitter:card" content="summary">
+
+<!-- End Jetpack Open Graph Tags -->
+			<style type="text/css" id="wp-custom-css">
+				/*
+Welcome to Custom CSS!
+
+CSS (Cascading Style Sheets) is a kind of code that tells the browser how
+to render a web page. You may delete these comments and get started with
+your customizations.
+
+By default, your stylesheet will be loaded after the theme stylesheets,
+which means that your rules can take precedence and override the theme CSS
+rules. Just write here what you want to change, you don't need to copy all
+your theme's stylesheet content.
+*/
+hr {
+	color: #000;
+}
+
+h3 {
+	font-size: 24px;
+	border-bottom: 1px solid #ccc;
+}
+
+h4 {
+	font-size: 18px;
+	padding-bottom: 4px;
+}
+
+h5 {
+	font-size: 16px;
+	padding-bottom: 4px;
+}
+
+h6 {
+	color: #333;
+	font-size: 14px;
+	padding-top: 4px;
+	padding-bottom: 8px;
+}
+
+code {
+	color: #000;
+	overflow: auto;
+}
+
+blockquote {
+	border-left: 4px solid #DDD;
+	margin-right: 3em;
+}
+
+blockquote>:first-child {
+	margin-top: 0;
+}
+
+blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+blockquote p {
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+table th {
+	font-weight: bold;
+	background-color: #dedede;
+}
+
+table th, table td {
+	border: 1px solid #ccc;
+	padding: 6px 13px;
+}
+
+table tr {
+	border-top: 1px solid #ccc;
+	background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+p {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+pre {
+	overflow: auto;
+}			</style>
+			<link type="text/css" rel="stylesheet" charset="UTF-8" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/translateelement.css"><script type="text/javascript" charset="UTF-8" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/main.js"></script><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/services.css"><script type="text/javascript" charset="UTF-8" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/element_main.js"></script></head>
+	<body class="post-template-default single single-post postid-312 single-format-standard" style="position: relative; min-height: 100%; top: 0px;">
+
+				
+				
+					<div id="menu-above-header" class="menu-navigation navbar navbar-fixed-top">
+				<div class="navbar-inner ">
+					<div class="container">
+		
+						<a class="btn btn-navbar" data-toggle="collapse" data-target=".above-header-nav-collapse">
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						</a>
+					
+						<div class="nav-collapse above-header-nav-collapse">													
+							<div class="menu-header-container"><ul id="menu-menu" class="nav nav-menu menu"><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.brianlinkletter.com/about_brian_linkletter/">About</a></li><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.brianlinkletter.com/open-source-network-simulators/">Open-Source Network Simulators</a></li><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.brianlinkletter.com/about_brian_linkletter/citations/">Citations</a></li><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.brianlinkletter.com/open-source-network-simulation-archive/">Archive</a></li></ul></div>
+						</div><!-- /.nav-collapse -->		
+						
+																			<div id="social-networking" class="clearfix">
+								<ul class="nav social-icons clearfix"><li><a href="http://www.twitter.com/BELinkletter" class="fademe" target="_blank"><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/twitter.png" alt=""></a></li><li><a href="http://www.linkedin.com/in/brianlinkletter" class="fademe" target="_blank"><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/social_linkedin_box_blue.png" alt=""></a></li><li><a href="http://feeds.feedburner.com/brian-linkletter-open-source-routing-blog" class="fademe" target="_blank"><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/rss.png" alt=""></a></li></ul>
+
+  
+							</div><!-- /#social-networking -->	
+						
+					</div> <!-- /container -->
+				</div><!-- /navbar-inner -->
+			</div> <!-- /#menu-above-header -->	
+					
+				
+			<div id="header" class="imageless">
+				<div id="head-wrapper" class="container clearfix">
+				
+									
+																<div id="hgroup" class="clearfix no-logo">
+
+																	<div id="logo">
+									
+																														
+											<p id="site-title">
+											
+																																				
+													<a href="http://www.brianlinkletter.com/" title="Open-Source Routing and Network Simulation" rel="home">Open-Source Routing and Network Simulation</a>
+																								
+											</p> <!-- /#site-title -->
+										
+																				
+																															<p><small id="site-description"></small></p>
+											
+									</div><!-- /#logo -->
+																
+																
+						</div><!-- /#hgroup -->
+										
+														</div><!-- /#head-wrapper -->
+			</div><!-- /#header -->
+
+			
+<div id="wrapper">
+	<div class="container">
+		<div class="row">
+
+			
+			<div id="main" class="span8 clearfix" role="main">
+				
+				<div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><ul class="breadcrumb"><li class="home-breadcrumb"><a href="http://www.brianlinkletter.com/" itemprop="url"><span itemprop="title">Home</span></a><span class="divider">/</span></li><li><a href="http://www.brianlinkletter.com/category/network-simulation/" itemprop="url"><span itemprop="title">Network Simulation</span></a><span class="divider">/</span></li><li class="active">Installing Debian Linux in a VirtualBox Virtual Machine</li></ul></div>				
+				
+<div id="post-312" class="post format-standard clearfix post-312 type-post status-publish hentry category-network-simulation category-open-source-routing tag-tools tag-virtualbox tag-virtualization">
+
+	<div class="post-header clearfix">
+
+				 
+		<div class="title-wrap clearfix">
+												<h1 class="post-title">Installing Debian Linux in a VirtualBox Virtual Machine</h1>	
+										<div class="post-header-meta">
+													<span class="the-time">October 6, 2012</span>
+											</div><!-- /.post-header-meta -->
+		</div><!-- /.title-wrap -->
+
+	</div> <!-- /.post-header -->
+
+	<div id="content-312" class="entry-content clearfix">
+					<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/Debian-8.jpg" alt="Debian 8.2 Running" class="aligncenter size-large wp-image-4185" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1.jpg?w=1024 1024w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1.jpg?resize=300%2C238 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1.jpg?resize=768%2C608 768w" sizes="(max-width: 1000px) 100vw, 1000px" width="580" height="459"></p>
+<p>In this article, we will review the procedures required to install 
+Debian Linux in a virtual machine managed by the VirtualBox application.
+ A summary of the procedures is listed below:</p>
+<ul>
+<li>Download the Debian install DVD.</li>
+<li>Create a virtual machine using the VirtualBox application.</li>
+<li>Boot the virtual machine from the DVD image we downloaded</li>
+<li>Install the Debian Linux operating system on the virtual machine.</li>
+</ul>
+<p>We will install <a href="http://www.debian.org/">Debian Linux</a> because it is the version of Linux that is used by most of the researchers who have developed the <a href="http://www.brianlinkletter.com/open-source-network-simulators/">network simulation tools we wish to investigate</a>.
+ Also, Debian is a conservative Linux distribution so we can be fairly 
+confident that if we run into issues, we will not need to debug the 
+operating system.</p>
+<p>Here is the procedure we followed:</p>
+<p><span id="more-312"></span></p>
+<p><strong>NOTE:</strong> This post was updated on January 4, 2016. I updated it to show the procedure for installing Debian 8 in VirtualBox 5.</p>
+<h4>Step 1: Download the Debian network installer</h4>
+<p>Go to <a href="http://www.debian.org/">http://www.debian.org</a> and download the network installer disk image. In this example, the network installer disk image was: <em>debian-8.2.0-amd64-netinst.iso</em>.</p>
+<h4>Step 2: Create a new VirtualBox VM</h4>
+<p>Click on the <em>New</em> icon in the VirtualBox menu bar.</p>
+<p>This will start the New Virtual Machine Wizard. The first screen is just a welcome screen so click <em>Continue</em> to proceed.</p>
+<h5>VM Name and OS Type</h5>
+<p>In the <em>Name</em> field type any name you choose (we chose “Debian 8.2”). In the <em>Operating System</em> field, enter “Linux” and in the <em>Version</em> field, enter “Debian (64 bit)”. The click <em>Continue</em>.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7.png" alt="b-VirtualBox 7" class="aligncenter size-full wp-image-4187" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7.png?w=615 615w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7.png?resize=300%2C185 300w" sizes="(max-width: 615px) 100vw, 615px" width="580" height="358"></p>
+<h5>Memory</h5>
+<p>Use the default setting for the amount of base memory. In our case, 
+the default value is 768 MB. In this example, we set it to 1024 MB and 
+we can change it later if we need to.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-37.png" alt="b-VirtualBox 7-37" class="aligncenter size-full wp-image-4188" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-37.png?w=615 615w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-37.png?resize=300%2C185 300w" sizes="(max-width: 615px) 100vw, 615px" width="580" height="358"></p>
+<h5>Virtual Hard Disk</h5>
+<p>We will create a new virtual hard disk to use as our VM filesystem. So, use the default setting on this screen.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-36.png" alt="b-VirtualBox 7-36" class="aligncenter size-full wp-image-4191" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-36.png?w=615 615w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-36.png?resize=300%2C185 300w" sizes="(max-width: 615px) 100vw, 615px" width="580" height="358"></p>
+<p>In the next screen, select the format for the virtual hard disk. 
+Here. we will us the default settings, again. So, we will use the native
+ VirtualBox Disk Image (VDI) format. Then, click <em>Continue.</em></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-35.png" alt="b-VirtualBox 7-35" class="aligncenter size-full wp-image-4192" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-35.png?w=703 703w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-35.png?resize=300%2C195 300w" sizes="(max-width: 703px) 100vw, 703px" width="580" height="377"></p>
+<p>In the next screen, we need to choose between a Dynamically Allocated
+ or a Fixed size virtual disk file. We should choose “dynamically 
+allocated”, which is the default. The VirtualBox user manual says that a
+ fixed size virtual disk file offers better file system performance but 
+we do not know ahead of time how much disk space we really need, so it’s
+ easier to use the default setting.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-34.png" alt="b-VirtualBox 7-34" class="aligncenter size-full wp-image-4194" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-34.png?w=703 703w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-34.png?resize=300%2C195 300w" sizes="(max-width: 703px) 100vw, 703px" width="580" height="377"></p>
+<p>Then, choose the location and maximum size of the VM disk image file 
+on your host computer’s file system. Again, we just use the defaults.</p>
+<p>In this case, the default virtual disk file size is 8GB. But, since 
+we chose a dynamically allocated size disk file, the initial size of the
+ disk file will be much less than 8GB. The dynamically allocated virtual
+ disk file size will depend on the actual size of the filesystem 
+installed in it. As we add software to the virtual machine and as 
+running software generates log files and other data in the virtual 
+machine, the filesystem size will grow.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-33.png" alt="b-VirtualBox 7-33" class="aligncenter size-full wp-image-4196" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-33.png?w=703 703w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-33.png?resize=300%2C195 300w" sizes="(max-width: 703px) 100vw, 703px" width="580" height="377"></p>
+<p>Note that the reverse does not happen. If files are deleted in the 
+virtual disk image, the size of the virtual disk image file does not 
+become smaller.</p>
+<p>Click <em>Create</em> to proceed.</p>
+<p>Now we see we have a Debian 8 VM available in VirtualBox and it is in the Powered Off state.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-32.png" alt="b-VirtualBox 7-32" class="aligncenter size-full wp-image-4197" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-32.png?w=772 772w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-32.png?resize=300%2C250 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-32.png?resize=768%2C641 768w" sizes="(max-width: 772px) 100vw, 772px" width="580" height="484"></p>
+<h4>Step 3: Insert the Debian install DVD image into the VM storage system</h4>
+<p>Now, we need to install Debian Linux. We need to configure this new 
+virtual machine so it will boot from the network installer ISO disk 
+image we downloaded earlier.</p>
+<p>Select the <em>Debian 8</em> virtual machine in the left side of the VirtualBox window and then click on the <em>Settings</em> icon in the VirtualBox menu bar.</p>
+<p>In the screen that appears, click on the <em>Storage</em> icon. You will see items called <em>IDE Controller</em> and <em>SATA Controller</em>
+ in the left side of the screen. It shows it is connected to an empty 
+optical disk. We need to configure it so the network installer ISO disk 
+image appears where the empty disk is now. This is just like inserting a
+ CD or DVD installer disk into a normal host machine.</p>
+<p>DVD’s and CD’s are attached to the IDE Controller in a real computer so click on the <em>Empty</em>
+ optical disk icon below the IDE Controller. Then, click on the optical 
+disk icon on the far right side of the window next to the <em>CD/DVD Drive</em> field.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-1.png" alt="b-VirtualBox 7-1" class="aligncenter size-full wp-image-4200" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-1.png?w=662 662w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-1.png?resize=300%2C248 300w" sizes="(max-width: 662px) 100vw, 662px" width="580" height="480"></p>
+<p>Then select the option: <em>Choose a virtual CD/DVD disk file</em>.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/A10-VirtualBox-new.png" alt="A10-VirtualBox-new" class="aligncenter size-full wp-image-4245" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/A10-VirtualBox-new.png?w=339 339w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/A10-VirtualBox-new.png?resize=300%2C70 300w" sizes="(max-width: 339px) 100vw, 339px" width="339" height="79"></p>
+<p>Navigate to the <em>Downloads</em> folder (or wherever you stored the ISO image) and select the network installer ISO image which, in this case, is <em>debian-8.2.0-amd64-netinst.iso</em>. Then, click <em>Open</em>.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-39-1.png" alt="b-VirtualBox 7-39" class="aligncenter size-full wp-image-4209" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-39-1.png?w=706 706w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-39-1.png?resize=300%2C178 300w" sizes="(max-width: 706px) 100vw, 706px" width="580" height="343"></p>
+<p>Now the disk file is available to the virtual machine and shows up as
+ a DVD attached to the IDE Controller in the Storage Tree. Click <em>OK</em> to proceed.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-2-1.png" alt="b-VirtualBox 7-2" class="aligncenter size-full wp-image-4210" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-2-1.png?w=662 662w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-2-1.png?resize=300%2C248 300w" sizes="(max-width: 662px) 100vw, 662px" width="580" height="480"></p>
+<p>Now you can see that the network install ISO image is configured for 
+the Debian 8 VM. We should be able to start it now and it will boot from
+ the image and the software on the disk image will start the Debian 
+Linux installation process in the virtual machine.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-29-1.png" alt="b-VirtualBox 7-29" class="aligncenter size-full wp-image-4212" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-29-1.png?w=772 772w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-29-1.png?resize=300%2C250 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-29-1.png?resize=768%2C641 768w" sizes="(max-width: 772px) 100vw, 772px" width="580" height="484"></p>
+<h4>Step 4: Install Debian Linux on the new virtual machine</h4>
+<p>Start the Debian virtual machine by selecting it in the VirtualBox VM Manager and then clicking on the green <em>Start</em>
+ arrow. The VM will boot from the DVD, which will start the installer 
+program on the DVD. See below for the configurations used in each of the
+ key configuration screens. In most cases, we will use the default 
+values.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/Debian-8_002.jpg" alt="Debian 8.2 [Running]-2" class="aligncenter size-full wp-image-4242" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-2.jpg?w=642 642w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-2.jpg?resize=300%2C245 300w" sizes="(max-width: 642px) 100vw, 642px" width="580" height="474"></p>
+<p>Select the country in which you a working and keyboard layout that matches the computer hardware you are using.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-22.png" alt="b-VirtualBox 7-22" class="aligncenter size-full wp-image-4214" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-22.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-22.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-22.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-21.png" alt="b-VirtualBox 7-21" class="aligncenter size-full wp-image-4215" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-21.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-21.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-21.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>After selecting the keyboard key map, the installer installs some 
+components and then pauses to ask for the host name. You can choose 
+anything you want for the host name. I chose “debian”.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-20.png" alt="b-VirtualBox 7-20" class="aligncenter size-full wp-image-4216" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-20.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-20.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-20.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>It is best to leave the domain name blank, for now. We can configure it later, if we need to.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-19.png" alt="b-VirtualBox 7-19" class="aligncenter size-full wp-image-4217" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-19.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-19.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-19.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Next, select the root password for the system. The root password is 
+used when you need to make changes to the system’s critical software and
+ configurations.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-18.png" alt="b-VirtualBox 7-18" class="aligncenter size-full wp-image-4218" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-18.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-18.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-18.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Now, you will set up the user name, user id, and user password for 
+the account you will use when working with this virtual machine. In this
+ example, I used my real name for the user name, then I used my first 
+name as my userid. You can use any user name and userid you wish. Then I
+ chose a password.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-16.png" alt="b-VirtualBox 7-16" class="aligncenter size-full wp-image-4219" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-16.png?w=802 802w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-16.png?resize=300%2C241 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-16.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-15.png" alt="b-VirtualBox 7-15" class="aligncenter size-full wp-image-4220" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-15.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-15.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-15.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-14.png" alt="b-VirtualBox 7-14" class="aligncenter size-full wp-image-4221" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-14.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-14.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-14.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Next, choose the time zone in which you are working.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-12.png" alt="b-VirtualBox 7-12" class="aligncenter size-full wp-image-4222" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-12.png?w=802 802w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-12.png?resize=300%2C241 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-12.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>In the next screen, select the default choice, <em>Guided – use entire disk</em>.
+ The LVM option is an advanced disk configuration that might be useful 
+in a real host machine but is not needed in a virtual machine. It is OK 
+to use the LVM option, if you want.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-11.png" alt="b-VirtualBox 7-11" class="aligncenter size-full wp-image-4223" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-11.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-11.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-11.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-10.png" alt="b-VirtualBox 7-10" class="aligncenter size-full wp-image-4224" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-10.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-10.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-10.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>All files in one partition is the simplest configuration and it is the default choice.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-9.png" alt="b-VirtualBox 7-9" class="aligncenter size-full wp-image-4225" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-9.png?w=802 802w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-9.png?resize=300%2C241 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-9.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-8.png" alt="b-VirtualBox 7-8" class="aligncenter size-full wp-image-4226" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-8.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-8.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-8.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Now, you commit the disk configuration and the Debian installer will 
+partition and format the virtual disk image file to paper it for the 
+installation of the new Debian Linux operating system.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-7.png" alt="b-VirtualBox 7-7" class="aligncenter size-full wp-image-4227" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-7.png?w=802 802w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-7.png?resize=300%2C241 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-7.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>The package manager application needs to be configured with 
+information that tells it where to download additional software from, 
+and where to find software updates in the future. the following two 
+screens help you to choose the appropriate server. First, select the 
+country in which the server you wish to use is located.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-6.png" alt="b-VirtualBox 7-6" class="aligncenter size-full wp-image-4228" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-6.png?w=802 802w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-6.png?resize=300%2C241 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-6.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Then, select the server in the country you chose. You can probably 
+guess from the domain names which server is the most reliable. Or you 
+can research the institutions associated with the domain names to 
+determine which one is likely to be the best source. Don’t worry too 
+much about choosing the best server. Any server listed will be adequate.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-5.png" alt="b-VirtualBox 7-5" class="aligncenter size-full wp-image-4229" srcset="https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-5.png?w=802 802w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-5.png?resize=300%2C241 300w, https://i2.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-5.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Since my network does not have a proxy server, I can leave the next 
+screen blank. Most home networks will not have a proxy server. If your 
+network has a proxy server, enter it’s information on this screen. You 
+may need to ask your network administrator for the proxy server 
+information.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-4.png" alt="b-VirtualBox 7-4" class="aligncenter size-full wp-image-4230" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-4.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-4.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-4.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-3.png" alt="b-VirtualBox 7-3" class="aligncenter size-full wp-image-4231" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-3.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-3.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-3.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Now, the system will spend some time downloading and installing all 
+the additional software it needs from the server you specified. This may
+ take up to 20  minutes on a typical broadband connection.</p>
+<p>The next screen will ask you what additional software you want to select. <em>Debian Desktop Environment</em> and <em>Standard System utilities</em> are selected by default. You should also select <em>SSH Server</em> so you can securely log into the virtual machine over the network if you need to.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-28.png" alt="b-VirtualBox 7-28" class="aligncenter size-full wp-image-4232" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-28.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-28.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-28.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>Next, install the GRUB bootloader.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-27.png" alt="b-VirtualBox 7-27" class="aligncenter size-full wp-image-4233" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-27.png?w=802 802w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-27.png?resize=300%2C241 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-27.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>I suggest you install GRUB on the disk recommended by the installer. In this case, select <em>/dev/sda</em> from the menu in the screen below.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-26.png" alt="b-VirtualBox 7-26" class="aligncenter size-full wp-image-4234" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-26.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-26.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-26.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b-VirtualBox-7-24.png" alt="b-VirtualBox 7-24" class="aligncenter size-full wp-image-4235" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-24.png?w=802 802w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-24.png?resize=300%2C241 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-24.png?resize=768%2C618 768w" sizes="(max-width: 802px) 100vw, 802px" width="580" height="466"></p>
+<p>After the installation is complete, the Debian operating system boots up in the virtual machine.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/Debian-8_004.jpg" alt="Debian 8.2 [Running]-3" class="aligncenter size-large wp-image-4237" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-3.jpg?resize=1024%2C811 1024w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-3.jpg?resize=300%2C238 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-3.jpg?resize=768%2C609 768w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-3.jpg?w=1026 1026w" sizes="(max-width: 1000px) 100vw, 1000px" width="580" height="459"></p>
+<p>Log in using the userid and password you selected during the installation process.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/Debian-8_003.jpg" alt="Debian 8.2 [Running]-1" class="aligncenter size-large wp-image-4239" srcset="https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1-1.jpg?resize=1024%2C811 1024w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1-1.jpg?resize=300%2C238 300w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1-1.jpg?resize=768%2C609 768w, https://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-1-1.jpg?w=1026 1026w" sizes="(max-width: 1000px) 100vw, 1000px" width="580" height="459"></p>
+<p>The system will be up to date. But, when you want to check for more updates, use the Debian Update Manager application.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/Debian-8_005.jpg" alt="Debian 8.2 [Running]-0" class="aligncenter size-large wp-image-4240" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-0.jpg?resize=1024%2C811 1024w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-0.jpg?resize=300%2C238 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-0.jpg?resize=768%2C609 768w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/Debian-8.2-Running-0.jpg?w=1026 1026w" sizes="(max-width: 1000px) 100vw, 1000px" width="580" height="459"></p>
+<p>You can now proceed to install more software from inside the virtual 
+machine, using the tools provided by the Debian Linux operating system.</p>
+<p>In this example, I chose to shut down the virtual machine and stop at
+ this point. I will discuss installation of additional software later, 
+when needed.</p>
+<p>Looking at the VirtualBox Virtual Machine Manager window, You can see
+ that the Debian virtual machine is now configured to boot from the VDI 
+file and the IDE controller no longer has the <em>.iso</em> DVD image attached to it. the <em>.iso</em> disk image file was automatically “ejected” by the Virtual Machine Manager application after the installation was completed.</p>
+<p><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/OVB-VDI-b.png" alt="OVB-VDI-b" class="aligncenter size-full wp-image-4248" srcset="https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/OVB-VDI-b.png?w=772 772w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/OVB-VDI-b.png?resize=300%2C250 300w, https://i1.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/OVB-VDI-b.png?resize=768%2C641 768w" sizes="(max-width: 772px) 100vw, 772px" width="580" height="484"></p><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-312" class="share-linkedin sd-button share-icon no-text" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/?share=linkedin&amp;nb=1" target="_blank" title="Click to share on LinkedIn"><span></span><span class="sharing-screen-reader-text">Click to share on LinkedIn (Opens in new window)</span></a></li><li class="share-reddit"><a rel="nofollow" data-shared="" class="share-reddit sd-button share-icon no-text" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/?share=reddit&amp;nb=1" target="_blank" title="Click to share on Reddit"><span></span><span class="sharing-screen-reader-text">Click to share on Reddit (Opens in new window)</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-312" class="share-twitter sd-button share-icon no-text" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/?share=twitter&amp;nb=1" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-312" class="share-facebook sd-button share-icon no-text" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/?share=facebook&amp;nb=1" target="_blank" title="Click to share on Facebook"><span><span class="share-count">37</span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)<span class="share-count">37</span></span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-312" class="share-google-plus-1 sd-button share-icon no-text" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/?share=google-plus-1&amp;nb=1" target="_blank" title="Click to share on Google+"><span></span><span class="sharing-screen-reader-text">Click to share on Google+ (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div><div class="yarpp-related">
+<hr><h3>Related posts:</h3><ol>
+<li><a href="http://www.brianlinkletter.com/install-parallels-tools-on-a-debian-virtual-machine/" rel="bookmark" title="Install Parallels Tools on a Debian Virtual Machine">Install Parallels Tools on a Debian Virtual Machine </a></li>
+<li><a href="http://www.brianlinkletter.com/how-to-install-dcore-linux-in-a-virtual-machine/" rel="bookmark" title="How To Install dCore Linux in a virtual machine">How To Install dCore Linux in a virtual machine </a></li>
+<li><a href="http://www.brianlinkletter.com/create-a-nested-virtual-machine-in-a-microsoft-azure-linux-vm/" rel="bookmark" title="Create a nested virtual machine in a Microsoft Azure Linux VM">Create a nested virtual machine in a Microsoft Azure Linux VM </a></li>
+<li><a href="http://www.brianlinkletter.com/why-use-a-virtual-machine/" rel="bookmark" title="Why use a Virtual Machine?">Why use a Virtual Machine? </a></li>
+<li><a href="http://www.brianlinkletter.com/installing-the-core-network-emulator-in-ubuntu-linux/" rel="bookmark" title="Installing the CORE Network Emulator in Ubuntu Linux">Installing the CORE Network Emulator in Ubuntu Linux </a></li>
+</ol>
+</div>
+					</div><!-- /.entry-content -->
+	
+	<div class="post-meta clearfix">
+
+			<div class="meta-date-cat-tags pull-left">
+			
+													<span class="the-category">In <a href="http://www.brianlinkletter.com/category/network-simulation/">Network Simulation</a>, <a href="http://www.brianlinkletter.com/category/open-source-routing/">Open Source Networking</a></span>								
+													<span class="the-tags"><a href="http://www.brianlinkletter.com/tag/tools/" rel="tag">tools</a>, <a href="http://www.brianlinkletter.com/tag/virtualbox/" rel="tag">VirtualBox</a>, <a href="http://www.brianlinkletter.com/tag/virtualization/" rel="tag">virtualization</a></span>								
+			</div><!-- /meta-date-cat-tags -->
+			
+			<div class="meta-comment-link pull-right">
+				<a class="pull-right post-link" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/" title="permalink "><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/icn-permalink.png" alt="permalink "></a>
+							</div><!-- /meta-comment-link -->
+
+	</div><!-- /.post-meta -->
+
+</div> <!-- /#post- -->	
+																		
+							
+																					
+														
+							
+
+	<div id="single-post-nav">
+		<ul class="pager">
+		
+						
+							<li class="previous">
+					<span class="previous-page"><a href="http://www.brianlinkletter.com/why-use-a-virtual-machine/" rel="prev" title="Why use a Virtual Machine?"><i class="icon-chevron-left"></i>&nbsp;Why use a Virtual Machine?</a></span>				</li>
+						
+							<li class="next">
+				<span class="no-previous-page-link next-page"><a href="http://www.brianlinkletter.com/one-million-virtual-machines-on-the-march/" rel="next" title="One million virtual machines on the march">&nbsp;One million virtual machines...<i class="icon-chevron-right"></i></a></span>				</li>
+					</ul>	
+	</div><!-- /#single-post-nav -->
+
+							
+							
+
+
+			<div id="comments" class="clearfix">
+			<h3>66 responses to <em>Installing Debian Linux in a VirtualBox Virtual Machine</em></h3>
+			<ol class="commentlist">
+					<li class="comment even thread-even depth-1 clearfix" id="li-comment-11045">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/1395f4893bf083bbc4b0dd92ad3738bc.png" srcset="http://1.gravatar.com/avatar/1395f4893bf083bbc4b0dd92ad3738bc?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-1395f4893bf083bbc4b0dd92ad3738bc-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11045">
+			
+				<div class="comment-head">
+					<span class="name">
+													Richard Zijdeman											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11045" title="Permalink">March 5, 2014 at 5:52 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi, Thank you very much for providing this excellent walk 
+through. I just successfully installed the Debian 7.4 on a macbook pro 
+running OS X 10.9.1 (March 5th, 2014)</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 clearfix" id="li-comment-11047">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11047">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkleter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11047" title="Permalink">March 5, 2014 at 11:26 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thanks, Richard. I appreciate your feedback.<br>
+–Brian</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-11054">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/628500b6319021cc35647005fab83dcd.png" srcset="http://0.gravatar.com/avatar/628500b6319021cc35647005fab83dcd?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-628500b6319021cc35647005fab83dcd-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11054">
+			
+				<div class="comment-head">
+					<span class="name">
+													Shawn Mathiesen											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11054" title="Permalink">March 5, 2014 at 6:37 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>I teach Windows OS in a community college and one of the topics 
+will be virtualization.  This tutorial is perfect for my students to use
+ to learn all about setting up a virtual machine using all freeware.<br>
+Thanks so much for creating it!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 clearfix" id="li-comment-11060">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11060">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkleter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11060" title="Permalink">March 5, 2014 at 10:37 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>I’m glad you found this information to be useful, Shawn!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-11114">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/4f3a1b601497e1ca6372c658f9387307.png" srcset="http://1.gravatar.com/avatar/4f3a1b601497e1ca6372c658f9387307?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-4f3a1b601497e1ca6372c658f9387307-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11114">
+			
+				<div class="comment-head">
+					<span class="name">
+													Dino											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11114" title="Permalink">March 7, 2014 at 3:05 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Brian ,<br>
+Can we install the debian through USB ?If so what should be format of 
+Debian OS as it was .iso in the DVD?Does the installation of virtualbox 
+differ when this mode is followed ?<br>
+Thanks in advance<br>
+Dino</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 clearfix" id="li-comment-11168">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-2" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11168">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkleter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11168" title="Permalink">March 8, 2014 at 10:41 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Dino,<br>
+USB would appear as just another available disk to VirtualBox so if you 
+have the ISO file on a USB drive, you should be able to use it to 
+install Debian in VirtualBox. The procedure would be the same.<br>
+–Brian</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even depth-2 clearfix" id="li-comment-11281">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/4f3a1b601497e1ca6372c658f9387307.png" srcset="http://1.gravatar.com/avatar/4f3a1b601497e1ca6372c658f9387307?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-4f3a1b601497e1ca6372c658f9387307-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11281">
+			
+				<div class="comment-head">
+					<span class="name">
+													Dino											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11281" title="Permalink">March 12, 2014 at 12:59 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>thanks Brian.Your tutorial helped me a lot</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-11237">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/c1b0546021a8b11717af29ed683bfd04.png" srcset="http://0.gravatar.com/avatar/c1b0546021a8b11717af29ed683bfd04?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-c1b0546021a8b11717af29ed683bfd04-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11237">
+			
+				<div class="comment-head">
+					<span class="name">
+													priya											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11237" title="Permalink">March 10, 2014 at 3:32 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>HI Brian<br>
+     I am working in  windows with virtual box and this tutorial is very
+ helpful for me but i got struck ed after the partition disk (i.e..,) 
+the scanning of  cd rom it  remain in 11% and it is working after that 
+plz guide me…<br>
+thanks in advance….</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor even depth-2 clearfix" id="li-comment-11251">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-3" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11251">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkleter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11251" title="Permalink">March 10, 2014 at 8:17 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Priya,<br>
+Which version of Debian are you trying to install? I think you’ve 
+encountered a bug that exists in Debian “Jesse”, which is not a stable 
+release. The problem you describe is documented as a bug in the current 
+builds of Debian Jesse. I suggest you download the Debian Wheezy (7.4) 
+ISO file, instead. (I assume you are using the network install ISO). 
+Information about this bug is posted at the following URLs:<br>
+<a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740073" rel="nofollow">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740073</a><br>
+<a href="http://forums.debian.net/viewtopic.php?f=17&amp;t=111983" rel="nofollow">http://forums.debian.net/viewtopic.php?f=17&amp;t=111983</a><br>
+Thanks for you interest,<br>
+Brian</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-11238">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/c1b0546021a8b11717af29ed683bfd04.png" srcset="http://0.gravatar.com/avatar/c1b0546021a8b11717af29ed683bfd04?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-c1b0546021a8b11717af29ed683bfd04-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-11238">
+			
+				<div class="comment-head">
+					<span class="name">
+													priya											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-11238" title="Permalink">March 10, 2014 at 3:42 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>@it is not working after that how to overcome this</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-28993">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/ecc4c743afea1e87ba4d6d90dabdac9e.png" srcset="http://2.gravatar.com/avatar/ecc4c743afea1e87ba4d6d90dabdac9e?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-ecc4c743afea1e87ba4d6d90dabdac9e-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-28993">
+			
+				<div class="comment-head">
+					<span class="name">
+													viren											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-28993" title="Permalink">October 30, 2014 at 8:17 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Very good article explaining steps..i successfully installed debian.<br>
+Pls tell, now how to install gnu octave in debian and other softwares.<br>
+thanks</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-40129">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/55d96f0baef44e39c50d712b857d26d4.png" srcset="http://2.gravatar.com/avatar/55d96f0baef44e39c50d712b857d26d4?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-55d96f0baef44e39c50d712b857d26d4-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-40129">
+			
+				<div class="comment-head">
+					<span class="name">
+													nd989											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-40129" title="Permalink">January 17, 2015 at 5:59 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Great tutorial! Thanks a lot!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-40228">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/4ad7dd07b56137ee7f0c5df0eb6969c0.png" srcset="http://1.gravatar.com/avatar/4ad7dd07b56137ee7f0c5df0eb6969c0?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-4ad7dd07b56137ee7f0c5df0eb6969c0-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-40228">
+			
+				<div class="comment-head">
+					<span class="name">
+													G-Mac											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-40228" title="Permalink">January 19, 2015 at 1:08 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>I’ve been a developer on Windows all my career (20+ years).  
+This walkthrough helped me install Linux for the very first time, 
+painlessly.  Thanks for taking the time!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-44010">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/7a0d9644a87aacbbdb3664b02243e2e3.jpeg" srcset="http://1.gravatar.com/avatar/7a0d9644a87aacbbdb3664b02243e2e3?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-7a0d9644a87aacbbdb3664b02243e2e3-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-44010">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://falsmaniakrian.blogspot.com/" target="_blank">rangga</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-44010" title="Permalink">March 2, 2015 at 5:00 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>this artikel very good</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-44108">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/d4c7f78ed03d327ba690dc2fb31cb348.png" srcset="http://1.gravatar.com/avatar/d4c7f78ed03d327ba690dc2fb31cb348?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-d4c7f78ed03d327ba690dc2fb31cb348-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-44108">
+			
+				<div class="comment-head">
+					<span class="name">
+													Aristoteles											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-44108" title="Permalink">March 5, 2015 at 11:04 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>can u please send me a URL of the Debian 6 version to download it??</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 clearfix" id="li-comment-44115">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-4" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-44115">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-44115" title="Permalink">March 5, 2015 at 3:07 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>You should use the latest version of Debian (7.8) unless you 
+have a specific requirement to use 6.0. If you really need to install an
+ old release, they are stored at the following URL:  <a href="http://cdimage.debian.org/cdimage/archive/" rel="nofollow">http://cdimage.debian.org/cdimage/archive/</a></p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-44128">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/82dc566b9e9a8d982a0efcb62b054a78.png" srcset="http://2.gravatar.com/avatar/82dc566b9e9a8d982a0efcb62b054a78?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-82dc566b9e9a8d982a0efcb62b054a78-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-44128">
+			
+				<div class="comment-head">
+					<span class="name">
+													rjnew											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-44128" title="Permalink">March 5, 2015 at 9:34 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Great tutorial. Thank you!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-44478">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/c6dea4c9b430ac31fd2356bc2b374c39.png" srcset="http://0.gravatar.com/avatar/c6dea4c9b430ac31fd2356bc2b374c39?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-c6dea4c9b430ac31fd2356bc2b374c39-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-44478">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.udom.ac.tz/" target="_blank">mjahidi</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-44478" title="Permalink">March 13, 2015 at 10:48 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thanks for your excellent walk through. I manage to install  Ubuntu Server 14.04.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-45059">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/8a4fc83bc7eb7e36fc1c50668ff0210e.png" srcset="http://2.gravatar.com/avatar/8a4fc83bc7eb7e36fc1c50668ff0210e?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-8a4fc83bc7eb7e36fc1c50668ff0210e-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-45059">
+			
+				<div class="comment-head">
+					<span class="name">
+													Kamil Nowak											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-45059" title="Permalink">March 27, 2015 at 8:48 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thanks ! Great job ! It took me 1 hour to install it all. I have
+ a question. How to instal additional software collections after 
+installation is completed, because I pressed ENTER as I was trying to 
+mark all collections to install but ENTER sent me to start installation.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 clearfix" id="li-comment-45060">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-5" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-45060">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-45060" title="Permalink">March 27, 2015 at 8:58 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>What do you mean by “all collections”? After installing, update the system using the commands:<br>
+$ sudo apt-get update<br>
+$ sudo apt-get upgrade<br>
+Then install the specific packages you need. What additional software are you trying to install?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment even depth-3 clearfix" id="li-comment-45063">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/8a4fc83bc7eb7e36fc1c50668ff0210e.png" srcset="http://2.gravatar.com/avatar/8a4fc83bc7eb7e36fc1c50668ff0210e?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-8a4fc83bc7eb7e36fc1c50668ff0210e-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-45063">
+			
+				<div class="comment-head">
+					<span class="name">
+													Kamil Nowak											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-45063" title="Permalink">March 27, 2015 at 10:14 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>I didn’t choose SSH server and SQL database. Are there any 
+commands to get those collections(I am talking about screenshot called 
+“A34 Debian 6.0(running)”). I am calling it “collections” because that’s
+ how they call it on that screenshot 🙂</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-4 clearfix" id="li-comment-45064">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-6" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-45064">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-45064" title="Permalink">March 27, 2015 at 10:23 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Look at the following links.<br>
+<a href="https://packages.debian.org/squeeze/ssh" rel="nofollow">https://packages.debian.org/squeeze/ssh</a><br>
+<a href="https://packages.debian.org/jessie/mysql-server" rel="nofollow">https://packages.debian.org/jessie/mysql-server</a></p>
+<p># apt-get install ssh<br>
+# apt-get install mysql-server</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment even depth-5 clearfix" id="li-comment-45066">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/8a4fc83bc7eb7e36fc1c50668ff0210e.png" srcset="http://2.gravatar.com/avatar/8a4fc83bc7eb7e36fc1c50668ff0210e?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-8a4fc83bc7eb7e36fc1c50668ff0210e-2" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-45066">
+			
+				<div class="comment-head">
+					<span class="name">
+													Kamil Nowak											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-45066" title="Permalink">March 27, 2015 at 10:25 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Yeah, it was easier than finding dressed woman in google search. Sorry for wasting your time 🙂</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt depth-4 clearfix" id="li-comment-45065">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/8a4fc83bc7eb7e36fc1c50668ff0210e.png" srcset="http://2.gravatar.com/avatar/8a4fc83bc7eb7e36fc1c50668ff0210e?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-8a4fc83bc7eb7e36fc1c50668ff0210e-3" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-45065">
+			
+				<div class="comment-head">
+					<span class="name">
+													Kamil Nowak											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-45065" title="Permalink">March 27, 2015 at 10:23 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>OK, for SSH I found:<br>
+$ apt-get install ssh<br>
+and for SQL DB:<br>
+$ apt-get install mysql-server mysql-client</p>
+<p>Correct?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-46097">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/ead30f9459282075c45f753bc2c3fb47.png" srcset="http://2.gravatar.com/avatar/ead30f9459282075c45f753bc2c3fb47?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-ead30f9459282075c45f753bc2c3fb47-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-46097">
+			
+				<div class="comment-head">
+					<span class="name">
+													Hengky											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-46097" title="Permalink">April 19, 2015 at 10:03 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thanks dude 😀 its very helpful</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-50951">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/3ad5ab2bff215d39a3b7e923c99276d2.png" srcset="http://0.gravatar.com/avatar/3ad5ab2bff215d39a3b7e923c99276d2?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-3ad5ab2bff215d39a3b7e923c99276d2-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-50951">
+			
+				<div class="comment-head">
+					<span class="name">
+													Ravi											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-50951" title="Permalink">August 1, 2015 at 9:20 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Very Useful. Thanks</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-53822">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/3dadab20a645274c68b398aab2ecb464.png" srcset="http://0.gravatar.com/avatar/3dadab20a645274c68b398aab2ecb464?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-3dadab20a645274c68b398aab2ecb464-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-53822">
+			
+				<div class="comment-head">
+					<span class="name">
+													SHOURYA											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-53822" title="Permalink">September 12, 2015 at 1:16 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>SOME GRUB BOOTLOADER IS ON DISPLAY AFTER THE INSTALLATION IS DONE …. THE DEBIAN SCREEN IS NOT COMING WHAT TO DO?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-55538">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/fab79467fb2b08bb2a3014c2d7b5917a.png" srcset="http://0.gravatar.com/avatar/fab79467fb2b08bb2a3014c2d7b5917a?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-fab79467fb2b08bb2a3014c2d7b5917a-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-55538">
+			
+				<div class="comment-head">
+					<span class="name">
+													andi											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-55538" title="Permalink">October 7, 2015 at 4:58 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Ok I followed all the steps and everything went great, until 
+debian tried to boot and then I got an error “A problem has occurred and
+ the system can’t recover. Please contact a system administrator”. Any 
+ideas?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment even depth-2 clearfix" id="li-comment-58299">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5b25f5916721e7004db70442878842cf.png" srcset="http://2.gravatar.com/avatar/5b25f5916721e7004db70442878842cf?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5b25f5916721e7004db70442878842cf-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-58299">
+			
+				<div class="comment-head">
+					<span class="name">
+													Tibi											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-58299" title="Permalink">November 22, 2015 at 2:06 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi you have to go in  your computer BIOS system and enable the 
+virtual technology probable is disabled. This is how I did it on my 
+laptop having the same error mesage like you and after that everything 
+was OK.Just check on the internet how you can access your computer type 
+BIOS as  on each computer you have to type different keys.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-58238">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5b25f5916721e7004db70442878842cf.png" srcset="http://2.gravatar.com/avatar/5b25f5916721e7004db70442878842cf?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5b25f5916721e7004db70442878842cf-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-58238">
+			
+				<div class="comment-head">
+					<span class="name">
+													Tibi											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-58238" title="Permalink">November 21, 2015 at 10:20 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>same error message as andi“A problem has occurred and the system can’t recover. Please contact a system administrator”.<br>
+before that also when the screen is black the first text message is”failed to access perfctr msr”<br>
+is this message that could lead to the problem mention first?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-69213">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/410574cb395402b58cd364053c068e19.png" srcset="http://1.gravatar.com/avatar/410574cb395402b58cd364053c068e19?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-410574cb395402b58cd364053c068e19-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-69213">
+			
+				<div class="comment-head">
+					<span class="name">
+													mozaffar											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-69213" title="Permalink">March 13, 2016 at 11:35 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>dear sir<br>
+let us know latest update as you know on debian</p>
+<p>b/r<br>
+mozaffar</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-72994">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/34b8e36b4f2b8a0d4b79703da2e4f979.png" srcset="http://0.gravatar.com/avatar/34b8e36b4f2b8a0d4b79703da2e4f979?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-34b8e36b4f2b8a0d4b79703da2e4f979-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-72994">
+			
+				<div class="comment-head">
+					<span class="name">
+													Érico											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-72994" title="Permalink">April 20, 2016 at 8:55 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thanks. But this definitely does no work. The scene is W7 sevice
+ Pack 64 bits. Image is the latest. These walk thru stpe do work with 
+Ubuntu hosting Virtual Box. W7 does not.<br>
+The message “boot failure” keeps always the same. SHA 1 is ok.<br>
+Don’t know any step further.<br>
+Would you have any hint?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment even depth-2 clearfix" id="li-comment-72995">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/34b8e36b4f2b8a0d4b79703da2e4f979.png" srcset="http://0.gravatar.com/avatar/34b8e36b4f2b8a0d4b79703da2e4f979?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-34b8e36b4f2b8a0d4b79703da2e4f979-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-72995">
+			
+				<div class="comment-head">
+					<span class="name">
+													Érico											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-72995" title="Permalink">April 20, 2016 at 9:10 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Excuse-me. Service Pack 1, Windows 7 64 bits. Debian iso should 
+be debian-8.4.0-AMD64-netinst AND NOT debian-8.4.0-arm64-netinst.<br>
+Now it is working! Nice work, Linkletter.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-73515">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/ec9a37a6e999397cc405421b48df722f.png" srcset="http://2.gravatar.com/avatar/ec9a37a6e999397cc405421b48df722f?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-ec9a37a6e999397cc405421b48df722f-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-73515">
+			
+				<div class="comment-head">
+					<span class="name">
+													Richard Savage											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-73515" title="Permalink">April 27, 2016 at 2:49 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi. I followed all the instructions and at the end I get a blank
+ screen that does nothing.  No blinking cursor. Nothing. Please advise.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor even depth-2 clearfix" id="li-comment-73547">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-7" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-73547">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-73547" title="Permalink">April 27, 2016 at 11:15 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Richard,<br>
+This has happened to me in the past, but very infrequently. I would stop
+ the VM and start it again and that usually solved the problem.<br>
+Some links that may help:<br>
+<a href="http://askubuntu.com/questions/371432/how-to-troubleshoot-booting-to-a-black-screen-on-virtualbox" rel="nofollow">http://askubuntu.com/questions/371432/how-to-troubleshoot-booting-to-a-black-screen-on-virtualbox</a><br>
+<a href="http://superuser.com/questions/965065/ubuntu-running-on-virtual-box-shows-black-screen" rel="nofollow">http://superuser.com/questions/965065/ubuntu-running-on-virtual-box-shows-black-screen</a><br>
+Thanks,<br>
+Brian</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-74904">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/82dcbf2514f8d88e436a92c8ffad2565.png" srcset="http://2.gravatar.com/avatar/82dcbf2514f8d88e436a92c8ffad2565?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-82dcbf2514f8d88e436a92c8ffad2565-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-74904">
+			
+				<div class="comment-head">
+					<span class="name">
+													Rocket											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-74904" title="Permalink">May 22, 2016 at 12:56 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Brian,<br>
+I am running Linux Mint 17.3 and my root is on sda (500G SSD) I have a 
+1TB SATA drive partitioned into two (sdb1 and sdb2) (my /home folder for
+ Linux Mint is on sdb1) During the installation I have only 1 choice and
+ it offers configure iSCSI volumes SCSI1 (0,0,0) (sda) – 268.4GB ATA 
+VBOX HARDISK. I so do NOT want to screw up my linux mint on sda. Why 
+does the installer not recognize all the other partitions that are 
+available?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor even depth-2 clearfix" id="li-comment-75004">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-8" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-75004">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-75004" title="Permalink">May 24, 2016 at 2:48 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>This post is about installing in a virtual machine, so the 
+issues of drivers does not come up. You are attempting to install on a 
+real machine with multiple drives and partitions. That’s a more complex 
+case and I cannot help with that. Sorry.<br>
+Brian</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment odd alt depth-3 clearfix" id="li-comment-75173">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/82dcbf2514f8d88e436a92c8ffad2565.png" srcset="http://2.gravatar.com/avatar/82dcbf2514f8d88e436a92c8ffad2565?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-82dcbf2514f8d88e436a92c8ffad2565-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-75173">
+			
+				<div class="comment-head">
+					<span class="name">
+													Rocket											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-75173" title="Permalink">May 27, 2016 at 5:42 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Brian, no, I am following your tutorial. There is nothing 
+about installing on a real machine when you are in VirtualBox. Anyway as
+ you can see in my previous post I got to the step in your tutorial of 
+the slide indicating <a href="http://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-10.png?w=802" rel="nofollow">http://i0.wp.com/www.brianlinkletter.com/wp-content/uploads/2015/12/b-VirtualBox-7-10.png?w=802</a>.
+ When I saw this choice and I knew my current linux distro is installed 
+on sda, I baulked and did not complete the installation because it 
+“appears” as if my sda will be erased/formatted. do I have anything to 
+worry about? or is all this information looking like its going to do 
+real damage just part of creating the virtualbox installation and drives
+ are not going to be erased or re-partitioned or destroying any current 
+real machine configuration?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor even depth-4 clearfix" id="li-comment-75275">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-9" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-75275">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-75275" title="Permalink">May 28, 2016 at 11:18 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>If you are installing Linux on a virtual machine, then you have 
+nothing to worry about. If you make a mistake, delet the VM and create a
+ new one.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-76596">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/42b732c207701e84ceba304fbe6e1964.png" srcset="http://1.gravatar.com/avatar/42b732c207701e84ceba304fbe6e1964?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-42b732c207701e84ceba304fbe6e1964-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-76596">
+			
+				<div class="comment-head">
+					<span class="name">
+													Jakvara											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-76596" title="Permalink">June 21, 2016 at 1:18 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Brian, the article is good. But, i have one question. If we 
+do netinstall how much data will it download. I want to know this 
+because here data is costly and i have to know how much will it download
+ so i can check if sufficient data balance is available before starting 
+installation. You can assume a fairly smaller install for normal usage. 
+Thanks.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor even depth-2 clearfix" id="li-comment-76613">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-10" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-76613">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-76613" title="Permalink">June 21, 2016 at 9:07 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Jakvara,<br>
+You raise a good point. I did not measure how much data I used when I 
+did the netinstall of Ubuntu. If bandwidth is limited, then I suggest 
+you install Ubuntu from DVD. The procedure outlines in this post will 
+also work for the other Ubuntu ISO images, including the DVD.<br>
+Brian</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-76748">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/f25d38f19bd0f3bd0f611bfbfac0d304.png" srcset="http://0.gravatar.com/avatar/f25d38f19bd0f3bd0f611bfbfac0d304?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-f25d38f19bd0f3bd0f611bfbfac0d304-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-76748">
+			
+				<div class="comment-head">
+					<span class="name">
+													Steve											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-76748" title="Permalink">June 24, 2016 at 5:19 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>I am using Windows 7 64bit home.  After installing VM and 
+selecting New and then selecting Linux it only gives me 32 bit versions 
+of Linux types to choose from.  Why would that happen? I was hoping 
+debian 7 64bit would show up on list as choice.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-76918">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/cbbb479444d6e84f532733d79f1e2eb8.png" srcset="http://0.gravatar.com/avatar/cbbb479444d6e84f532733d79f1e2eb8?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-cbbb479444d6e84f532733d79f1e2eb8-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-76918">
+			
+				<div class="comment-head">
+					<span class="name">
+													GANESH KUMAR P											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-76918" title="Permalink">June 29, 2016 at 12:47 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thank you very much. I am a school teacher. Now I successfully 
+installed the VM for linux. I feel comfort to teach both windows and 
+linux simultaneously. Thanks a lot.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-76936">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/b348f6b9feac7e8054889911ceb802ca.png" srcset="http://2.gravatar.com/avatar/b348f6b9feac7e8054889911ceb802ca?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-b348f6b9feac7e8054889911ceb802ca-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-76936">
+			
+				<div class="comment-head">
+					<span class="name">
+													Jannik											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-76936" title="Permalink">June 29, 2016 at 9:56 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hey, I did everything like you did but now in the end I only get
+ a black (boot) screen. In the top left is a static underscore “_” and I
+ can’t type nothing.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-79213">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/ec9a37a6e999397cc405421b48df722f.png" srcset="http://2.gravatar.com/avatar/ec9a37a6e999397cc405421b48df722f?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-ec9a37a6e999397cc405421b48df722f-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-79213">
+			
+				<div class="comment-head">
+					<span class="name">
+													Richard Savage											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-79213" title="Permalink">August 15, 2016 at 10:02 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi. I seem to be running into a problem between the “Install 
+GRUB boot loader…” step. There is a step between Install GRUB boot 
+loader and “finish the installation…” that you did not cover.When I try 
+to start the VM, it does not boot.  Any suggestions?</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 clearfix" id="li-comment-79311">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-11" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-79311">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-79311" title="Permalink">August 18, 2016 at 11:48 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>I see I used an incorrect screen capture. Use the “dev/sda” selection and it will work. Do not use the “manual” selection.</p>
+<p>I will update my post with a correction. Thank you for finding this error.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 clearfix" id="li-comment-80577">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/bf4f1d315dc0d38cc820c7c34c465172.png" srcset="http://2.gravatar.com/avatar/bf4f1d315dc0d38cc820c7c34c465172?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-bf4f1d315dc0d38cc820c7c34c465172-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-80577">
+			
+				<div class="comment-head">
+					<span class="name">
+													Placid_Storm											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-80577" title="Permalink">September 17, 2016 at 3:28 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Confirmed to work on ASUS Laptop within Windows 10 with Debian 8.5.0.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 clearfix" id="li-comment-81239">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/aec82ab1dbc89b65e5ff0e117624322e.png" srcset="http://1.gravatar.com/avatar/aec82ab1dbc89b65e5ff0e117624322e?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-aec82ab1dbc89b65e5ff0e117624322e-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-81239">
+			
+				<div class="comment-head">
+					<span class="name">
+													Abk											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-81239" title="Permalink">September 30, 2016 at 7:33 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>pls how can i convert the CLI to GUI.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+<ul class="children">
+	<li class="comment byuser comment-author-admin bypostauthor even depth-2 clearfix" id="li-comment-81468">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/5f6f3e1e43fa2d96d8b4351183cad847.jpeg" srcset="http://2.gravatar.com/avatar/5f6f3e1e43fa2d96d8b4351183cad847?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-5f6f3e1e43fa2d96d8b4351183cad847-12" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-81468">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.brianlinkletter.com/" target="_blank">Brian Linkletter</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-81468" title="Permalink">October 5, 2016 at 2:01 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Look at my post about <a href="http://www.brianlinkletter.com/how-to-run-gui-applications-xfce-on-an-amazon-aws-cloud-server-instance/">setting up a desktop system on AWS</a> to see the procedure to install XFCE on a server.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-81946">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/44694160371f86710778fc5361d4d477.png" srcset="http://1.gravatar.com/avatar/44694160371f86710778fc5361d4d477?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-44694160371f86710778fc5361d4d477-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-81946">
+			
+				<div class="comment-head">
+					<span class="name">
+													Shako											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-81946" title="Permalink">October 16, 2016 at 3:15 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Any ideas why even though I choose to install a desktop 
+environment I’m still booting into the command line with no way to 
+access a GUI?<br>
+I used this iso file: debian-8.6.0-amd64-CD-1.iso</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-82616">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/44694160371f86710778fc5361d4d477.png" srcset="http://1.gravatar.com/avatar/44694160371f86710778fc5361d4d477?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-44694160371f86710778fc5361d4d477-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-82616">
+			
+				<div class="comment-head">
+					<span class="name">
+													Shako											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-82616" title="Permalink">November 1, 2016 at 5:14 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Well, using the net installer debian-8.6.0-amd64-netinst instead solves the problem.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-90285">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/3e8cabc28cc5a17d205a716c789fa780.png" srcset="http://0.gravatar.com/avatar/3e8cabc28cc5a17d205a716c789fa780?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-3e8cabc28cc5a17d205a716c789fa780-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-90285">
+			
+				<div class="comment-head">
+					<span class="name">
+													<a href="http://www.lukeroyal.com/" target="_blank">Luke Chikkala</a>
+											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-90285" title="Permalink">February 23, 2017 at 12:53 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thank you so much for putting everything in proper detail, Brian!<br>
+Even for a complete layman like me, this post has been very helpful guiding exactly in the right steps.<br>
+Thanks a bunch!</p>
+<p>Cheers,<br>
+Luke</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-91234">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/e1a6bcc3b11f32e23c16061d8e006a47.png" srcset="http://2.gravatar.com/avatar/e1a6bcc3b11f32e23c16061d8e006a47?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-e1a6bcc3b11f32e23c16061d8e006a47-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-91234">
+			
+				<div class="comment-head">
+					<span class="name">
+													Akshaya											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-91234" title="Permalink">March 13, 2017 at 1:28 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Brian,<br>
+I got stuck up with “Bad Archive mirror” while configuring the package manager.<br>
+I use  <a href="http://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-8.7.1-amd64-netinst.iso" rel="nofollow">http://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-8.7.1-amd64-netinst.iso</a>. How to proceed from here?<br>
+Any help would be appreciated!!<br>
+Thanks in Advance!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-91240">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/e1a6bcc3b11f32e23c16061d8e006a47.png" srcset="http://2.gravatar.com/avatar/e1a6bcc3b11f32e23c16061d8e006a47?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-e1a6bcc3b11f32e23c16061d8e006a47-1" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-91240">
+			
+				<div class="comment-head">
+					<span class="name">
+													Akshaya											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-91240" title="Permalink">March 13, 2017 at 3:20 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hi Brian<br>
+I used debian-8.5.0-amd64-netinst.iso and after the installation is 
+complete, the Debian operating system boots and opens the terminal 
+asking for “<em>hostname</em> login:” for which i gave the <em>username</em> which i gave during the process. it got logged in with the password.<br>
+BUT My question is why is not the desktop GUI is not available as you shown in ur screen shots?????<br>
+Thanks in Advance!!!</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-91303">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/9a5aeffb09d0cc0388d714b34f88126f.png" srcset="http://0.gravatar.com/avatar/9a5aeffb09d0cc0388d714b34f88126f?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-9a5aeffb09d0cc0388d714b34f88126f-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-91303">
+			
+				<div class="comment-head">
+					<span class="name">
+													Raj Kumar											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-91303" title="Permalink">March 14, 2017 at 11:13 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Great. Thank you for the installation Guide.:)</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="li-comment-92755">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/8e131a4f0facd0d64c22e6c539165ab6.png" srcset="http://2.gravatar.com/avatar/8e131a4f0facd0d64c22e6c539165ab6?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-8e131a4f0facd0d64c22e6c539165ab6-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-92755">
+			
+				<div class="comment-head">
+					<span class="name">
+													Juneld Nerosa											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-92755" title="Permalink">April 4, 2017 at 9:50 pm</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Thanks a lot.</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 clearfix" id="li-comment-94073">
+		<div class="comment-container">
+							<div class="avatar-holder">
+					<img alt="" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/13e6bc20c41480a3083aa03baab67471.png" srcset="http://1.gravatar.com/avatar/13e6bc20c41480a3083aa03baab67471?s=100&amp;d=identicon&amp;r=g 2x" class="avatar avatar-50 photo grav-hashed grav-hijack" id="grav-13e6bc20c41480a3083aa03baab67471-0" width="50" height="50">				</div><!-- /.avatar-holder -->
+				
+			
+			<div class="comment-entry" id="comment-94073">
+			
+				<div class="comment-head">
+					<span class="name">
+													Jesus											</span>
+											<span class="date"><a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/#comment-94073" title="Permalink">April 23, 2017 at 4:25 am</a></span>
+						<span class="edit"></span>
+									</div><!-- /.comment-head -->
+				
+								
+				<div class="comment-text">
+					<p>Hello Brian, many thanks for your detailed tutorial. It help me a lot when installing my first Debian OS.</p>
+<p>I was getting lost with the official tutorial :<br>
+<a href="https://www.debian.org/releases/stable/installmanual" rel="nofollow">https://www.debian.org/releases/stable/installmanual</a></p>
+<p>then this way:<br>
+<a href="http://ftp.cica.es/debian/dists/jessie/main/installer-amd64/current/images/hd-media/gtk/" rel="nofollow">http://ftp.cica.es/debian/dists/jessie/main/installer-amd64/current/images/hd-media/gtk/</a></p>
+<p>then I found your tutorial and with the .iso choice (network install) was much more easier.</p>
+<p>but this was because I need to get used to this “world”, your tutorial is a quicker and more simple way.</p>
+<p>Next challange to install it in the other way 🙂</p>
+<p>thank you again.</p>
+<p>br,<br>
+jesus</p>
+				</div><!-- /.comment-text -->
+				
+				<div class="reply">
+									</div><!-- /.reply -->
+				
+			</div><!-- /.comment-entry -->
+		</div><!-- /comment-container -->
+</li><!-- #comment-## -->
+			</ol>    
+			<div class="comment-navigation clearfix">
+				<div class="comment-prev-nav">
+									</div>
+				<div class="comment-next-nav">
+									</div>
+			</div>
+		</div><!-- /#comments -->
+	
+			<div id="pings">
+			<h3>
+				Trackbacks and Pingbacks:			</h3>
+			<ol class="pinglist">
+					<li id="comment-13927">
+		<span class="author">
+			<a href="http://sparkcognition.com/use-virtualization-to-run-insecure-apps-securely/" rel="external nofollow" class="url">The
+ Cognitive Security Analytics Company – Machine Learning, Data Science, 
+AI and Security – Use Virtualization to Run Insecure Apps Securely</a>		</span> -
+		<span class="date">
+			May 4, 2014		</span>
+		<span class="pingcontent">
+			<p>[…] follow these instructions to create a VM on VirtualBox and install the OS (Debian) you just […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-26821">
+		<span class="author">
+			<a href="http://levelupguides.com/wargame-red-dragon/host-wargame-red-dragon-server/" rel="external nofollow" class="url">How to Host a Wargame: Red Dragon Server - Level Up Guides</a>		</span> -
+		<span class="date">
+			October 12, 2014		</span>
+		<span class="pingcontent">
+			<p>[…] I get around to it / people request it, I will do my own tutorial but untill then: <a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/" rel="nofollow">http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/</a> Just make sure that with this link you do Debian 32 bit. Also Diban UI is different so install with […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-31420">
+		<span class="author">
+			<a href="http://forums.hardwarezone.com.sg/opensource-community-6/need-debian-installation-service-4877562.html#post89950612" rel="external nofollow" class="url">Need Debian installation service - www.hardwarezone.com.sg</a>		</span> -
+		<span class="date">
+			November 14, 2014		</span>
+		<span class="pingcontent">
+			<p>[…] weeds wrote:   Hi, I am needing a debian installation on my 
+laptop urgently within these few days. If you think you can do it, do PM
+ me your contact number and your rate.  * Mods: I not too sure where to 
+post this, if I am posting in the wrong forum, please help to move to 
+the correct forum, thanks!  Download Oracle Virtualbox and you can 
+install as many times you wish until you are familiar with it.  
+Installing Debian Linux in a VirtualBox Virtual Machine | Open-Source 
+Routing and Network Simulation […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-35554">
+		<span class="author">
+			<a href="http://www.brianlinkletter.com/how-to-install-mininet-sdn-network-simulator/" rel="external nofollow" class="url">How to install the Mininet SDN Network Simulator | Open-Source Routing and Network Simulation</a>		</span> -
+		<span class="date">
+			December 12, 2014		</span>
+		<span class="pingcontent">
+			<p>[…] in VirtualBox and install Ubuntu Server on it. Use the steps 
+described in my previous post about installing Debian in a VirtualBox 
+VM. The procedure is the […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-48973">
+		<span class="author">
+			<a href="http://cdaniels.net/index.php/2015/06/25/debian-on-osx/" rel="external nofollow" class="url">Debian on OSX | cdaniels.net</a>		</span> -
+		<span class="date">
+			June 25, 2015		</span>
+		<span class="pingcontent">
+			<p>[…] VirtualBox […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-54021">
+		<span class="author">
+			<a href="http://grommit.com/blogs/ranga/?p=1975" rel="external nofollow" class="url">Ranga’s Blog » Blog Archive » AGS on Debian/Parallels</a>		</span> -
+		<span class="date">
+			September 14, 2015		</span>
+		<span class="pingcontent">
+			<p>[…] mostly followed Brian Linkletter’s very helpful instructions 
+for installing Debian under VirtualBox and for installing Parallels 
+Tools on a Debian virtual […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-73203">
+		<span class="author">
+			<a href="http://www.brianlinkletter.com/mininet-wifi-software-defined-network-emulator-supports-wifi-networks/" rel="external nofollow" class="url">Mininet-WiFi: Software defined network emulator supports WiFi networks | Open-Source Routing and Network Simulation</a>		</span> -
+		<span class="date">
+			April 22, 2016		</span>
+		<span class="pingcontent">
+			<p>[…] Server in a new VM. Download an Ubuntu Server ISO image from 
+the Ubuntu web site. See my post about installing Debian Linux in a VM. 
+Follow the same steps to install […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-77009">
+		<span class="author">
+			<a href="http://sparkcognition.com/2016/06/using-virtualization-run-insecure-apps-securely/" rel="external nofollow" class="url">Using Virtualization to Run Insecure Apps Securely</a>		</span> -
+		<span class="date">
+			June 30, 2016		</span>
+		<span class="pingcontent">
+			<p>[…] follow these instructions to create a VM on VirtualBox and install the OS (Debian) you just […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+	<li id="comment-78281">
+		<span class="author">
+			<a href="http://www.digitalbrix.com/blog/?p=296" rel="external nofollow" class="url">Setup up Beagle Bone Black Cross Compilation Infrastructure – Digital Brix</a>		</span> -
+		<span class="date">
+			July 24, 2016		</span>
+		<span class="pingcontent">
+			<p>[…] get Debian installed as the Guest OS follow this link <a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/" rel="nofollow">http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/</a> – It has the BEST documentation on how to do […]</p>
+		</span>
+	</li>
+<!-- #comment-## -->
+			</ol>
+		</div><!-- /#pings -->
+		
+	
+
+	
+							
+					 	
+							</div><!-- /#main -->
+			
+							<div id="sidebar" class="span4">
+	<div id="text-4" class="widget widget_text">			<div class="textwidget"><h4><a href="http://twitter.com/belinkletter" target="_blank">Follow me on Twitter</a></h4></div>
+		</div><div id="text-2" class="widget widget_text"><h4 class="Text widget-title">Network Simulators</h4>			<div class="textwidget"><ul><li>
+<a href="http://www.brianlinkletter.com/open-source-network-simulators/">Open-Source Network Simulators</a>
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/cloonix/">Cloonix</a> network emulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/core/">CORE</a> network emulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/gns3/">GNS3</a> network emulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/imunes/">IMUNES</a> network emulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/mininet/">Mininet</a> SDN network emulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/netkit/">Netkit</a> network emulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/open-source-network-simulators/#ns3">NS-3</a> network simulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/devstack/">OpenStack all-in-one</a> (DevStack, etc.)
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/open-source-network-simulators/#shadow">Shadow</a> network simulator
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/open-source-network-simulators/#unetlab">UNetLab and EVE.NG</a> network emulators
+</li>
+<li>
+<a href="http://www.brianlinkletter.com/tag/vnx/">VNX and VNUML</a> network emulators
+</li>
+</ul></div>
+		</div><div id="search-2" class="widget widget_search"><h4 class="Search widget-title">Search this site</h4><form role="search" method="get" id="searchform" action="http://www.brianlinkletter.com/"><input placeholder="Search..." name="s" id="s" type="text"></form></div><div id="google_translate_widget-2" class="widget widget_google_translate_widget"><h4 class="Google Translate (Jetpack) widget-title">Translate this page</h4><div id="google_translate_element"><div class="skiptranslate goog-te-gadget" dir="ltr" style=""><div id=":0.targetLanguage"><select class="goog-te-combo" aria-label="Language Translate Widget"><option value="" selected="selected">Select Language</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="am">Amharic</option><option value="ar">Arabic</option><option value="hy">Armenian</option><option value="az">Azerbaijani</option><option value="eu">Basque</option><option value="be">Belarusian</option><option value="bn">Bengali</option><option value="bs">Bosnian</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="ceb">Cebuano</option><option value="ny">Chichewa</option><option value="zh-CN">Chinese (Simplified)</option><option value="zh-TW">Chinese (Traditional)</option><option value="co">Corsican</option><option value="hr">Croatian</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="tl">Filipino</option><option value="fi">Finnish</option><option value="fr">French</option><option value="fy">Frisian</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gu">Gujarati</option><option value="ht">Haitian Creole</option><option value="ha">Hausa</option><option value="haw">Hawaiian</option><option value="iw">Hebrew</option><option value="hi">Hindi</option><option value="hmn">Hmong</option><option value="hu">Hungarian</option><option value="is">Icelandic</option><option value="ig">Igbo</option><option value="id">Indonesian</option><option value="ga">Irish</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="jw">Javanese</option><option value="kn">Kannada</option><option value="kk">Kazakh</option><option value="km">Khmer</option><option value="ko">Korean</option><option value="ku">Kurdish (Kurmanji)</option><option value="ky">Kyrgyz</option><option value="lo">Lao</option><option value="la">Latin</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="lb">Luxembourgish</option><option value="mk">Macedonian</option><option value="mg">Malagasy</option><option value="ms">Malay</option><option value="ml">Malayalam</option><option value="mt">Maltese</option><option value="mi">Maori</option><option value="mr">Marathi</option><option value="mn">Mongolian</option><option value="my">Myanmar (Burmese)</option><option value="ne">Nepali</option><option value="no">Norwegian</option><option value="ps">Pashto</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="pa">Punjabi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sm">Samoan</option><option value="gd">Scots Gaelic</option><option value="sr">Serbian</option><option value="st">Sesotho</option><option value="sn">Shona</option><option value="sd">Sindhi</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="so">Somali</option><option value="es">Spanish</option><option value="su">Sundanese</option><option value="sw">Swahili</option><option value="sv">Swedish</option><option value="tg">Tajik</option><option value="ta">Tamil</option><option value="te">Telugu</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="ur">Urdu</option><option value="uz">Uzbek</option><option value="vi">Vietnamese</option><option value="cy">Welsh</option><option value="xh">Xhosa</option><option value="yi">Yiddish</option><option value="yo">Yoruba</option><option value="zu">Zulu</option></select></div>Powered by <span style="white-space:nowrap"><a class="goog-logo-link" href="https://translate.google.com/" target="_blank"><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/googlelogo_color_42x16dp.png" style="padding-right: 3px" alt="Google Translate" width="37px" height="14px">Translate</a></span></div></div></div><div id="top-posts-3" class="widget widget_top-posts"><h4 class="Top Posts &amp; Pages (Jetpack) widget-title">Top Posts</h4><ul>				<li>
+										<a href="http://www.brianlinkletter.com/how-to-set-up-the-eve-ng-network-emulator-on-a-linux-system/" class="bump-view" data-bump-view="tp">
+						How to set up the UNetLab or EVE-NG network emulator on a Linux system					</a>
+									</li>
+							<li>
+										<a href="http://www.brianlinkletter.com/open-source-network-simulators/" class="bump-view" data-bump-view="tp">
+						Open-Source Network Simulators					</a>
+									</li>
+							<li>
+										<a href="http://www.brianlinkletter.com/how-to-use-virtualbox-to-emulate-a-network/" class="bump-view" data-bump-view="tp">
+						How to emulate a network using VirtualBox					</a>
+									</li>
+							<li>
+										<a href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/" class="bump-view" data-bump-view="tp">
+						Installing Debian Linux in a VirtualBox Virtual Machine					</a>
+									</li>
+							<li>
+										<a href="http://www.brianlinkletter.com/using-the-opendaylight-sdn-controller-with-the-mininet-network-emulator/" class="bump-view" data-bump-view="tp">
+						Using the OpenDaylight SDN Controller with the Mininet Network Emulator					</a>
+									</li>
+			</ul></div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h4 class="Recent Posts widget-title">Recent Posts</h4>		<ul>
+											<li>
+					<a href="http://www.brianlinkletter.com/create-a-nested-virtual-machine-in-a-microsoft-azure-linux-vm/">Create a nested virtual machine in a Microsoft Azure Linux VM</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/network-labs-using-nested-virtualization-in-the-cloud/">Network Labs Using Nested Virtualization in the Cloud</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/enable-nested-virtualization-on-google-cloud/">Enable nested virtualization on Google Cloud</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/install-and-run-the-cloonix-network-emulator-on-packet-net/">Install and run the Cloonix network emulator on Packet.net</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/set-up-a-dedicated-virtualization-server-on-packet-net/">Set up a dedicated virtualization server on Packet.net</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/install-the-core-network-emulator-from-source-code/">Install the CORE Network Emulator from source code</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/netdev-2-1-conference-report/">Netdev 2.1 conference report</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/build-custom-linux-router-image-unetlab-eve-ng-network-emulators/">Build a custom Linux Router image for UNetLab and EVE-NG network emulators</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/how-to-set-up-the-eve-ng-network-emulator-on-a-linux-system/">How to set up the UNetLab or EVE-NG network emulator on a Linux system</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/dns-and-bind-demonstration-using-the-cloonix-network-emulator/">DNS and BIND demonstration using the Cloonix network emulator</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/ofnet-a-new-sdn-network-emulator/">OFNet SDN network emulator</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/psimulator2-forked-updated/">Psimulator2 forked, updated</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/how-to-use-virtualbox-to-emulate-a-network/">How to emulate a network using VirtualBox</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/how-to-build-a-network-of-linux-routers-using-quagga/">How to build a network of Linux routers using quagga</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/how-to-install-dcore-linux-in-a-virtual-machine/">How To Install dCore Linux in a virtual machine</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/mininet-wifi-software-defined-network-emulator-supports-wifi-networks/">Mininet-WiFi: SDN emulator supports WiFi networks</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/openstack-on-one-machine/">OpenStack all-in-one: test cloud services in one laptop</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/using-the-opendaylight-sdn-controller-with-the-mininet-network-emulator/">Using the OpenDaylight SDN Controller with the Mininet Network Emulator</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/saving-cloonix-network-topology/">Saving a Cloonix network topology</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/lenovo-thinkpad-t420-another-excellent-inexpensive-linux-laptop/">Lenovo Thinkpad T420: Another excellent, inexpensive Linux laptop</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/process-images-for-your-blog-with-imagemagick/">Use ImageMagick to quickly and easily process images for your blog</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/cloonix-network-simulator-updated-to-v28-v29/">Cloonix Network Simulator updated to v28</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/kvm-performance-limits-for-virtual-cpu-cores/">KVM Performance Limits for virtual CPU cores</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/capture-data-on-open-source-router-interfaces-in-gns3/">Capture data on open-source router interfaces in GNS3</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/using-virtualbox-linked-clones-in-the-gns3-network-simulator/">Using VirtualBox linked clones in the GNS3 network simulator</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/using-pox-components-to-create-a-software-defined-networking-application/">Using POX components to create a software defined networking application</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/how-to-map-openflow-switch-tcp-ports-in-mininet-sdn-simulations/">How to map OpenFlow switches to TCP ports in Mininet SDN simulations</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/imunes-on-linux/">IMUNES on Linux</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/gns3-version-1-3-whats-new-for-open-source-routers/">GNS3 Version 1.3: What’s new for Open-Source Routers</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/book-review-the-book-of-gns3/">Book review: The Book of GNS3</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/install-the-gns3-version-1-x-network-simulator/">Install the GNS3 network simulator version 1.x</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/build-your-own-network-simulator-using-open-source-devops-tools/">Build your own network simulator using open-source DevOps tools</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/core-network-emulator-updated-to-4-8/">CORE Network Emulator updated to 4.8</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/cloonix-network-simulator-updated-to-version-26/">Cloonix network simulator updated to version 26</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/visualizing-software-defined-network-topologies-using-pox-and-gephi/">Visualizing software defined network topologies using POX and Gephi</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/install-gephi-on-the-mininet-vm/">Install <em>Gephi</em> on the Mininet VM</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/using-the-pox-sdn-controller/">Using the POX SDN controller</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/how-to-use-miniedit-mininets-graphical-user-interface/">How to use <em>MiniEdit</em>, Mininet’s graphical user interface</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/install-mininet-on-an-amazon-ec2-server/">Install Mininet on an Amazon EC2 server</a>
+									</li>
+											<li>
+					<a href="http://www.brianlinkletter.com/amazon-ec2-server-vnc-ssh-apple-ipad-tablet/">Control an Amazon EC2 server from an Apple iPad using SSH and VNC</a>
+									</li>
+					</ul>
+		</div><div id="archives-2" class="widget widget_archive"><h4 class="Archives widget-title">Archive</h4>		<label class="screen-reader-text" for="archives-dropdown-2">Archive</label>
+		<select id="archives-dropdown-2" name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+			
+			<option value="" selected="selected">Select Month</option>
+				<option value="http://www.brianlinkletter.com/2018/06/"> June 2018 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2017/12/"> December 2017 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2017/10/"> October 2017 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2017/05/"> May 2017 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2017/03/"> March 2017 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2017/02/"> February 2017 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/12/"> December 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/11/"> November 2016 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2016/07/"> July 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/06/"> June 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/05/"> May 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/04/"> April 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/03/"> March 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2016/02/"> February 2016 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2016/01/"> January 2016 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2015/12/"> December 2015 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2015/11/"> November 2015 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2015/10/"> October 2015 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2015/09/"> September 2015 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2015/08/"> August 2015 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2015/07/"> July 2015 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2015/06/"> June 2015 &nbsp;(4)</option>
+	<option value="http://www.brianlinkletter.com/2015/05/"> May 2015 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2015/04/"> April 2015 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2015/03/"> March 2015 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2015/02/"> February 2015 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2015/01/"> January 2015 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2014/12/"> December 2014 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2014/11/"> November 2014 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2014/08/"> August 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2014/07/"> July 2014 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2014/06/"> June 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2014/05/"> May 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2014/04/"> April 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2014/03/"> March 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2014/02/"> February 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2014/01/"> January 2014 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2013/12/"> December 2013 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2013/11/"> November 2013 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2013/09/"> September 2013 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2013/05/"> May 2013 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2013/04/"> April 2013 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2013/03/"> March 2013 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2013/02/"> February 2013 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2013/01/"> January 2013 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2012/12/"> December 2012 &nbsp;(3)</option>
+	<option value="http://www.brianlinkletter.com/2012/11/"> November 2012 &nbsp;(1)</option>
+	<option value="http://www.brianlinkletter.com/2012/10/"> October 2012 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2012/09/"> September 2012 &nbsp;(2)</option>
+	<option value="http://www.brianlinkletter.com/2012/08/"> August 2012 &nbsp;(4)</option>
+	<option value="http://www.brianlinkletter.com/2012/07/"> July 2012 &nbsp;(3)</option>
+
+		</select>
+		</div></div><!-- /#sidebar -->
+							
+		</div> <!-- /row -->
+	</div><!-- /container -->
+</div> <!-- /#wrapper -->
+<div id="footer" class="clearfix">
+	
+									<div id="footer-widgets" class="clearfix">
+					<div class="container">
+						<div class="row">
+						
+							<div id="left-footer-widgets" class="span4 clearfix">
+								<div id="text-3" class="widget widget_text">			<div class="textwidget"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/88x31.png" width="88" height="31"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Open Source Routing and Network Simulation blog</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/www.brianlinkletter.com" property="cc:attributionName" rel="cc:attributionURL">Brian Linkletter</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</div>
+		</div>							</div><!-- /#left-footer-widget -->
+							
+							<div id="center-footer-widgets" class="span4 clearfix">
+															</div><!-- /#center-footer-widget -->
+							
+							<div id="right-footer-widgets" class="span4 clearfix">
+															</div><!-- /#right-footer-widget -->
+							
+						</div><!-- /row -->
+					</div><!-- /container -->
+				</div><!-- /#footer-widgets -->
+										
+				<div id="sub-floor" class="clearfix">
+			<div class="container">
+				<div class="row">
+					<div id="footer-links" class="span7">
+											</div><!-- /#footer-links -->			
+							
+					<div id="credit" class="span12">
+												
+													© 2018 <a href="http://www.brianlinkletter.com/">Open-Source Routing and Network Simulation</a> — <a href="http://standardtheme.com/?utm_source=standard-theme&amp;utm_medium=footer&amp;utm_content=wp-org&amp;utm_campaign=Standard%2BFooter" target="_blank">Standard</a> by <a href="http://8bit.io/?utm_source=standard-theme&amp;utm_medium=footer&amp;utm_content=wp-org&amp;utm_campaign=Standard%2BFooter" target="_blank">8BIT</a>												
+					</div><!-- /#credits -->
+
+				</div><!-- /row -->
+			</div><!-- /.container -->
+		</div><!-- /#sub-floor -->
+	</div><!-- /#footer -->
+		<div style="display:none">
+	<div class="grofile-hash-map-1395f4893bf083bbc4b0dd92ad3738bc">
+	</div>
+	<div class="grofile-hash-map-5f6f3e1e43fa2d96d8b4351183cad847">
+	</div>
+	<div class="grofile-hash-map-628500b6319021cc35647005fab83dcd">
+	</div>
+	<div class="grofile-hash-map-4f3a1b601497e1ca6372c658f9387307">
+	</div>
+	<div class="grofile-hash-map-c1b0546021a8b11717af29ed683bfd04">
+	</div>
+	<div class="grofile-hash-map-ecc4c743afea1e87ba4d6d90dabdac9e">
+	</div>
+	<div class="grofile-hash-map-55d96f0baef44e39c50d712b857d26d4">
+	</div>
+	<div class="grofile-hash-map-4ad7dd07b56137ee7f0c5df0eb6969c0">
+	</div>
+	<div class="grofile-hash-map-7a0d9644a87aacbbdb3664b02243e2e3">
+	</div>
+	<div class="grofile-hash-map-d4c7f78ed03d327ba690dc2fb31cb348">
+	</div>
+	<div class="grofile-hash-map-82dc566b9e9a8d982a0efcb62b054a78">
+	</div>
+	<div class="grofile-hash-map-c6dea4c9b430ac31fd2356bc2b374c39">
+	</div>
+	<div class="grofile-hash-map-8a4fc83bc7eb7e36fc1c50668ff0210e">
+	</div>
+	<div class="grofile-hash-map-ead30f9459282075c45f753bc2c3fb47">
+	</div>
+	<div class="grofile-hash-map-3ad5ab2bff215d39a3b7e923c99276d2">
+	</div>
+	<div class="grofile-hash-map-3dadab20a645274c68b398aab2ecb464">
+	</div>
+	<div class="grofile-hash-map-fab79467fb2b08bb2a3014c2d7b5917a">
+	</div>
+	<div class="grofile-hash-map-5b25f5916721e7004db70442878842cf">
+	</div>
+	<div class="grofile-hash-map-410574cb395402b58cd364053c068e19">
+	</div>
+	<div class="grofile-hash-map-34b8e36b4f2b8a0d4b79703da2e4f979">
+	</div>
+	<div class="grofile-hash-map-ec9a37a6e999397cc405421b48df722f">
+	</div>
+	<div class="grofile-hash-map-82dcbf2514f8d88e436a92c8ffad2565">
+	</div>
+	<div class="grofile-hash-map-42b732c207701e84ceba304fbe6e1964">
+	</div>
+	<div class="grofile-hash-map-f25d38f19bd0f3bd0f611bfbfac0d304">
+	</div>
+	<div class="grofile-hash-map-cbbb479444d6e84f532733d79f1e2eb8">
+	</div>
+	<div class="grofile-hash-map-b348f6b9feac7e8054889911ceb802ca">
+	</div>
+	<div class="grofile-hash-map-bf4f1d315dc0d38cc820c7c34c465172">
+	</div>
+	<div class="grofile-hash-map-aec82ab1dbc89b65e5ff0e117624322e">
+	</div>
+	<div class="grofile-hash-map-44694160371f86710778fc5361d4d477">
+	</div>
+	<div class="grofile-hash-map-3e8cabc28cc5a17d205a716c789fa780">
+	</div>
+	<div class="grofile-hash-map-e1a6bcc3b11f32e23c16061d8e006a47">
+	</div>
+	<div class="grofile-hash-map-9a5aeffb09d0cc0388d714b34f88126f">
+	</div>
+	<div class="grofile-hash-map-8e131a4f0facd0d64c22e6c539165ab6">
+	</div>
+	<div class="grofile-hash-map-13e6bc20c41480a3083aa03baab67471">
+	</div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.brianlinkletter.com\/installing-debian-linux-in-a-virtualbox-virtual-machine\/":312};
+	</script>
+<link rel="stylesheet" id="yarppRelatedCss-css" href="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/related.css" type="text/css" media="all">
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/photon.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/wpgroho.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/comment-reply.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/twitter-timeline.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/wp-embed.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _wp_google_translate_widget = {"lang":"en_US","layout":"0"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/google-translate.js"></script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/element.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/sharing.js"></script>
+<script type="text/javascript">
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-google-plus-1', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+</script>
+<script type="text/javascript" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/e-201827.js" async="async" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:6.2.1',blog:'39593494',post:'312',tz:'-4',srv:'www.brianlinkletter.com'} ]);
+	_stq.push([ 'clickTrackerInit', '39593494', '312' ]);
+</script>
+	
+
+<div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/translate_24dp.png" alt="Google Translate" width="20" height="20"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div><img src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/g.gif" alt=":)" id="wpstats" width="6" height="5"><div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div><iframe scrolling="no" allowtransparency="true" src="Installing%20Debian%20Linux%20in%20a%20VirtualBox%20Virtual%20Machine%20%20%20Open-Source%20Routing%20and%20Network%20Simulation_files/widget_iframe.htm" title="Twitter settings iframe" style="display: none;" frameborder="0"></iframe><iframe id="rufous-sandbox" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: medium none;" title="Twitter analytics iframe" frameborder="0"></iframe></body></html>
+<!--Generated by Endurance Page Cache-->

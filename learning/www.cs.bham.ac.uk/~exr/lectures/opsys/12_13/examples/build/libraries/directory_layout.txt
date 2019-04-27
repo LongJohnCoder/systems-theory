@@ -1,0 +1,27 @@
+# Here is the source code structure for main application code and the
+# linked_list code, which we've separated out into a library
+#
+# The source code in this example is identical to the last example with the
+# only changes being:
+#
+#  #include "linked_list.h" -> #include <linked_list.h>
+#
+# in the files todo_list.c and linked_list.c, which serve to decouple the
+# library header file from the source code.  This means then when compiling,
+# we must add the directory of that header file to the search path.
+
+Makefile             # Top-level Makefile which drives sub-makefiles
+
+src
+  Makefile           # Main application Makefile
+  todo_list.c
+  user_interface.h   # We chose not to put these files in their
+  user_interface.c   # own library, which would be excessive.
+
+libs                 # Folder to hold library code
+  linked_list        # Our linked list library
+    include          # Include files for using library
+      linked_list.h
+    src              # Library source files
+      Makefile       # To build the library
+      linked_list.c
